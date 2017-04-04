@@ -66,3 +66,12 @@ C:\Users\zehra.duzgit.BILGI\Desktop\TABU5\bin\x64\Debug\Tabu-Java.pdb
 C:\Users\zehra.duzgit.BILGI\Desktop\TABU5\bin\x64\Debug\ILOG.Concert.xml
 C:\Users\zehra.duzgit.BILGI\Desktop\TABU5\bin\x64\Debug\ILOG.CPLEX.xml
 C:\Users\zehra.duzgit.BILGI\Desktop\TABU5\obj\x64\Debug\Tabu-Java.csprojResolveAssemblyReference.cache
+D:\TABU5\obj\x64\Debug\Tabu-Java.exe
+D:\TABU5\obj\x64\Debug\Tabu-Java.pdb
+C:\masterTez\TABU5\obj\x64\Debug\Tabu-Java.exe
+C:\masterTez\TABU5\obj\x64\Debug\Tabu-Java.pdb
+C:\masterTez\TABU5\bin\x64\Debug\Tabu-Java.exe
+C:\masterTez\TABU5\bin\x64\Debug\Tabu-Java.pdb
+C:\masterTez\TABU5\bin\x64\Debug\ILOG.Concert.xml
+C:\masterTez\TABU5\bin\x64\Debug\ILOG.CPLEX.xml
+C:\masterTez\TABU5\obj\x64\Debug\Tabu-Java.csprojResolveAssemblyReference.cache

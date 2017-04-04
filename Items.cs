@@ -13,7 +13,7 @@ namespace ITEMDEFINITION
         public int C_info;
         public int D_info;
 
-        public bool picked_during_sshape;
+        public bool picked_during_sshape = false;
 
         int IComparable<Item>.CompareTo(Item other) //compares coordinatesof items DESCENDING
         {

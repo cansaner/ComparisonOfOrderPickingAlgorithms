@@ -1,0 +1,148 @@
+ITEM NO:1 - A=1, B=1, C=1, D=5
+ITEM NO:2 - A=1, B=2, C=1, D=2
+ITEM NO:3 - A=1, B=3, C=1, D=1
+ITEM NO:4 - A=1, B=4, C=0, D=7
+ITEM NO:5 - A=1, B=5, C=0, D=6
+ITEM NO:6 - A=2, B=1, C=1, D=5
+ITEM NO:7 - A=2, B=4, C=1, D=7
+ITEM NO:8 - A=2, B=5, C=1, D=2
+ITEM NO:9 - A=2, B=5, C=1, D=7
+ITEM NO:10 - A=2, B=6, C=1, D=5
+ITEM NO:11 - A=2, B=7, C=0, D=3
+ITEM NO:12 - A=3, B=2, C=1, D=2
+ITEM NO:13 - A=3, B=3, C=1, D=1
+ITEM NO:14 - A=3, B=4, C=0, D=5
+ITEM NO:15 - A=3, B=5, C=0, D=2
+ITEM NO:16 - A=3, B=5, C=1, D=4
+ITEM NO:17 - A=3, B=5, C=0, D=7
+ITEM NO:18 - A=3, B=6, C=0, D=2
+ITEM NO:19 - A=3, B=7, C=0, D=1
+Min Item Info: 2, 1, 1, 5
+LEFT PICK AISLE: 2
+FARTHEST BLOCK: 1
+Picker came to location: 4, 1
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 5M
+Picker came to location: 4, 2
+GOING UP
+GOING FROM 4,2 TO 3,2
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 19M
+GOING FROM 3,2 TO 2,2
+Collected Item Info: 2, 1, 1, 5: Index: 6
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 33M
+Picker came to location: 2, 2
+GOING UP
+GOING FROM 2,2 TO 1,2
+Collected Item Info: 1, 1, 1, 5: Index: 1
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 47M
+Picker came to location: 1, 2
+LEFT MOST SUB AISLE IS SELECTED
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 48M
+Picker came to location: 1, 3
+GOING DOWN
+GOING FROM 1,3 TO 2,3
+Collected Item Info: 1, 2, 1, 2: Index: 2
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 62M
+Picker came to location: 2, 3
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 67M
+Picker came to location: 2, 4
+GOING UP
+GOING FROM 2,4 TO 1,4
+Collected Item Info: 1, 4, 0, 7: Index: 4
+Collected Item Info: 1, 3, 1, 1: Index: 3
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 81M
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 86M
+Picker came to location: 1, 5
+GOING DOWN
+GOING FROM 1,5 TO 2,5
+Collected Item Info: 1, 5, 0, 6: Index: 5
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 100M
+Picker came to location: 2, 5
+LEFT MOST SUB AISLE IS SELECTED
+TRAVELLED DISTANCE 0W
+TOTAL DISTANCE 100M
+Picker came to location: 2, 5
+GOING DOWN
+GOING FROM 2,5 TO 3,5
+Collected Item Info: 2, 4, 1, 7: Index: 7
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 114M
+Picker came to location: 3, 5
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 119M
+Picker came to location: 3, 6
+GOING UP
+GOING FROM 3,6 TO 2,6
+Collected Item Info: 2, 5, 1, 7: Index: 9
+Collected Item Info: 2, 5, 1, 2: Index: 8
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 133M
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 138M
+Picker came to location: 2, 7
+GOING DOWN
+GOING FROM 2,7 TO 3,7
+Collected Item Info: 2, 7, 0, 3: Index: 11
+Collected Item Info: 2, 6, 1, 5: Index: 10
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 152M
+Picker came to location: 3, 7
+RIGHT MOST SUB AISLE IS SELECTED
+TRAVELLED DISTANCE 0W
+TOTAL DISTANCE 152M
+Picker came to location: 3, 7
+GOING DOWN
+GOING FROM 3,7 TO 4,7
+Collected Item Info: 3, 7, 0, 1: Index: 19
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 166M
+Picker came to location: 4, 7
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 171M
+Picker came to location: 4, 6
+GOING UP
+GOING FROM 4,6 TO 3,6
+Collected Item Info: 3, 5, 1, 4: Index: 16
+Collected Item Info: 3, 6, 0, 2: Index: 18
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 185M
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 190M
+Picker came to location: 3, 5
+GOING DOWN
+GOING FROM 3,5 TO 4,5
+Collected Item Info: 3, 5, 0, 2: Index: 15
+Collected Item Info: 3, 5, 0, 7: Index: 17
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 204M
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 209M
+Picker came to location: 4, 4
+GOING UP
+GOING FROM 4,4 TO 3,4
+Collected Item Info: 3, 4, 0, 5: Index: 14
+Collected Item Info: 3, 3, 1, 1: Index: 13
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 223M
+TRAVELLED DISTANCE 1W
+TOTAL DISTANCE 228M
+Picker came to location: 3, 3
+GOING DOWN
+GOING FROM 3,3 TO 4,3
+Collected Item Info: 3, 2, 1, 2: Index: 12
+TRAVELLED DISTANCE 1L
+TOTAL DISTANCE 242M
+Picker came to location: 4, 3
+TRAVELLED DISTANCE 2W
+TOTAL DISTANCE 252M
+Picker came to location: 4, 1
+PICKER IS FINISHED ITS JOB
