@@ -81,8 +81,8 @@ namespace TBSRCH
         {
             for (int i = 0; i < solution.GetLength(0); i++)
             {
-                Console.WriteLine(solution[i] + " "); //ORIGINAL: FOR CITIES
-                //Console.WriteLine((solution[i]+1) + " "); //ITEM İÇİN +1 OLARAK YAZDIRALIM
+                //Console.WriteLine(solution[i] + " "); //ORIGINAL: FOR CITIES
+                Console.WriteLine((solution[i] + 1) + " "); //ITEM İÇİN +1 OLARAK YAZDIRALIM
             }
             Console.WriteLine();
         }//end of printSolution

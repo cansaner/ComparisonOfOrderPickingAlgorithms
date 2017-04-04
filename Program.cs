@@ -14,21 +14,18 @@ using ITEMDEFINITION;
 namespace ConsoleApplication1
 {
     struct PickerPosition
-        //bven  comment
     {
         public int aPos;
         public int bPos;
-    }; 
+    };
+
     public class Program
     {
-        //static int tabuLength;
-        const int MAX_A = 3;
-        const int MAX_B = 7;
-        const int MAX_C = 1;
-        const int MAX_D = 7;
+        public static int tabuLength = 5;
 
+        enum Methods { TabuSearch, SShape };
         static PickerPosition pickerPosition;
-        static int totalDistance = 0;
+        static double totalDistance = 0;
         
         static int A;  //horizontal block of the initial item   
         static int B; //vertical block of the initial item 
@@ -44,16 +41,20 @@ namespace ConsoleApplication1
         static int[] arrayC; // an array to hold coordinate C of all items
         static int[] arrayD; // an array to hold coordinate D of all items
 
-        
         static int S = 7; //no of shelves
-        static int K = 2; //length of one shelf
-        static int W = 5; //width of corridor    
-        static int L = 14; //length of corridor  
+        static double W = 5; //width of corridor
+        static double L = 14; //length of corridor
+        static double K = L / S; //length of one shelf
 
-        static int DISTANCE; 
+        static double DISTANCE; 
         
         static int no_of_horizontal_aisles = 4;
         static int no_of_vertical_aisles = 8 ;
+
+        static int MAX_A = no_of_horizontal_aisles-1;
+        static int MAX_B = no_of_vertical_aisles-1;
+        static int MAX_C = 1;
+        static int MAX_D = S;
 
         static int IND1;
         static int IND2;
@@ -68,6 +69,7 @@ namespace ConsoleApplication1
         static TSPEnvironment tspEnvironmentWAREHOUSE;
 
         static List<Item> ITEMLIST;
+        static List<Item> SORTED_ITEMS;
         //static List<Item> SSHAPE_ITEMS;
 
 
@@ -81,69 +83,108 @@ namespace ConsoleApplication1
         public static void Main(string[] args)
         {
             //ITEMLIST.Clear(); 
-            //Setting Picker to starting Point
-            int depotAPos = MAX_A + 1;
-            int depotBPos = 1;
-            pickerPosition.aPos = depotAPos;
-            pickerPosition.bPos = depotBPos;
 
             size_of_picklist = 0; // 22; ITEM'LARI RANDOM ILE GENERATE EDERKEN EN BAŞTA SAYI VERİLMELİ!
+
+            Reading("C:\\masterTez/sshape3.txt"); //GenerateItems(); name of the function can be changed if not read
+
+            //Generating();
             
-            DateTime stTime = DateTime.Now; //BURADA YAZARSAK DISTANCE MATRIX HESAPLANMASI İÇİN GEREKLİ SÜREYİ DE KAPSIYOR!
-            //Console.WriteLine("START OF SIMULATION: {0}", stTime);
+            //reWriteData();
+            generateInitialSolution();
 
-            Reading("C:\\masterTez/sshape2.txt"); //GenerateItems(); name of the function can be changed if not read
+            populateHelperArrays();
 
-            //Copying item list for S-Shape Heuristic
-            //travelled_distance_with_SSHAPEHEURISTIC = 0;
+            createDistanceMatrix();
 
-            //List<Item> SSHAPE_ITEMS = new List<Item>(); //Copying JOBS List to another List for Manipulation Purposes
-            //SSHAPE_ITEMS = new List<Item>(); //Copying JOBS List to another List for Manipulation Purposes
-
-            //foreach (Item jj in ITEMLIST)
-            //{
-            //    SSHAPE_ITEMS.Add(jj);
-            //}
+            solve((int)Methods.TabuSearch);
+            solve((int)Methods.SShape);
             
-            //SShapeHeuristic(); //YERİ DOĞRU MU ACABA???
-            
-            //Writing items on another text file
             //CANSANER COMMENT OUT
-            //string FN = "PICKLIST-SIZE" + size_of_picklist + ".txt";
-            //TextWriter WriterSolution = new StreamWriter(FN);
-            //WriterSolution.WriteLine();
 
-            //WriterSolution.WriteLine("\tITEMNO\tA\tB\tC\tD");
-            //WriterSolution.WriteLine();
+            //ITEMLIST.Clear();
 
-            //foreach (Item itm in ITEMLIST)
-            //{
-            //    WriterSolution.WriteLine("\t" + (itm.index + 1) + "\t" + itm.A_info + "\t" + itm.B_info + "\t" + itm.C_info + "\t" + itm.D_info);
-            //}
-
-            //WriterSolution.Close();
-
-            //Console.WriteLine("No of items:{0}", ITEMLIST.Count());
-
-            ////initial solution generation:B->C->A->D
-            //List<Item> SORTED_ITEMS = new List<Item>(); //Copying ITEMLIST to another List for Manipulation Purposes
-
-            //foreach (Item jj in ITEMLIST)
-            //{
-            //    SORTED_ITEMS.Add(jj);
-            //}
-
-            //SORTED_ITEMS.Sort(); //comparing items based on coordinates (B->C->A->D)
-
-            //foreach (Item iii in SORTED_ITEMS)
-            //    Console.WriteLine("SORTED LIST: {0}", iii.index + 1);
-
-
-
+            Console.ReadLine();
             //CANSANER COMMENT OUT END
+        }//end of Main
 
-            //initial solution generated!
-            
+        public static int getMinOfArray(int[] arr, int max)
+        {
+            int minVal = max;
+
+            foreach (int i in arr)
+            {
+                if (i < minVal)
+                {
+                    minVal = i;
+                }
+
+            }
+            return minVal;
+        }
+
+        public static void generateInitialSolution() {
+            //initial solution generation:B->C->A->D
+            SORTED_ITEMS = new List<Item>(); //Copying ITEMLIST to another List for Manipulation Purposes
+
+            foreach (Item jj in ITEMLIST)
+            {
+                SORTED_ITEMS.Add(jj);
+            }
+
+            SORTED_ITEMS.Sort(); //comparing items based on coordinates (B->C->A->D)
+
+            foreach (Item iii in SORTED_ITEMS)
+                Console.WriteLine("SORTED LIST: {0}", iii.index + 1);
+        }
+
+        public static void createDistanceMatrix() {
+            tspEnvironmentWAREHOUSE = new TSPEnvironment();
+
+            tspEnvironmentWAREHOUSE.distances = new int[ITEMLIST.Count(), ITEMLIST.Count()];
+
+            for (int i = 1; i <= tspEnvironmentWAREHOUSE.distances.GetLength(0); i++)
+            {
+                for (int j = 1; j <= tspEnvironmentWAREHOUSE.distances.GetLength(1); j++)
+                {
+                    if (i == j)
+                    {
+                        tspEnvironmentWAREHOUSE.distances[i - 1, j - 1] = 0;
+                    }
+                    else
+                    {
+                        Console.WriteLine("SOLVING SHORTEST PATH FOR ITEM {0} TO ITEM {1}", i, j);
+                        A = arrayA[i - 1]; //ITEMLIST[i - 1].A_info;
+                        B = arrayB[i - 1];
+                        C = arrayC[i - 1];
+                        D = arrayD[i - 1];
+                        APRIME = arrayA[j - 1];
+                        BPRIME = arrayB[j - 1];
+                        CPRIME = arrayC[j - 1];
+                        DPRIME = arrayD[j - 1];
+                        Console.WriteLine("A={0}, B={1}, C={2}, D={3}, APRIME={4}, BPRIME={5}, CPRIME={6}, DPRIME={7}", A, B, C, D, APRIME, BPRIME, CPRIME, DPRIME);
+                        tspEnvironmentWAREHOUSE.distances[i - 1, j - 1] = Solve_Shortest_Path(A, B, C, D, APRIME, BPRIME, CPRIME, DPRIME);
+                        //Assignments(); BUNU CPLEX.NULL'DAN ÖNCE YAZMAK GEREK!!!
+                    }
+                }
+                //next row
+                Console.WriteLine();
+            }
+
+
+            //Writing distance matrix based on shortest path between items
+            for (int i = 0; i < tspEnvironmentWAREHOUSE.distances.GetLength(0); i++)
+            {
+                for (int j = 0; j < tspEnvironmentWAREHOUSE.distances.GetLength(1); j++)
+                {
+                    Console.Write(tspEnvironmentWAREHOUSE.distances[i, j] + "\t");
+                }
+                //next row
+                Console.WriteLine();
+            }
+        }
+
+        public static void populateHelperArrays() {
             arrayA = new int[ITEMLIST.Count()];
             arrayB = new int[ITEMLIST.Count()];
             arrayC = new int[ITEMLIST.Count()];
@@ -152,40 +193,163 @@ namespace ConsoleApplication1
             foreach (Item jjj in ITEMLIST)
             {
                 arrayA[jjj.index] = jjj.A_info;
-                arrayB[jjj.index] = jjj.B_info; 
+                arrayB[jjj.index] = jjj.B_info;
                 arrayC[jjj.index] = jjj.C_info;
                 arrayD[jjj.index] = jjj.D_info;
                 //Console.WriteLine("FIRST ELEMENTS: {0}, {1}, {2}, {3}", arrayA[jjj.index], arrayB[jjj.index], arrayC[jjj.index], arrayD[jjj.index]);
+            }
+        }
 
+        public static void reWriteData() {
+            //Writing items on another text file
+            string FN = "PICKLIST-SIZE" + size_of_picklist + ".txt";
+            TextWriter WriterSolution = new StreamWriter(FN);
+            WriterSolution.WriteLine();
+
+            WriterSolution.WriteLine("\tITEMNO\tA\tB\tC\tD");
+            WriterSolution.WriteLine();
+
+            foreach (Item itm in ITEMLIST)
+            {
+                WriterSolution.WriteLine("\t" + (itm.index + 1) + "\t" + itm.A_info + "\t" + itm.B_info + "\t" + itm.C_info + "\t" + itm.D_info);
             }
 
+            WriterSolution.Close();
+
+            Console.WriteLine("No of items:{0}", ITEMLIST.Count());
+            //initial solution generated!
+        }
+
+        public static void solve(int method) {
+            DateTime stTime = DateTime.Now; //BURADA YAZARSAK DISTANCE MATRIX HESAPLANMASI İÇİN GEREKLİ SÜREYİ DE KAPSIYOR!
+            switch (method)
+            {
+                case (int)Methods.TabuSearch:
+                    solveUsingTabuSearch();
+                    break;
+                case (int)Methods.SShape:
+                    solveUsingSShapeHeuristic();
+                    break;
+                default:
+                    solveUsingTabuSearch();
+                    break;
+            }
+            DateTime etTime = DateTime.Now;
+            TimeSpan elapsed_Time = etTime.Subtract(stTime);
+            double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
+            switch (method) {
+                case (int)Methods.TabuSearch:
+                    Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", elapsedTime);
+                    break;
+                case (int)Methods.SShape:
+                    Console.WriteLine("S-SHAPE RUNNING TIME: {0} Seconds", elapsedTime);
+                    break;
+                default:
+                    Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", elapsedTime);
+                    break;
+            }
+        }
+
+        public static void solveUsingTabuSearch() {
+            //if initial solution is to be generated through B->C->A->D:
+            int[] currSolution = new int[SORTED_ITEMS.Count() + 1];
+            currSolution[0] = 0;
+            currSolution[SORTED_ITEMS.Count()] = 0;
+            for (int i = 1; i < SORTED_ITEMS.Count(); i++)
+            {
+                currSolution[i] = SORTED_ITEMS[i].index;
+            }
+
+            for (int i = 0; i < SORTED_ITEMS.Count(); i++)
+            {
+                Console.WriteLine("CURRENT SOLUTION: {0}", currSolution[i]);
+            }
+
+            //TABU SEARCH
+            int numberOfIterations = 20; //Stopping criterion
+            //int tabuLength = 5; //Tabu Tenure
+            //TabuList tabuList = new TabuList(tabuLength); //Why tabuLength??? but not numCities??? because when swapping city 1&2, taking (1,2) and (2,1) i.e. 2 moves?
+            TabuList tabuList = new TabuList(tspEnvironmentWAREHOUSE.distances.GetLength(0));
+
+            int[] bestSol = new int[currSolution.GetLength(0)]; //this is the best Solution So Far
+            Array.Copy(currSolution, 0, bestSol, 0, bestSol.GetLength(0));
+            int bestCost = tspEnvironmentWAREHOUSE.getObjectiveFunctionValue(bestSol);
+            //***
+            Console.WriteLine("BEST COST:{0}", bestCost);
+
+            for (int i = 0; i < numberOfIterations; i++)
+            { //perform iterations here
+
+                //***
+                Console.WriteLine("ITERATION NO: {0}", i + 1);
+
+                currSolution = TabuSearch.getBestNeighbour(tabuList, tspEnvironmentWAREHOUSE, currSolution);
+                TabuSearch.printSolution(currSolution);
+                //TabuSearch.printSolution(tabuList);
+                for (int row = 0; row < tabuList.tabuList.GetLength(1); row++)
+                {
+                    for (int col = 0; col < tabuList.tabuList.GetLength(0); col++)
+                        Console.Write(String.Format("{0}\t", tabuList.tabuList[row, col]));
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+
+                int currCost = tspEnvironmentWAREHOUSE.getObjectiveFunctionValue(currSolution);
+                //***
+                Console.WriteLine("CURRENT COST:{0}", currCost);
+
+                //Console.WriteLine("Current best cost = " + tspEnvironment.getObjectiveFunctionValue(currSolution));
+
+                if (currCost < bestCost)
+                {
+                    Array.Copy(currSolution, 0, bestSol, 0, bestSol.GetLength(0));
+                    bestCost = currCost;
+                    //***
+                    Console.WriteLine("CURRENT COST IS LESS THAN BEST COST");
+                }
+            }
+
+            Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
+
+            TabuSearch.printSolution(bestSol);
+        }
+
+        public static void solveUsingSShapeHeuristic() {
+            //Setting Picker to starting Point
+            int depotAPos = MAX_A + 1;
+            int depotBPos = 1;
+            pickerPosition.aPos = depotAPos;
+            pickerPosition.bPos = depotBPos;
             int leftPickAisleB = findLeftPickAisle();
             int farthestBlockA = determineFarthestBlock();
             Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisleB);
             Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlockA);
             printLocation();
-            totalDistance = totalDistance + (Math.Abs(leftPickAisleB - pickerPosition.bPos)*W);
+            totalDistance = totalDistance + (Math.Abs(leftPickAisleB - pickerPosition.bPos) * W);
             Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(leftPickAisleB - pickerPosition.bPos));
             Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
             goToLocation(pickerPosition.aPos, leftPickAisleB);
-            goVertical(farthestBlockA +1);
+            goVertical(farthestBlockA + 1);
             printLocation();
             List<int> pickAisles = getPickAislesOfBlock(farthestBlockA);
             bool isItOnlyOne = (pickAisles.Count == 1);
             if (isItOnlyOne)
             {
-                collectAisle(pickerPosition.aPos-1, pickerPosition.bPos, true, true);
+                collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true);
             }
-            else {
+            else
+            {
                 goVertical(farthestBlockA);
             }
             int farMostBlock = farthestBlockA;
             printLocation();
             bool goRight = true;
             bool goUp = false;
-            while (farMostBlock < depotAPos) {
+            while (farMostBlock < depotAPos)
+            {
                 pickAisles = getPickAislesOfBlock(farMostBlock);
-                if (pickAisles.Count() > 0) { 
+                if (pickAisles.Count() > 0)
+                {
                     int leftMostSubAisleB = pickAisles.ElementAt(0);
                     int rightMostSubAisleB = pickAisles.ElementAt(pickAisles.Count() - 1);
                     //Console.WriteLine("LEFT MOST SUB AISLE: {0}", leftMostSubAisleB);
@@ -199,7 +363,8 @@ namespace ConsoleApplication1
                         pickerPosition.bPos = leftMostSubAisleB;
                         goRight = true;
                     }
-                    else {
+                    else
+                    {
                         Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
                         totalDistance = totalDistance + (Math.Abs(rightMostSubAisleB - pickerPosition.bPos));
                         Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(rightMostSubAisleB - pickerPosition.bPos)));
@@ -242,26 +407,35 @@ namespace ConsoleApplication1
                     }
                     pickAisles = getPickAislesOfBlock(farMostBlock);
                 }
-                if (goRight)
+                if (pickAisles.Count() > 0)
                 {
-                    totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos) * W);
-                    Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos)));
-                    Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                    pickerPosition.bPos = pickAisles.ElementAt(0);
+                    if (goRight)
+                    {
+                        totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos) * W);
+                        Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos)));
+                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+                        pickerPosition.bPos = pickAisles.ElementAt(0);
+                    }
+                    else
+                    {
+                        totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos) * W);
+                        Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos));
+                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+                        pickerPosition.bPos = pickAisles.ElementAt(pickAisles.Count() - 1);
+                    }
                 }
-                else {
-                    totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos) * W);
-                    Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos));
-                    Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                    pickerPosition.bPos = pickAisles.ElementAt(pickAisles.Count() - 1);
+                else { 
+                
                 }
+                
                 printLocation();
                 if (goUp)
                 {
                     collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true);
                 }
-                else {
-                    goVertical(farMostBlock+1);
+                else
+                {
+                    goVertical(farMostBlock + 1);
                 }
                 printLocation();
                 farMostBlock++;
@@ -273,152 +447,6 @@ namespace ConsoleApplication1
             pickerPosition.bPos = depotBPos;
             printLocation();
             Console.WriteLine("PICKER IS FINISHED ITS JOB");
-            //pickerPosition.aPos = aLoc;
-
-            
-
-            //CANSANER COMMENT OUT            
-            //tspEnvironmentWAREHOUSE = new TSPEnvironment();
-
-            //tspEnvironmentWAREHOUSE.distances = new int[ITEMLIST.Count(), ITEMLIST.Count()];
-
-            //for (int i = 1; i <= tspEnvironmentWAREHOUSE.distances.GetLength(0); i++)
-            //{
-            //    for (int j = 1; j <= tspEnvironmentWAREHOUSE.distances.GetLength(1); j++)
-            //    {
-            //        if (i == j)
-            //        {
-            //            tspEnvironmentWAREHOUSE.distances[i - 1, j - 1] = 0;
-            //        }
-            //        else
-            //        {
-            //            Console.WriteLine("SOLVING SHORTEST PATH FOR ITEM {0} TO ITEM {1}", i, j);
-            //            A = arrayA[i - 1]; //ITEMLIST[i - 1].A_info;
-            //            B = arrayB[i - 1];
-            //            C = arrayC[i - 1];
-            //            D = arrayD[i - 1];
-            //            APRIME = arrayA[j - 1];
-            //            BPRIME = arrayB[j - 1];
-            //            CPRIME = arrayC[j - 1];
-            //            DPRIME = arrayD[j - 1];
-            //            Console.WriteLine("A={0}, B={1}, C={2}, D={3}, APRIME={4}, BPRIME={5}, CPRIME={6}, DPRIME={7}", A, B, C, D, APRIME, BPRIME, CPRIME, DPRIME);
-            //            tspEnvironmentWAREHOUSE.distances[i - 1, j - 1] = Solve_Shortest_Path(A, B, C, D, APRIME, BPRIME, CPRIME, DPRIME);
-            //            //Assignments(); BUNU CPLEX.NULL'DAN ÖNCE YAZMAK GEREK!!!
-            //        }
-            //    }
-            //    //next row
-            //    Console.WriteLine();
-            //}
-
-
-            ////Writing distance matrix based on shortest path between items
-            //for (int i = 0; i < tspEnvironmentWAREHOUSE.distances.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < tspEnvironmentWAREHOUSE.distances.GetLength(1); j++)
-            //    {
-            //        Console.Write(tspEnvironmentWAREHOUSE.distances[i, j] + "\t");
-            //    }
-            //    //next row
-            //    Console.WriteLine();
-            //}
-
-            ////int[] currSolution = new int[] { 0, 1, 2, 3, 4, 0 };   //initial solution
-            ////yukarıdaki "0", distance matrix'teki 0.elemana denk geliyor!!!
-            ////city numbers start from 0
-            //// the first and last cities' positions do not change
-
-            ////if initial solution is to be provided:
-            ////int[] currSolution = new int[] { 0, 6, 1, 2, 3, 4, 7, 5, 0 };   //initial solution: 1-7-2-3-4-5-8-6(-1)
-
-            ////if initial solution is to be generated through B->C->A->D:
-            //int[] currSolution = new int[SORTED_ITEMS.Count() + 1];
-            //currSolution[0] = 0;
-            //currSolution[SORTED_ITEMS.Count()] = 0;
-            //for (int i = 1; i < SORTED_ITEMS.Count(); i++)
-            //{
-            //    currSolution[i] = SORTED_ITEMS[i].index;
-            //}
-
-            //for (int i = 0; i < SORTED_ITEMS.Count(); i++)
-            //{
-            //    Console.WriteLine("CURRENT SOLUTION: {0}", currSolution[i]);
-            //}
-
-            ////TABU SEARCH
-            //int numberOfIterations = 20; //Stopping criterion
-            ////int tabuLength = 5; //Tabu Tenure
-            ////TabuList tabuList = new TabuList(tabuLength); //Why tabuLength??? but not numCities??? because when swapping city 1&2, taking (1,2) and (2,1) i.e. 2 moves?
-            //TabuList tabuList = new TabuList(tspEnvironmentWAREHOUSE.distances.GetLength(0));
-
-            //int[] bestSol = new int[currSolution.GetLength(0)]; //this is the best Solution So Far
-            //Array.Copy(currSolution, 0, bestSol, 0, bestSol.GetLength(0));
-            //int bestCost = tspEnvironmentWAREHOUSE.getObjectiveFunctionValue(bestSol);
-            ////***
-            //Console.WriteLine("BEST COST:{0}", bestCost);
-
-            //for (int i = 0; i < numberOfIterations; i++)
-            //{ //perform iterations here
-
-            //    //***
-            //    Console.WriteLine("ITERATION NO: {0}", i + 1);
-
-            //    currSolution = TabuSearch.getBestNeighbour(tabuList, tspEnvironmentWAREHOUSE, currSolution);
-            //    TabuSearch.printSolution(currSolution);
-            //    //TabuSearch.printSolution(tabuList);
-            //    for (int row = 0; row < tabuList.tabuList.GetLength(1); row++)
-            //    {
-            //        for (int col = 0; col < tabuList.tabuList.GetLength(0); col++)
-            //            Console.Write(String.Format("{0}\t", tabuList.tabuList[row, col]));
-            //        Console.WriteLine();
-            //    }
-            //    Console.WriteLine();
-
-            //    int currCost = tspEnvironmentWAREHOUSE.getObjectiveFunctionValue(currSolution);
-            //    //***
-            //    Console.WriteLine("CURRENT COST:{0}", currCost);
-
-            //    //Console.WriteLine("Current best cost = " + tspEnvironment.getObjectiveFunctionValue(currSolution));
-
-            //    if (currCost < bestCost)
-            //    {
-            //        Array.Copy(currSolution, 0, bestSol, 0, bestSol.GetLength(0));
-            //        bestCost = currCost;
-            //        //***
-            //        Console.WriteLine("CURRENT COST IS LESS THAN BEST COST");
-            //    }
-            //}
-
-            //Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
-
-            //TabuSearch.printSolution(bestSol);
-
-            ////foreach (var item in bestSol)
-            ////    Console.Write("{0} ", item);
-
-            //DateTime etTime = DateTime.Now;
-            //TimeSpan elapsed_Time = etTime.Subtract(stTime);
-            //double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
-            //Console.WriteLine("RUNNING TIME: {0} Seconds", elapsedTime);
-
-            ////ITEMLIST.Clear();
-
-            Console.ReadLine();
-            //CANSANER COMMENT OUT END
-        }//end of Main
-
-        public static int getMinOfArray(int[] arr, int max)
-        {
-            int minVal = max;
-
-            foreach (int i in arr)
-            {
-                if (i < minVal)
-                {
-                    minVal = i;
-                }
-
-            }
-            return minVal;
         }
 
         public static void printLocation()
@@ -612,7 +640,14 @@ namespace ConsoleApplication1
                     }
                 }
             }
-            Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.A_info, minItem.B_info, minItem.C_info, minItem.D_info);
+            if (minItem != null){
+                Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.A_info, minItem.B_info, minItem.C_info, minItem.D_info);
+            }
+            else{
+                minItem = ITEMLIST.ElementAt(0);
+                Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.A_info, minItem.B_info, minItem.C_info, minItem.D_info);
+            }
+            
 
             if (minItem.C_info == 0)
             {
@@ -661,23 +696,28 @@ namespace ConsoleApplication1
 
             else
                 Console.WriteLine("NO FILE!");
-
-            //excelde generate edip txt ye aktarıp okutmak yerine direk random classtan generate etmek istenirse:
-            //rand = new Random();
-
-            //for (int i = 0; i < size_of_picklist; i++)
-            //{
-            //    Item j = new Item();
-            //    j.index = i;
-            //    j.A_info = rand.Next(1, no_of_horizontal_aisles); //inclusive lower bound & exclusive upper bound
-            //    j.B_info = rand.Next(1, no_of_vertical_aisles);
-            //    j.C_info = rand.Next(0, 2); //(0,1): 1 is exclusive
-            //    j.D_info = rand.Next(1, S + 1);
-            //    ITEMLIST.Add(j);
-            //}
-                       
-
         }// end of Reading
+
+        public static void Generating()
+        {
+            ITEMLIST = new List<Item>();
+
+            // excelde generate edip txt ye aktarıp okutmak yerine direk random classtan generate etmek istenirse:
+            rand = new Random();
+
+            for (int i = 0; i < size_of_picklist; i++)
+            {
+                Item j = new Item();
+                j.index = i;
+                j.A_info = rand.Next(1, no_of_horizontal_aisles); //inclusive lower bound & exclusive upper bound
+                j.B_info = rand.Next(1, no_of_vertical_aisles);
+                j.C_info = rand.Next(0, 2); //(0,1): 1 is exclusive
+                j.D_info = rand.Next(1, S + 1);
+                ITEMLIST.Add(j);
+            }
+
+
+        }// end of Generating
 
 
         //public static int SShapeHeuristic() //http://www.roodbergen.com/whopt/
@@ -877,7 +917,7 @@ namespace ConsoleApplication1
             Const3();
         }//end of Constraints()
 
-        public static int Distance_Function(int i, int j, int iprime, int jprime) //???
+        public static double Distance_Function(int i, int j, int iprime, int jprime) //???
         {
             if ((iprime == i + 1 && jprime == j) || (iprime == i - 1 && jprime == j))
                 DISTANCE = L;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TBLST;
 using TBSRCH;
+using ConsoleApplication1;
 
 namespace TBLST
 {
@@ -18,8 +19,8 @@ namespace TBLST
 
         public void tabuMove(int city1, int city2)
         { //tabus the swap operation
-            tabuList[city1, city2] += 5; //Why 5 but not 10? 5+5=10??? (1,2)=5 ve (2,1)=5 ve toplamda mı 10?
-            tabuList[city2, city1] += 5; //Why 5?
+            tabuList[city1, city2] += ConsoleApplication1.Program.tabuLength; //Why 5 but not 10? 5+5=10??? (1,2)=5 ve (2,1)=5 ve toplamda mı 10?
+            tabuList[city2, city1] += ConsoleApplication1.Program.tabuLength; //Why 5?
         }//end of tabuMove
 
         public void decrementTabu()
