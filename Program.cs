@@ -14,6 +14,7 @@ using ITEMDEFINITION;
 namespace ConsoleApplication1
 {
     struct PickerPosition
+        //bven  comment
     {
         public int aPos;
         public int bPos;
