@@ -23,7 +23,8 @@ namespace ConsoleApplication1
     {
         public static int tabuLength = 5;
 
-        enum Methods { TabuSearch, SShape };
+        enum Methods { TabuSearch, SShape, LargestGap };
+        enum AislePart { All, Rear, Front };
         static PickerPosition pickerPosition;
         static double totalDistance = 0;
         
@@ -86,7 +87,7 @@ namespace ConsoleApplication1
 
             size_of_picklist = 0; // 22; ITEM'LARI RANDOM ILE GENERATE EDERKEN EN BAŞTA SAYI VERİLMELİ!
 
-            Reading("C:\\masterTez/sshape3.txt"); //GenerateItems(); name of the function can be changed if not read
+            Reading("C:\\masterTez/sshape.txt"); //GenerateItems(); name of the function can be changed if not read
 
             //Generating();
             
@@ -95,17 +96,13 @@ namespace ConsoleApplication1
 
             populateHelperArrays();
 
-            createDistanceMatrix();
+            //createDistanceMatrix();
 
-            solve((int)Methods.TabuSearch);
+            //solve((int)Methods.TabuSearch);
             solve((int)Methods.SShape);
-            
-            //CANSANER COMMENT OUT
-
-            //ITEMLIST.Clear();
+            //solve((int)Methods.LargestGap);
 
             Console.ReadLine();
-            //CANSANER COMMENT OUT END
         }//end of Main
 
         public static int getMinOfArray(int[] arr, int max)
@@ -230,6 +227,9 @@ namespace ConsoleApplication1
                 case (int)Methods.SShape:
                     solveUsingSShapeHeuristic();
                     break;
+                case (int)Methods.LargestGap:
+                    solveUsingLargestGap();
+                    break;
                 default:
                     solveUsingTabuSearch();
                     break;
@@ -314,14 +314,14 @@ namespace ConsoleApplication1
             TabuSearch.printSolution(bestSol);
         }
 
-        public static void solveUsingSShapeHeuristic() {
+        public static void solveUsingLargestGap() {
             //Setting Picker to starting Point
             int depotAPos = MAX_A + 1;
             int depotBPos = 1;
             pickerPosition.aPos = depotAPos;
             pickerPosition.bPos = depotBPos;
-            int leftPickAisleB = findLeftPickAisle();
             int farthestBlockA = determineFarthestBlock();
+            int leftPickAisleB = findLeftPickAisle(0);
             Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisleB);
             Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlockA);
             printLocation();
@@ -335,7 +335,102 @@ namespace ConsoleApplication1
             bool isItOnlyOne = (pickAisles.Count == 1);
             if (isItOnlyOne)
             {
-                collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true);
+                collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true, (int)AislePart.All);
+            }
+            else
+            {
+                goVertical(farthestBlockA);
+            }
+            int farMostBlock = farthestBlockA;
+            printLocation();
+            while (farMostBlock < depotAPos)
+            {
+                pickAisles = getPickAislesOfBlock(farMostBlock);
+                if (pickAisles.Count() > 0)
+                {
+                    int leftMostSubAisleB = pickAisles.ElementAt(0);
+                    int lastSubAisleB = pickAisles.ElementAt(pickAisles.Count() - 1);
+                    List<int> rearPickAisles = filterPickAislesOfBlock(farMostBlock, pickAisles, (int)AislePart.Rear);
+                    List<int> frontPickAisles = filterPickAislesOfBlock(farMostBlock, pickAisles, (int)AislePart.Front);
+
+                    totalDistance = totalDistance + (Math.Abs(leftMostSubAisleB - pickerPosition.bPos) * W);
+                    Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(leftMostSubAisleB - pickerPosition.bPos)));
+                    Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+                    pickerPosition.bPos = leftMostSubAisleB;
+                    printLocation();
+                    if (frontPickAisles.Count() > 1)
+                    {
+                        frontPickAisles.Reverse();
+                    }
+
+                    for (int i = 0; i < rearPickAisles.Count(); i++)
+                    {
+                        if (rearPickAisles.ElementAt(i) != lastSubAisleB)
+                        {
+                            printLocation();
+                            totalDistance = totalDistance + (Math.Abs(rearPickAisles.ElementAt(i) - pickerPosition.bPos) * W);
+                            Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(rearPickAisles.ElementAt(i) - pickerPosition.bPos)));
+                            Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+                            pickerPosition.bPos = rearPickAisles.ElementAt(i);
+                            collectAisle(farMostBlock, pickerPosition.bPos, false, true, (int)AislePart.Rear);
+                            printLocation();
+                        }
+                    }
+                    totalDistance = totalDistance + (Math.Abs(lastSubAisleB - pickerPosition.bPos) * W);
+                    Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(lastSubAisleB - pickerPosition.bPos)));
+                    Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+                    pickerPosition.bPos = lastSubAisleB;
+                    printLocation();
+
+                    goVertical(farMostBlock + 1);
+                    for (int i = 0; i < frontPickAisles.Count(); i++)
+                    {
+                        if (frontPickAisles.ElementAt(i) != lastSubAisleB)
+                        {
+                            printLocation();
+                            totalDistance = totalDistance + (Math.Abs(frontPickAisles.ElementAt(i) - pickerPosition.bPos) * W);
+                            Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(frontPickAisles.ElementAt(i) - pickerPosition.bPos)));
+                            Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+                            pickerPosition.bPos = frontPickAisles.ElementAt(i);
+                            collectAisle(farMostBlock, pickerPosition.bPos, true, true, (int)AislePart.Front);
+                            printLocation();
+                        }
+                    }
+                }
+                printLocation();
+                farMostBlock++;
+            }
+            totalDistance = totalDistance + (Math.Abs(depotBPos - pickerPosition.bPos) * W);
+            Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(depotBPos - pickerPosition.bPos));
+            Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+            pickerPosition.aPos = depotAPos;
+            pickerPosition.bPos = depotBPos;
+            printLocation();
+            Console.WriteLine("PICKER IS FINISHED ITS JOB");
+        }
+
+        public static void solveUsingSShapeHeuristic() {
+            //Setting Picker to starting Point
+            int depotAPos = MAX_A + 1;
+            int depotBPos = 1;
+            pickerPosition.aPos = depotAPos;
+            pickerPosition.bPos = depotBPos;
+            int farthestBlockA = determineFarthestBlock();
+            int leftPickAisleB = findLeftPickAisle(farthestBlockA);
+            Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisleB);
+            Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlockA);
+            printLocation();
+            totalDistance = totalDistance + (Math.Abs(leftPickAisleB - pickerPosition.bPos) * W);
+            Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(leftPickAisleB - pickerPosition.bPos));
+            Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
+            goToLocation(pickerPosition.aPos, leftPickAisleB);
+            goVertical(farthestBlockA + 1);
+            printLocation();
+            List<int> pickAisles = getPickAislesOfBlock(farthestBlockA);
+            bool isItOnlyOne = (pickAisles.Count == 1);
+            if (isItOnlyOne)
+            {
+                collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true, (int)AislePart.All);
             }
             else
             {
@@ -357,7 +452,7 @@ namespace ConsoleApplication1
                     if (Math.Abs(pickerPosition.bPos - leftMostSubAisleB) < Math.Abs(pickerPosition.bPos - rightMostSubAisleB))
                     {
                         Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
-                        totalDistance = totalDistance + (Math.Abs(leftMostSubAisleB - pickerPosition.bPos));
+                        totalDistance = totalDistance + (Math.Abs(leftMostSubAisleB - pickerPosition.bPos) * W);
                         Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(leftMostSubAisleB - pickerPosition.bPos)));
                         Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
                         pickerPosition.bPos = leftMostSubAisleB;
@@ -366,7 +461,7 @@ namespace ConsoleApplication1
                     else
                     {
                         Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
-                        totalDistance = totalDistance + (Math.Abs(rightMostSubAisleB - pickerPosition.bPos));
+                        totalDistance = totalDistance + (Math.Abs(rightMostSubAisleB - pickerPosition.bPos) * W);
                         Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(rightMostSubAisleB - pickerPosition.bPos)));
                         Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
                         pickerPosition.bPos = rightMostSubAisleB;
@@ -425,13 +520,13 @@ namespace ConsoleApplication1
                     }
                 }
                 else { 
-                
+                  //Step 4.b should be written
                 }
                 
                 printLocation();
                 if (goUp)
                 {
-                    collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true);
+                    collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true, (int)AislePart.All);
                 }
                 else
                 {
@@ -451,7 +546,7 @@ namespace ConsoleApplication1
 
         public static void printLocation()
         {
-            Console.WriteLine("Picker came to location: {0}, {1}", pickerPosition.aPos, pickerPosition.bPos);
+            Console.WriteLine("Picker is on location: {0}, {1}", pickerPosition.aPos, pickerPosition.bPos);
         }
 
         public static void printDistance()
@@ -474,7 +569,7 @@ namespace ConsoleApplication1
                 for (int a = start; a < stop; a = a + 1)
                 {
                     Console.WriteLine("GOING FROM {0},{1} TO {2},{3}", a, pickerPosition.bPos, a + 1, pickerPosition.bPos);
-                    collectAisle(a, pickerPosition.bPos, false, false);
+                    collectAisle(a, pickerPosition.bPos, false, false, (int)AislePart.All);
                     pickerPosition.aPos = a + 1;
                     totalDistance = totalDistance + L;
                     Console.WriteLine("TRAVELLED DISTANCE 1L");
@@ -487,7 +582,7 @@ namespace ConsoleApplication1
                 for (int a = start; a > stop; a = a - 1)
                 {
                     Console.WriteLine("GOING FROM {0},{1} TO {2},{3}", a, pickerPosition.bPos, a - 1, pickerPosition.bPos);
-                    collectAisle(a - 1, pickerPosition.bPos, true, false);
+                    collectAisle(a - 1, pickerPosition.bPos, true, false, (int)AislePart.All);
                     pickerPosition.aPos = a - 1;
                     totalDistance = totalDistance + L;
                     Console.WriteLine("TRAVELLED DISTANCE 1L");
@@ -543,9 +638,13 @@ namespace ConsoleApplication1
             return sortedItems;
         }
 
-        public static void collectAisle(int aPos, int bPos, bool up, bool countDistance)
+        public static void collectAisle(int aPos, int bPos, bool up, bool countDistance, int aislePart)
         {
-            List<Item> aisleItems = getAisleItems(aPos, bPos);
+            List<Item> aisleItems = getNonPickedAisleItems(aPos, bPos, aislePart);
+            if (aisleItems.Count() == 0)
+            {
+                return;
+            }
             List<Item> sortedAisleItems = sortAisleItems(aisleItems);
             if (up)
             {
@@ -577,39 +676,102 @@ namespace ConsoleApplication1
             }
         }
 
-        public static int countAisle(int aPos, int bPos)
+        public static void findMaximumGap(int aPos, int bPos)
         {
-            int count = 0;
+            List<Item> aisleItems = getAisleItems(aPos, bPos);
+            List<Item> sortedAisleItems = sortAisleItems(aisleItems);
+            
+            
+        }
+
+        public static List<Item> getNonPickedAisleItems(int aPos, int bPos, int aislePart) {
+            List<Item> aisleItems = new List<Item>();
+            int rearMost = (int)Math.Ceiling(System.Convert.ToDouble(MAX_D) / 2);
+
             foreach (Item i in ITEMLIST)
             {
-                if (i.A_info == aPos)
+                if (i.picked_during_sshape == false && i.A_info == aPos)
                 {
                     if ((i.B_info == bPos && i.C_info == 0) || (i.B_info == bPos - 1 && i.C_info == 1))
                     {
-                        if (i.picked_during_sshape == false) {
-                            count++;
+                        switch (aislePart)
+                        {
+                            case (int)AislePart.All:
+                                aisleItems.Add(i);
+                                break;
+                            case (int)AislePart.Rear:
+                                if (i.D_info <= rearMost)
+                                {
+                                    aisleItems.Add(i);
+                                }
+                                break;
+                            case (int)AislePart.Front:
+                                if (i.D_info > rearMost)
+                                {
+                                    aisleItems.Add(i);
+                                }
+                                break;
+                            default:
+                                aisleItems.Add(i);
+                                break;
                         }
                     }
                 }
             }
-            return count;
+            return aisleItems;
         }
+
+        public static int countAisle(int aPos, int bPos, int aislePart)
+        {
+            if (getNonPickedAisleItems(aPos, bPos, aislePart) == null){
+                return 0;
+            }
+            return getNonPickedAisleItems(aPos, bPos, aislePart).Count();
+        }
+
+        public static List<int> filterPickAislesOfBlock(int aPos, List<int> pickAisles, int aislePart) {
+            List<int> rearPickAisles = new List<int>();
+            List<int> frontPickAisles = new List<int>();
+
+            for (int i = 0; i < pickAisles.Count(); i++)
+            {
+                if (countAisle(aPos, pickAisles.ElementAt(i), (int)AislePart.Rear) > 0)
+                {
+                    rearPickAisles.Add(pickAisles.ElementAt(i));
+                }
+                if (countAisle(aPos, pickAisles.ElementAt(i), (int)AislePart.Front) > 0)
+                {
+                    frontPickAisles.Add(pickAisles.ElementAt(i));
+                }
+            }
+
+            if (aislePart == (int)AislePart.Rear)
+            {
+                return rearPickAisles;
+            }
+            if (aislePart == (int)AislePart.Front)
+            {
+                return frontPickAisles;
+            }
+            return pickAisles;
+        }
+
+
 
         public static List<int> getPickAislesOfBlock(int aPos)
         {
             List<int> result = new List<int>();
             for (int i = 2; i < MAX_B + 1; i++)
             {
-                if (countAisle(aPos, i) > 0) {
+                if (countAisle(aPos, i, (int)AislePart.All) > 0) {
                     result.Add(i);
                 }
             }
             return result;
         }
 
-        public static int findLeftPickAisle()
+        public static int findLeftPickAisle(int limit)
         {
-            int farthestBlock = determineFarthestBlock();
             int minVal = MAX_B;
             Item minItem = null;
 
@@ -618,7 +780,7 @@ namespace ConsoleApplication1
             }
             foreach (Item i in ITEMLIST)
             {
-                if (i.B_info <= minVal && i.A_info > farthestBlock)
+                if (i.B_info <= minVal && i.A_info > limit)
                 {
                     minVal = i.B_info;
                     if (minItem != null)
