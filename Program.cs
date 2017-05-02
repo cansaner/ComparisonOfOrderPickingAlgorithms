@@ -21,7 +21,16 @@ namespace ConsoleApplication1
 
     public class Program
     {
+        //Parameters
         public static int tabuLength = 5;
+
+        static int S = 10 ; //no of shelves
+        static double W = 2.6 ; //width of corridor: W=1.2 & W'=1.2+0.7+0.7=2.6 
+        static double L = 30.4 ; //length of corridor: L=27.7 & L'=27.7+1.35+1.35=30.4
+        static double K = 2.77 ; //length of one shelf
+
+        static int no_of_horizontal_aisles = 4;
+        static int no_of_vertical_aisles = 8;
 
         enum Methods { TabuSearch, SShape, LargestGap };
         enum AislePart { All, Rear, Front };
@@ -42,19 +51,11 @@ namespace ConsoleApplication1
         static int[] arrayC; // an array to hold coordinate C of all items
         static int[] arrayD; // an array to hold coordinate D of all items
 
-        static int S = 7; //no of shelves
-        static double W = 5; //width of corridor
-        static double L = 14; //length of corridor
-        static double K = L / S; //length of one shelf
-
         static double DISTANCE; 
-        
-        static int no_of_horizontal_aisles = 4;
-        static int no_of_vertical_aisles = 8 ;
-
+   
         static int MAX_A = no_of_horizontal_aisles-1;
         static int MAX_B = no_of_vertical_aisles-1;
-        static int MAX_C = 1;
+        //static int MAX_C = 1;
         static int MAX_D = S;
 
         static int IND1;
@@ -98,8 +99,8 @@ namespace ConsoleApplication1
 
             //createDistanceMatrix();
 
-            //solve((int)Methods.TabuSearch);
-            solve((int)Methods.SShape);
+            solve((int)Methods.TabuSearch);
+            //solve((int)Methods.SShape);
             //solve((int)Methods.LargestGap);
 
             Console.ReadLine();
@@ -252,11 +253,14 @@ namespace ConsoleApplication1
 
         public static void solveUsingTabuSearch() {
             //if initial solution is to be generated through B->C->A->D:
-            int[] currSolution = new int[SORTED_ITEMS.Count() + 1];
-            currSolution[0] = 0;
-            currSolution[SORTED_ITEMS.Count()] = 0;
-            for (int i = 1; i < SORTED_ITEMS.Count(); i++)
-            {
+            //int[] currSolution = new int[SORTED_ITEMS.Count() + 1];
+            //currSolution[0] = 0;
+            //currSolution[SORTED_ITEMS.Count()] = 0;
+            int[] currSolution = new int[SORTED_ITEMS.Count()];
+
+            //for (int i = 1; i < SORTED_ITEMS.Count(); i++)
+            for (int i = 0; i < SORTED_ITEMS.Count(); i++)
+                {
                 currSolution[i] = SORTED_ITEMS[i].index;
             }
 
@@ -309,6 +313,7 @@ namespace ConsoleApplication1
                 }
             }
 
+            //burda bestCost'a P/D pointten ilk item (bestSol'un ilk elemanı)'a gelme mesafesi + son item  (bestSol'un son elemanı)'dan P/D pointe gitme mesafesi eklenmeli!!!
             Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
 
             TabuSearch.printSolution(bestSol);
