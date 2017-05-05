@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TBLST;
-using TSPENVRNMNT;
+//using TBLST;
+//using TSPENVRNMNT;
 
-namespace TBSRCH
+namespace ComparisonOfOrderPickingAlgorithms
 {
     public class TabuSearch
     {

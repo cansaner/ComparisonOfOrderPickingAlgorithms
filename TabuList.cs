@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TBLST;
-using TBSRCH;
-using ConsoleApplication1;
+//using TBLST;
+//using TBSRCH;
+//using ConsoleApplication1;
 
-namespace TBLST
+namespace ComparisonOfOrderPickingAlgorithms
 {
     public class TabuList
     {

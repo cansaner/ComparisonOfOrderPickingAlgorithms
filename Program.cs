@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.IO;
 //using namespaces:
-using TBLST;
-using TBSRCH;
-using TSPENVRNMNT;
+//using TBLST;
+//using TBSRCH;
+//using TSPENVRNMNT;
 using ILOG.Concert;
 using ILOG.CPLEX;
-using ITEMDEFINITION;
+//using ITEMDEFINITION;
 
-namespace ConsoleApplication1
+namespace ComparisonOfOrderPickingAlgorithms
 {
     struct PickerPosition
     {
@@ -24,13 +24,15 @@ namespace ConsoleApplication1
         //Parameters
         public static int tabuLength = 5;
 
-        static int S = 10 ; //no of shelves
-        static double W = 2.6 ; //width of corridor: W=1.2 & W'=1.2+0.7+0.7=2.6 
-        static double L = 30.4 ; //length of corridor: L=27.7 & L'=27.7+1.35+1.35=30.4
-        static double K = 2.77 ; //length of one shelf
+        
 
-        static int no_of_horizontal_aisles = 4;
-        static int no_of_vertical_aisles = 8;
+        //static int S = 10 ; //no of shelves
+        //static double W = 2.6 ; //width of corridor: W=1.2 & W'=1.2+0.7+0.7=2.6 
+        //static double L = 30.4 ; //length of corridor: L=27.7 & L'=27.7+1.35+1.35=30.4
+        //static double K = 2.77 ; //length of one shelf
+
+        //static int no_of_horizontal_aisles = 4;
+        //static int no_of_vertical_aisles = 8;
 
         enum Methods { TabuSearch, SShape, LargestGap };
         enum AislePart { All, Rear, Front };
@@ -84,6 +86,11 @@ namespace ConsoleApplication1
         
         public static void Main(string[] args)
         {
+            //setting the logistics challenge
+            Problem room1 = new Problem(10, 2.6, 30.4, 2.77, 3, 8);
+            Coordinate depot = new Coordinate(1, 4);
+            Picker picker = new Picker(depot);
+
             //ITEMLIST.Clear(); 
 
             size_of_picklist = 0; // 22; ITEM'LARI RANDOM ILE GENERATE EDERKEN EN BAŞTA SAYI VERİLMELİ!

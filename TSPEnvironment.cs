@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TBLST;
-using TBSRCH;
+//using TBLST;
+//using TBSRCH;
 
 
-namespace TSPENVRNMNT
+namespace ComparisonOfOrderPickingAlgorithms
 {
     public class TSPEnvironment
     { //Tabu Search Environment
