@@ -1,6 +1,0 @@
-C:\Users\pc\Desktop\Tabu-CSharp\bin\x64\Release\Tabu-Java.exe
-C:\Users\pc\Desktop\Tabu-CSharp\bin\x64\Release\ILOG.Concert.dll
-C:\Users\pc\Desktop\Tabu-CSharp\bin\x64\Release\ILOG.CPLEX.dll
-C:\Users\pc\Desktop\Tabu-CSharp\bin\x64\Release\ILOG.Concert.xml
-C:\Users\pc\Desktop\Tabu-CSharp\bin\x64\Release\ILOG.CPLEX.xml
-C:\Users\pc\Desktop\Tabu-CSharp\obj\x64\Release\Tabu-Java.exe

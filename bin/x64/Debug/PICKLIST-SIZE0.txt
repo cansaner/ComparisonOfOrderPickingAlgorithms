@@ -1,3 +1,0 @@
-
-	ITEMNO	A	B	C	D
-

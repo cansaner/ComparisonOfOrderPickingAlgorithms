@@ -19,7 +19,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return index;
             }
-            protected set
+            set
             {
                 index = value;
             }
@@ -31,7 +31,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return location.Y;
             }
-            protected set
+            set
             {
                 location.Y = value;
             }
@@ -43,7 +43,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return location.X;
             }
-            protected set
+            set
             {
                 location.X = value;
             }
@@ -55,7 +55,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return Convert.ToInt32(side);
             }
-            protected set
+            set
             {
                 side = Convert.ToBoolean(value);
             }
@@ -67,7 +67,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return order;
             }
-            protected set
+            set
             {
                 order = value;
             }
@@ -79,7 +79,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return picked;
             }
-            protected set
+            set
             {
                 picked = value;
             }
@@ -97,19 +97,11 @@ namespace ComparisonOfOrderPickingAlgorithms
         public Item(int index, int aInfo, int bInfo, int cInfo, int dInfo)
         {
             this.index = index;
-            this.location = new Coordinate(aInfo, bInfo);
+            this.location = new Coordinate(bInfo, aInfo);
             this.CInfo = cInfo;
             this.order = dInfo;
             this.picked = false;
         }
-
-        //public int index;
-        //public int a_info;
-        //public int b_info;
-        //public int c_info;
-        //public int d_info;
-
-        //public bool picked_during_sshape = false;
 
         int IComparable<Item>.CompareTo(Item other) //compares coordinatesof items DESCENDING
         {
