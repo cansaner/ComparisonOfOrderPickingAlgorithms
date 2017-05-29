@@ -58,10 +58,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ILOG.Concert">
-      <HintPath>..\..\..\..\ILOG\CPLEX_Studio125\cplex\bin\x64_win64\ILOG.Concert.dll</HintPath>
+      <HintPath>lib\ILOG.Concert.dll</HintPath>
     </Reference>
     <Reference Include="ILOG.CPLEX">
-      <HintPath>..\..\..\..\ILOG\CPLEX_Studio125\cplex\bin\x64_win64\ILOG.CPLEX.dll</HintPath>
+      <HintPath>lib\ILOG.CPLEX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
