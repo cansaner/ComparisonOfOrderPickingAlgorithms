@@ -221,19 +221,19 @@ namespace ComparisonOfOrderPickingAlgorithms
             //solve((int)Methods.LargestGap);
 
             //LIST GENERATION--BUNU BIR KERE YAP YAPARKEN PARAMETER TUNING KISMINI KAPAT SONRA LIST GENERATION I KAPAT
-            parameters.SizeOfLists = new int[] { 25, 50, 100 };
+            //parameters.SizeOfLists = new int[] { 25, 50, 100 };
             //parameters.SizeOfLists = new int[] { 5 };
-            parameters.NumberOfLists = 50;
-            generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
+            //parameters.NumberOfLists = 5;
+            //generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
 
             //PARAMETER TUNING--BUNU LIST GENERATION I YAPTIKTAN SONRA AC
             //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");
-            //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize005.txt");
+            parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize005.txt");
             //parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-            //parameters.TabuLengthList = new int[] { 5, 6 };
+            parameters.TabuLengthList = new int[] { 5, 6 };
             //parameters.NumberOfIterationsList = new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
-            //parameters.NumberOfIterationsList = new int[] { 10, 20 };
-            //tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
+            parameters.NumberOfIterationsList = new int[] { 10, 20 };
+            tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
 
             Console.ReadLine();
         }//end of Main
