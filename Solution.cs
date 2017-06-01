@@ -16,15 +16,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         private IObjective obj;
         private ILinearNumExpr objective;
 
-        //private int A;  //horizontal block of the initial item   
-        //private int B; //vertical block of the initial item 
-        //private int C; //side on the block for the initial item (0 for Left; 1 for Right)
-        //private int D; //shelf no of the initial item counted from the upper corridor 
-        //private int APRIME; //horizontal block of the final item 
-        //private int BPRIME; //vertical block of the final item  
-        //private int CPRIME; //side on the block for the final item 
-        //private int DPRIME; //shelf no of the final item counted from the upper corridor 
-
+        //Helpers... we are using helper arrays for simplicity
         private int[] arrayA; // an array to hold coordinate A of all items
         private int[] arrayB; // an array to hold coordinate B of all items
         private int[] arrayC; // an array to hold coordinate C of all items
@@ -123,6 +115,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public void solve(Methods method)
         {
+            populateHelperArrays();
             DateTime stTime = DateTime.Now;
             switch (method)
             {
@@ -133,7 +126,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingSShapeHeuristic();
                     break;
                 case Methods.LargestGap:
-                    //solveUsingLargestGap();
+                    solveUsingLargestGap();
                     break;
                 default:
                     solveUsingTabuSearch(this.parameters.NumberOfIterations, this.parameters.TabuLength, new Item(this.problem.ItemList.Count, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
@@ -157,13 +150,13 @@ namespace ComparisonOfOrderPickingAlgorithms
             //}
         }
 
-        //we are using helper arrays for simplicity
         private void populateHelperArrays()
         {
-            arrayA = new int[this.problem.ItemList.Count()];
-            arrayB = new int[this.problem.ItemList.Count()];
-            arrayC = new int[this.problem.ItemList.Count()];
-            arrayD = new int[this.problem.ItemList.Count()];
+            int itemCount = this.problem.ItemList.Count;
+            arrayA = new int[itemCount];
+            arrayB = new int[itemCount];
+            arrayC = new int[itemCount];
+            arrayD = new int[itemCount];
 
             foreach (Item i in this.problem.ItemList)
             {
@@ -173,22 +166,6 @@ namespace ComparisonOfOrderPickingAlgorithms
                 arrayD[i.Index-1] = i.DInfo;
             }
         }
-
-        //public static void populateHelperArrays() {
-        //    arrayA = new int[ITEMLIST.Count()];
-        //    arrayB = new int[ITEMLIST.Count()];
-        //    arrayC = new int[ITEMLIST.Count()];
-        //    arrayD = new int[ITEMLIST.Count()];
-
-        //    foreach (Item jjj in ITEMLIST)
-        //    {
-        //        arrayA[jjj.index] = jjj.A_info;
-        //        arrayB[jjj.index] = jjj.B_info;
-        //        arrayC[jjj.index] = jjj.C_info;
-        //        arrayD[jjj.index] = jjj.D_info;
-        //        //Console.WriteLine("FIRST ELEMENTS: {0}, {1}, {2}, {3}", arrayA[jjj.index], arrayB[jjj.index], arrayC[jjj.index], arrayD[jjj.index]);
-        //    }
-        //}
 
         private void prepareDistanceMatrix(Item picker)
         {
@@ -350,48 +327,6 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        //public static void Decision_Variables()
-        //{
-        //    X = new INumVar[101,101,101,101]; //??? for loop'larda 1!den başlattığım için 100+1; bir elemanın alabileceği max değer
-
-        //    for (int i = 1; i <= no_of_horizontal_aisles; i++)
-        //    {
-        //        for (int j = 1; j <= no_of_vertical_aisles ; j++)
-        //        {
-        //            for (int iprime = 1; iprime <= no_of_horizontal_aisles; iprime++)
-        //            {
-        //                for (int jprime = 1; jprime <= no_of_vertical_aisles; jprime++)
-        //                {
-        //                    if (
-        //                    (iprime < no_of_horizontal_aisles + 1 && jprime < no_of_vertical_aisles + 1 && i < no_of_horizontal_aisles + 1 && j < no_of_vertical_aisles + 1)
-        //                    &&
-        //                    ((i == iprime - 1 || i == iprime || i == iprime + 1) && (((i == iprime && jprime == j - 1) || (i == iprime && jprime == j + 1)) || (i != iprime && jprime == j)))
-        //                       )
-        //                    X[i, j, iprime, jprime] = cplex.NumVar(0, 1, NumVarType.Bool, "X(" + (i).ToString() + "," + (j).ToString() + "," + (iprime).ToString() + "," + (jprime).ToString() + ")");
-        //                }
-        //            }
-        //        }
-        //    }
-
-
-        //    for (int iprime = 1; iprime <= no_of_horizontal_aisles; iprime++)
-        //    {
-        //        for (int jprime = 1; jprime <= no_of_vertical_aisles; jprime++)
-        //        {
-        //            //if ((iprime == A && jprime == B + C) || (iprime == A + 1 && jprime == B + C)) // CAUSES TO A PROBLEM IN CONST1 REGARDING INDICATOR FUNCTIONS
-        //                  X[0, 0, iprime, jprime] = cplex.NumVar(0, 1, NumVarType.Bool, "X(" + 0 + "," + 0 + "," + (iprime).ToString() + "," + (jprime).ToString() + ")");
-        //        }
-        //    }
-
-        //    for (int i = 1; i <= no_of_horizontal_aisles; i++)
-        //    {
-        //        for (int j = 1; j <= no_of_vertical_aisles; j++)
-        //        {
-        //            //if ((i == APRIME && j == BPRIME + CPRIME) || (i == APRIME + 1 && j == BPRIME + CPRIME))  // CAUSES TO A PROBLEM IN CONST1 REGARDING INDICATOR FUNCTIONS
-        //                X[i, j, 100, 100] = cplex.NumVar(0, 1, NumVarType.Bool, "X(" + (i).ToString() + "," + (j).ToString() + "," + 100 + "," + 100 + ")");
-        //        }
-        //    }
-
         public void Constraints(int A, int B, int C, int APRIME, int BPRIME, int CPRIME)
         {
             Const1(APRIME, BPRIME, CPRIME, A, B, C);
@@ -521,19 +456,6 @@ namespace ComparisonOfOrderPickingAlgorithms
             c3[0] = cplex.AddEq(exprc3, 1, "constraint3(" + 100 + "," + 100 + ")");
         }
 
-        //public static void Const3() //Getting into sink node
-        //{
-        //    IRange[] c3 = new IRange[1];
-
-        //    ILinearNumExpr exprc3 = cplex.LinearNumExpr();
-
-        //    exprc3.AddTerm(1, X[APRIME+1, BPRIME+CPRIME, 100, 100]);
-        //    exprc3.AddTerm(1, X[APRIME, BPRIME+CPRIME, 100, 100]);
-
-        //    c3[0] = cplex.AddEq(exprc3, 1, "constraint3(" + 100 + "," + 100 +  ")");
-
-        //}//end of Const3()
-
         public double Distance_Function(int i, int j, int iprime, int jprime) //???
         {
             double distance;
@@ -584,6 +506,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             obj = cplex.AddMinimize(objective, "shortestdistance");
         }
 
+        //This functions exists only for testing and printing purpose.
         //public void Assignments()
         //{
         //    //Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, A, B+C, (int)cplex.GetValue(X[0, 0, A, B+C]));
@@ -726,8 +649,6 @@ namespace ComparisonOfOrderPickingAlgorithms
                 currentSolution[i] = sortedItems[i].Index;
             }
 
-            populateHelperArrays();
-
             prepareDistanceMatrix(picker);
 
             TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
@@ -751,7 +672,6 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
             }
 
-            //TODO burda bestCost'a P/D pointten ilk item (bestSol'un ilk elemanı)'a gelme mesafesi + son item  (bestSol'un son elemanı)'dan P/D pointe gitme mesafesi eklenmeli!!!
             //Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
             this.totalTravelledDistance = bestCost;
 
@@ -775,7 +695,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public int determineFarthestBlock()
         {
-            return getMinOfArray(arrayA, this.problem.NumberOfCrossAisles-1);
+            return getMinOfArray(arrayA, this.picker.AInfo-1);
         }
 
         public int findLeftPickAisle(int limit)
@@ -833,10 +753,8 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-
         public void solveUsingSShapeHeuristic()
         {
-            /* CANSANER COMMENT OUT
             int farthestBlockA = determineFarthestBlock();
             int leftPickAisleB = findLeftPickAisle(farthestBlockA);
             Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisleB);
@@ -844,121 +762,79 @@ namespace ComparisonOfOrderPickingAlgorithms
             picker.printLocation();
             picker.goToLocation(picker.AInfo, leftPickAisleB, new LinkDistance(Math.Abs(leftPickAisleB - picker.BInfo), Problem.Codes.W), Math.Abs(leftPickAisleB - picker.BInfo) * this.problem.W);
             picker.goVertical(farthestBlockA + 1, this.problem);
-            CANSANER COMMENT OUT*/
-
-            //static int MAX_A = no_of_horizontal_aisles-1;
-            //static int MAX_B = no_of_vertical_aisles-1;
-            ////static int MAX_C = 1;
-            //static int MAX_D = S;
-
-            ////Setting Picker to starting Point
-            //int depotAPos = MAX_A + 1;
-            //int depotBPos = 1;
-            //pickerPosition.aPos = depotAPos;
-            //pickerPosition.bPos = depotBPos;
-            //int farthestBlockA = determineFarthestBlock();
-            //int leftPickAisleB = findLeftPickAisle(farthestBlockA);
-            /* CANSANER COMMENT OUT
-            Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisleB);
-            Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlockA);
-            printLocation();
-            totalDistance = totalDistance + (Math.Abs(leftPickAisleB - pickerPosition.bPos) * W);
-            Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(leftPickAisleB - pickerPosition.bPos));
-            Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-            goToLocation(pickerPosition.aPos, leftPickAisleB);
-            goVertical(farthestBlockA + 1);
-            printLocation();
-            List<int> pickAisles = getPickAislesOfBlock(farthestBlockA);
+            List<int> pickAisles = this.problem.getPickAislesOfBlock(farthestBlockA);
             bool isItOnlyOne = (pickAisles.Count == 1);
             if (isItOnlyOne)
             {
-                collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true, (int)AislePart.All);
+                picker.collectAisle(picker.AInfo - 1, picker.BInfo, true, true, Problem.AislePart.All, this.problem);
             }
             else
             {
-                goVertical(farthestBlockA);
+                picker.goVertical(farthestBlockA, this.problem);
             }
             int farMostBlock = farthestBlockA;
-            printLocation();
+            //printLocation();
             bool goRight = true;
             bool goUp = false;
-            while (farMostBlock < depotAPos)
+            while (farMostBlock < this.problem.Depot.Y)
             {
-                pickAisles = getPickAislesOfBlock(farMostBlock);
+                pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
                 if (pickAisles.Count() > 0)
                 {
                     int leftMostSubAisleB = pickAisles.ElementAt(0);
                     int rightMostSubAisleB = pickAisles.ElementAt(pickAisles.Count() - 1);
                     //Console.WriteLine("LEFT MOST SUB AISLE: {0}", leftMostSubAisleB);
                     //Console.WriteLine("RIGHT MOST SUB AISLE: {0}", rightMostSubAisleB);
-                    if (Math.Abs(pickerPosition.bPos - leftMostSubAisleB) < Math.Abs(pickerPosition.bPos - rightMostSubAisleB))
+                    if (Math.Abs(picker.BInfo - leftMostSubAisleB) < Math.Abs(picker.BInfo - rightMostSubAisleB))
                     {
                         Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
-                        totalDistance = totalDistance + (Math.Abs(leftMostSubAisleB - pickerPosition.bPos) * W);
-                        Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(leftMostSubAisleB - pickerPosition.bPos)));
-                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                        pickerPosition.bPos = leftMostSubAisleB;
+                        picker.goToLocation(picker.AInfo, leftMostSubAisleB, new LinkDistance(Math.Abs(leftMostSubAisleB - picker.BInfo), Problem.Codes.W), Math.Abs(leftMostSubAisleB - picker.BInfo) * this.problem.W);
                         goRight = true;
                     }
                     else
                     {
                         Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
-                        totalDistance = totalDistance + (Math.Abs(rightMostSubAisleB - pickerPosition.bPos) * W);
-                        Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(rightMostSubAisleB - pickerPosition.bPos)));
-                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                        pickerPosition.bPos = rightMostSubAisleB;
+                        picker.goToLocation(picker.AInfo, rightMostSubAisleB, new LinkDistance(Math.Abs(rightMostSubAisleB - picker.BInfo), Problem.Codes.W), Math.Abs(rightMostSubAisleB - picker.BInfo) * this.problem.W);
                         goRight = false;
                     }
-                    printLocation();
-                    goVertical(farMostBlock + 1);
+                    //printLocation();
+                    picker.goVertical(farMostBlock + 1, this.problem);
                     goUp = true;
-                    printLocation();
+                    //printLocation();
                 }
-                pickAisles = getPickAislesOfBlock(farMostBlock);
+                pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
                 while (pickAisles.Count() > 1)
                 {
                     if (goRight)
                     {
-                        totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos) * W);
-                        Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos)));
-                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                        pickerPosition.bPos = pickAisles.ElementAt(0);
+                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), new LinkDistance(Math.Abs(pickAisles.ElementAt(0) - picker.BInfo), Problem.Codes.W), Math.Abs(pickAisles.ElementAt(0) - picker.BInfo) * this.problem.W);
                     }
                     else
                     {
-                        totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos) * W);
-                        Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos)));
-                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                        pickerPosition.bPos = pickAisles.ElementAt(pickAisles.Count() - 1);
+                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count() - 1), new LinkDistance(Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - picker.BInfo), Problem.Codes.W), Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - picker.BInfo) * this.problem.W);
                     }
-                    printLocation();
+                    //printLocation();
                     if (goUp)
                     {
-                        goVertical(farMostBlock);
+                        picker.goVertical(farMostBlock, this.problem);
                         goUp = false;
                     }
                     else
                     {
-                        goVertical(farMostBlock + 1);
+                        picker.goVertical(farMostBlock + 1, this.problem);
                         goUp = true;
                     }
-                    pickAisles = getPickAislesOfBlock(farMostBlock);
+                    pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
                 }
                 if (pickAisles.Count() > 0)
                 {
                     if (goRight)
                     {
-                        totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos) * W);
-                        Console.WriteLine("TRAVELLED DISTANCE {0}W", (Math.Abs(pickAisles.ElementAt(0) - pickerPosition.bPos)));
-                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                        pickerPosition.bPos = pickAisles.ElementAt(0);
+                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), new LinkDistance(Math.Abs(pickAisles.ElementAt(0) - picker.BInfo), Problem.Codes.W), Math.Abs(pickAisles.ElementAt(0) - picker.BInfo) * this.problem.W);
                     }
                     else
                     {
-                        totalDistance = totalDistance + (Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos) * W);
-                        Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - pickerPosition.bPos));
-                        Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-                        pickerPosition.bPos = pickAisles.ElementAt(pickAisles.Count() - 1);
+                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count() - 1), new LinkDistance(Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - picker.BInfo), Problem.Codes.W), Math.Abs(pickAisles.ElementAt(pickAisles.Count() - 1) - picker.BInfo) * this.problem.W);
                     }
                 }
                 else
@@ -966,27 +842,88 @@ namespace ComparisonOfOrderPickingAlgorithms
                     //Step 4.b should be written
                 }
 
-                printLocation();
+                //printLocation();
                 if (goUp)
                 {
-                    collectAisle(pickerPosition.aPos - 1, pickerPosition.bPos, true, true, (int)AislePart.All);
+                    picker.collectAisle(picker.AInfo - 1, picker.BInfo, true, true, Problem.AislePart.All, this.problem);
                 }
                 else
                 {
-                    goVertical(farMostBlock + 1);
+                    picker.goVertical(farMostBlock + 1, this.problem);
                 }
-                printLocation();
+                //printLocation();
                 farMostBlock++;
             }
-            totalDistance = totalDistance + (Math.Abs(depotBPos - pickerPosition.bPos) * W);
-            Console.WriteLine("TRAVELLED DISTANCE {0}W", Math.Abs(depotBPos - pickerPosition.bPos));
-            Console.WriteLine("TOTAL DISTANCE {0}M", totalDistance);
-            pickerPosition.aPos = depotAPos;
-            pickerPosition.bPos = depotBPos;
-            printLocation();
+            picker.goToLocation(picker.AInfo, this.problem.Depot.X, new LinkDistance(Math.Abs(this.problem.Depot.X - picker.BInfo), Problem.Codes.W), Math.Abs(this.problem.Depot.X - picker.BInfo) * this.problem.W);
             Console.WriteLine("PICKER IS FINISHED ITS JOB");
-            CANSANER COMMENT OUT */
+            picker.printPath();
+            picker.printTravelledDistances();
+            picker.printTravelledTotalDistance();
         }
 
+        public void solveUsingLargestGap()
+        {
+            int farthestBlockA = determineFarthestBlock();
+            int leftPickAisleB = findLeftPickAisle(farthestBlockA);
+            Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisleB);
+            Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlockA);
+            picker.printLocation();
+            picker.goToLocation(picker.AInfo, leftPickAisleB, new LinkDistance(Math.Abs(leftPickAisleB - picker.BInfo), Problem.Codes.W), Math.Abs(leftPickAisleB - picker.BInfo) * this.problem.W);
+            picker.goVertical(farthestBlockA + 1, this.problem);
+            List<int> pickAisles = this.problem.getPickAislesOfBlock(farthestBlockA);
+            bool isItOnlyOne = (pickAisles.Count == 1);
+            if (isItOnlyOne)
+            {
+                picker.collectAisle(picker.AInfo - 1, picker.BInfo, true, true, Problem.AislePart.All, this.problem);
+            }
+            else
+            {
+                picker.goVertical(farthestBlockA, this.problem);
+            }
+            int farMostBlock = farthestBlockA;
+            while (farMostBlock < this.problem.Depot.Y)
+            {
+                pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
+                if (pickAisles.Count() > 0)
+                {
+                    int leftMostSubAisleB = pickAisles.ElementAt(0);
+                    int lastSubAisleB = pickAisles.ElementAt(pickAisles.Count() - 1);
+                    List<int> rearPickAisles = this.problem.filterPickAislesOfBlock(farMostBlock, pickAisles, Problem.AislePart.Rear);
+                    List<int> frontPickAisles = this.problem.filterPickAislesOfBlock(farMostBlock, pickAisles, Problem.AislePart.Front);
+                    picker.goToLocation(picker.AInfo, leftMostSubAisleB, new LinkDistance(Math.Abs(leftMostSubAisleB - picker.BInfo), Problem.Codes.W), Math.Abs(leftMostSubAisleB - picker.BInfo) * this.problem.W);
+
+                    if (frontPickAisles.Count > 1)
+                    {
+                        frontPickAisles.Reverse();
+                    }
+
+                    for (int i = 0; i < rearPickAisles.Count; i++)
+                    {
+                        if (rearPickAisles.ElementAt(i) != lastSubAisleB)
+                        {
+                            picker.goToLocation(picker.AInfo, rearPickAisles.ElementAt(i), new LinkDistance(Math.Abs(rearPickAisles.ElementAt(i) - picker.BInfo), Problem.Codes.W), Math.Abs(rearPickAisles.ElementAt(i) - picker.BInfo) * this.problem.W);
+                            picker.collectAisle(farMostBlock, picker.BInfo, false, true, Problem.AislePart.Rear, this.problem);
+                        }
+                    }
+                    picker.goToLocation(picker.AInfo, lastSubAisleB, new LinkDistance(Math.Abs(lastSubAisleB - picker.BInfo), Problem.Codes.W), Math.Abs(lastSubAisleB - picker.BInfo) * this.problem.W);
+
+                    picker.goVertical(farMostBlock + 1, this.problem);
+                    for (int i = 0; i < frontPickAisles.Count(); i++)
+                    {
+                        if (frontPickAisles.ElementAt(i) != lastSubAisleB)
+                        {
+                            picker.goToLocation(picker.AInfo, frontPickAisles.ElementAt(i), new LinkDistance(Math.Abs(frontPickAisles.ElementAt(i) - picker.BInfo), Problem.Codes.W), Math.Abs(frontPickAisles.ElementAt(i) - picker.BInfo) * this.problem.W);
+                            picker.collectAisle(farMostBlock, picker.BInfo, true, true, Problem.AislePart.Front, this.problem);
+                        }
+                    }
+                }
+                farMostBlock++;
+            }
+            picker.goToLocation(picker.AInfo, this.problem.Depot.X, new LinkDistance(Math.Abs(this.problem.Depot.X - picker.BInfo), Problem.Codes.W), Math.Abs(this.problem.Depot.X - picker.BInfo) * this.problem.W);
+            Console.WriteLine("PICKER IS FINISHED ITS JOB");
+            picker.printPath();
+            picker.printTravelledDistances();
+            picker.printTravelledTotalDistance();
+        }
     }
 }

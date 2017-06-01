@@ -95,6 +95,28 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
+        private Block[] blocks;
+
+        public Block[] Blocks
+        {
+            get
+            {
+                return blocks;
+            }
+            //set
+            //{
+            //    bool isOK = true;
+            //    for (int i = 0; i <= value.Length; i++) {
+            //        if (value[i].StorageUnits.Length != this.numberOfAisles - 1) {
+            //            isOK = false;
+            //        }
+            //    }
+            //    if (isOK) {
+            //        blocks = value;
+            //    }
+            //}
+        }
+
         private List<int> pickedItemIndices;
 
         public List<int> PickingSequence
@@ -109,7 +131,22 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        public Problem(int S, double W, double L, double K, int numberOfBlocks, int numberOfAisles)
+        private Coordinate depot;
+
+        public Coordinate Depot
+        {
+            get
+            {
+                return depot;
+            }
+            set
+            {
+                depot = value;
+            }
+        }
+
+
+        public Problem(int S, double W, double L, double K, int numberOfBlocks, int numberOfAisles, Coordinate depot)
         {
             this.numberOfShelves = S;
             this.widthOfStorageUnit = W;
@@ -117,6 +154,15 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.lengthOfStorageUnitShelf = K;
             this.numberOfCrossAisles = numberOfBlocks + 1;
             this.numberOfAisles = numberOfAisles;
+            this.blocks = new Block[numberOfBlocks];
+            for (int i = 0; i < numberOfBlocks; i++)
+            {
+                this.blocks[i] = new Block(i + 1, numberOfAisles - 1);
+                for (int j = 0; j < numberOfAisles - 1; j++){
+                    this.blocks[i].StorageUnits[j] = new StorageUnit(new Coordinate(j + 1, i + 1), S);
+                }
+            }
+            this.depot = depot;
         }
 
         private List<Item> itemList;
@@ -129,6 +175,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
             set
             {
+                foreach (Item i in value)
+                {
+                    this.blocks[i.AInfo - 1].StorageUnits[i.BInfo - 1].fillShelf(i.CInfo, i.DInfo);
+                }
                 itemList = value;
             }
         }
@@ -143,66 +193,6 @@ namespace ComparisonOfOrderPickingAlgorithms
         //    {
         //        this.itemList = generateItemList(sizeOfList, filepath);
         //    }
-        //}
-
-        //private List<Item> generateItemList(int sizeOfList, String filepath)
-        //{
-        //    List<Item> itemList = new List<Item>();
-
-        //    Random rand = new Random();
-        //    StreamWriter wr = new StreamWriter(filepath, true);
-
-        //    for (int i = 0; i < sizeOfList; i++)
-        //    {
-        //        Item j = new Item();
-        //        j.Index = i+1;
-        //        j.AInfo = rand.Next(1, this.numberOfCrossAisles); //inclusive lower bound & exclusive upper bound
-        //        j.BInfo = rand.Next(1, this.numberOfAisles);
-        //        j.CInfo = rand.Next(0, 2); //(0,1): 1 is exclusive
-        //        j.DInfo = rand.Next(1, this.numberOfShelves + 1);
-        //        itemList.Add(j);
-        //        wr.WriteLine("{0},{1},{2},{3},{4}", j.Index, j.AInfo, j.BInfo, j.CInfo, j.DInfo);
-        //    }
-
-        //    wr.WriteLine("");
-        //    wr.Close();
-
-        //    return itemList;
-        //}
-
-        //private List<Item> readTestList(String filepath)
-        //{
-        //    List<List<Item>> listOfLists = new List<List<Item>>();
-        //    List<Item> itemList = new List<Item>();
-
-        //    if (System.IO.File.Exists(filepath))
-        //    {
-        //        StreamReader re = new StreamReader(File.OpenRead(filepath));
-        //        String line = String.Empty;
-
-        //        while ((line = re.ReadLine()) != null)
-        //        {
-        //            if (line.Equals(String.Empty))
-        //            {
-        //                listOfLists.Add(itemList);
-        //                itemList = new List<Item>();
-        //                continue;
-        //            }
-        //            string[] values = line.Split(',');
-        //            Item item = new Item(int.Parse(values[0]), int.Parse(values[1]), int.Parse(values[2]), int.Parse(values[3]), int.Parse(values[4]));
-        //            itemList.Add(item);
-        //        }
-        //        re.Close();
-
-        //        //foreach (List<Item> itemL in listOfLists)
-        //        //    foreach (Item item in itemL)
-        //        //        Console.WriteLine("ITEM NO:{0} - A={1}, B={2}, C={3}, D={4}", item.Index, item.AInfo, item.BInfo, item.CInfo, item.DInfo);
-        //    } 
-        //    else
-        //        Console.WriteLine("NO FILE to parse!");
-
-        //    this.itemListSet = listOfLists;
-        //    return this.itemListSet.ElementAt(0);
         //}
 
         public List<Item> getNonPickedAisleItems(int aPos, int bPos, AislePart aislePart)
@@ -275,6 +265,56 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
 
             return sortedItems;
+        }
+
+        public List<int> getPickAislesOfBlock(int aPos)
+        {
+            List<int> result = new List<int>();
+            for (int i = 2; i < this.numberOfAisles; i++)
+            {
+                if (countAisle(aPos, i, AislePart.All) > 0)
+                {
+                    result.Add(i);
+                }
+            }
+            return result;
+        }
+
+        public int countAisle(int aPos, int bPos, AislePart aislePart)
+        {
+            if (getNonPickedAisleItems(aPos, bPos, aislePart) == null)
+            {
+                return 0;
+            }
+            return getNonPickedAisleItems(aPos, bPos, aislePart).Count();
+        }
+
+        public List<int> filterPickAislesOfBlock(int aPos, List<int> pickAisles, AislePart aislePart)
+        {
+            List<int> rearPickAisles = new List<int>();
+            List<int> frontPickAisles = new List<int>();
+
+            for (int i = 0; i < pickAisles.Count(); i++)
+            {
+                if (countAisle(aPos, pickAisles.ElementAt(i), AislePart.Rear) > 0)
+                {
+                    rearPickAisles.Add(pickAisles.ElementAt(i));
+                }
+                if (countAisle(aPos, pickAisles.ElementAt(i), AislePart.Front) > 0)
+                {
+                    frontPickAisles.Add(pickAisles.ElementAt(i));
+                }
+            }
+
+            if (aislePart == AislePart.Rear)
+            {
+                return rearPickAisles;
+            }
+            if (aislePart == AislePart.Front)
+            {
+                return frontPickAisles;
+            }
+            return pickAisles;
         }
     }
 }

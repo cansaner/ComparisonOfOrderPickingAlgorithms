@@ -117,12 +117,13 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public Picker(Coordinate location)
         {
-            this.location = location;
+            this.location = new Coordinate(location.X, location.Y);
             this.distance = 0;
             this.numberOfPickedItems = 0;
             this.path = new List<Coordinate>();
             this.path.Add(location);
             this.travelledDistances = new List<LinkDistance>();
+            this.pickedItems = new List<Item>();
             Console.WriteLine("Picker is dropped into the room");
         }
 
@@ -149,15 +150,6 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.pickedItems.Add(item);
         }
 
-        public void printTravelledTotalDistance(){
-            Console.WriteLine("Picker travelled {0}M totally", this.distance);
-        }
-
-        public void printLocation()
-        {
-            Console.WriteLine("Picker is on location: {0}, {1}", this.AInfo, this.BInfo);
-        }
-
         public void goToLocation(int aLoc, int bLoc, LinkDistance travelledDistance, double distanceToIncrement)
         {
             if (aLoc == this.AInfo && bLoc == this.BInfo)
@@ -180,7 +172,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 for (int a = start; a < stop; a = a + 1)
                 {
-                    collectAisle(a, this.BInfo, false, false, problem);
+                    collectAisle(a, this.BInfo, false, false, Problem.AislePart.All, problem);
                     goToLocation(a + 1, this.BInfo, new LinkDistance(1, Problem.Codes.L), 1 * problem.L);
                 }
             }
@@ -189,15 +181,15 @@ namespace ComparisonOfOrderPickingAlgorithms
                 
                 for (int a = start; a > stop; a = a - 1)
                 {
-                    collectAisle(a - 1, this.BInfo, true, false, problem);
+                    collectAisle(a - 1, this.BInfo, true, false, Problem.AislePart.All, problem);
                     goToLocation(a - 1, this.BInfo, new LinkDistance(1, Problem.Codes.L), 1 * problem.L);
                 }
             }
         }
 
-        public void collectAisle(int aPos, int bPos, bool up, bool enterExitSame, Problem problem)
+        public void collectAisle(int aPos, int bPos, bool up, bool enterExitSame, Problem.AislePart aislePart, Problem problem)
         {
-            List<Item> sortedAisleItems = problem.sortAisleItems(problem.getNonPickedAisleItems(aPos, this.BInfo, Problem.AislePart.All));
+            List<Item> sortedAisleItems = problem.sortAisleItems(problem.getNonPickedAisleItems(aPos, this.BInfo, aislePart));
             if (sortedAisleItems.Count == 0)
             {
                 return;
@@ -229,6 +221,51 @@ namespace ComparisonOfOrderPickingAlgorithms
                     this.addToDistance(sortedAisleItems.ElementAt(sortedAisleItems.Count() - 1).DInfo * problem.K * 2);
                 }
             }
+        }
+        //PRINT FUNCTIONS
+        public void printLocation()
+        {
+            Console.WriteLine("Picker is on location: {0}, {1}", this.AInfo, this.BInfo);
+        }
+
+        public void printTravelledTotalDistance()
+        {
+            Console.WriteLine("Picker travelled {0}M totally", this.distance);
+        }
+
+        public void printPath()
+        {
+            String path = "Travelled path: ";
+            for (int i = 0; i < this.path.Count; i++)
+            {
+                path += "(";
+                path += this.path[i].Y;
+                path += ",";
+                path += this.path[i].X;
+                path += ")";
+                if (i != this.path.Count - 1)
+                {
+                    path += " -> ";
+                }
+            }
+            Console.WriteLine(path);
+            Console.WriteLine();
+        }
+
+        public void printTravelledDistances()
+        {
+            String travelledDistances = "Travelled distances: ";
+            for (int i = 0; i < this.travelledDistances.Count; i++)
+            {
+                travelledDistances += this.travelledDistances[i].Count;
+                travelledDistances += this.travelledDistances[i].Code;
+                if (i != this.travelledDistances.Count - 1)
+                {
+                    travelledDistances += " + ";
+                }
+            }
+            Console.WriteLine(travelledDistances);
+            Console.WriteLine();
         }
     }
 }

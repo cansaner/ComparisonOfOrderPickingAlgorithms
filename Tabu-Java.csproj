@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Block.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="LinkDistance.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Picker.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="Solution.cs" />
+    <Compile Include="StorageUnit.cs" />
     <Compile Include="TabuList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
