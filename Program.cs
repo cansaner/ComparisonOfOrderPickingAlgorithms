@@ -6,12 +6,6 @@ using System.IO;
 
 namespace ComparisonOfOrderPickingAlgorithms
 {
-    struct PickerPosition
-    {
-        public int aPos;
-        public int bPos;
-    };
-
     public class Program
     {
         //Enumerations
@@ -122,39 +116,36 @@ namespace ComparisonOfOrderPickingAlgorithms
         public static void Main(string[] args)
         {
             //setting the logistics challenge
+            Parameters parameters = new Parameters();
             Picker picker;
             Coordinate depot = new Coordinate(1, 4);
 
             //Setting parameters of the basic challenge
-            int S = 7;
-            double W = 2.6;
-            double L = 30.4;
-            double K = 2.77;
-            int no_of_horizontal_aisles = 4;
-            int no_of_vertical_aisles = 8;
-            
-            //Setting parameters of the real world challenge
-            //int S = 10;
+            //int S = 7;
             //double W = 2.6;
             //double L = 30.4;
             //double K = 2.77;
             //int no_of_horizontal_aisles = 4;
-            //int no_of_vertical_aisles = 31;
+            //int no_of_vertical_aisles = 8;
+            
+            //Setting parameters of the real world challenge
+            int S = 10;
+            double W = 2.6;
+            double L = 30.4;
+            double K = 2.77;
+            int no_of_horizontal_aisles = 4;
+            int no_of_vertical_aisles = 31;
 
             Problem room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
-            
-            
-            //room1.prepareItemList(true, "C:\\masterTez/sshape1New.txt", 0);
-            //room1.prepareItemList(false, "C:\\masterTez/cansaner.txt", 5);
-            //List<Item> itemList = room1.ItemList;
 
-            Parameters parameters = new Parameters();
             //S_SHAPE
             picker = new Picker(depot);
-            parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
-            room1.ItemList = parameters.ItemListSet.ElementAt(0);
-            Solution solution = new Solution(room1, picker, parameters);
-            solution.solve(Solution.Methods.SShape);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //Solution solution = new Solution(room1, picker, parameters);
+            //solution.solve(Solution.Methods.TabuSearch);
+            //solution.solve(Solution.Methods.SShape);
+            //solution.solve(Solution.Methods.LargestGap);
             
             //parameters.TabuLength = 5;
             //parameters.NumberOfIterations = 20;
@@ -171,30 +162,15 @@ namespace ComparisonOfOrderPickingAlgorithms
             //generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
 
             //PARAMETER TUNING--BUNU LIST GENERATION I YAPTIKTAN SONRA AC
-            //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");
+            parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");
             //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize005.txt");
-            //parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             //parameters.TabuLengthList = new int[] { 5, 6 };
-            //parameters.NumberOfIterationsList = new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+            parameters.NumberOfIterationsList = new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
             //parameters.NumberOfIterationsList = new int[] { 10, 20 };
-            //tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
+            tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
 
             Console.ReadLine();
-        }
-
-        public static int getMinOfArray(int[] arr, int max)
-        {
-            int minVal = max;
-
-            foreach (int i in arr)
-            {
-                if (i < minVal)
-                {
-                    minVal = i;
-                }
-
-            }
-            return minVal;
         }
 
         /* CANSANER COMMENT OUT //I DON'T KNOW WHY THESE FUNCTIONS EXIST!!!
