@@ -165,6 +165,34 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.depot = depot;
         }
 
+        private int leftPickAisle;
+
+        public int LeftPickAisle
+        {
+            get
+            {
+                return leftPickAisle;
+            }
+            protected set
+            {
+                leftPickAisle = value;
+            }
+        }
+
+        private int farthestBlock;
+
+        public int FarthestBlock
+        {
+            get
+            {
+                return farthestBlock;
+            }
+            protected set
+            {
+                farthestBlock = value;
+            }
+        }
+
         private List<Item> itemList;
 
         public List<Item> ItemList
@@ -175,11 +203,15 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
             set
             {
-                foreach (Item i in value)
-                {
-                    this.blocks[i.AInfo - 1].StorageUnits[i.BInfo - 1].fillShelf(i.CInfo, i.DInfo);
-                }
+                //foreach (Item i in value)
+                //{
+                //    this.blocks[i.AInfo - 1].StorageUnits[i.BInfo - 1].fillShelf(i.CInfo, i.DInfo);
+                //}
                 itemList = value;
+                farthestBlock = locateFarthestBlockFromDepotThatContainsOnePickLocation();
+                leftPickAisle = locateLeftMostPickAisleThatContainsOnePickLocation();
+                Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisle);
+                Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlock);
             }
         }
 
@@ -194,6 +226,79 @@ namespace ComparisonOfOrderPickingAlgorithms
         //        this.itemList = generateItemList(sizeOfList, filepath);
         //    }
         //}
+
+        public int locateFarthestBlockFromDepotThatContainsOnePickLocation()
+        {
+            int minValue = this.depot.Y - 1;
+
+            if (this.itemList.Count == 0)
+            {
+                return -1;
+            }
+            foreach (Item i in itemList)
+            {
+                if (i.AInfo < minValue)
+                {
+                    minValue = i.AInfo;
+                }
+            }
+            return minValue;
+        }
+
+        public int locateLeftMostPickAisleThatContainsOnePickLocation()
+        {
+            int minValue = this.numberOfAisles - 1;
+            Item minItem = null;
+
+            if (this.itemList.Count == 0)
+            {
+                return -1;
+            }
+            foreach (Item i in this.itemList)
+            {
+                if (i.BInfo <= minValue)
+                {
+                    minValue = i.BInfo;
+                    if (minItem != null)
+                    {
+                        if (minItem.BInfo == i.BInfo)
+                        {
+                            if (i.CInfo < minItem.CInfo)
+                            {
+                                minItem = i;
+                            }
+                        }
+                        else
+                        {
+                            minItem = i;
+                        }
+                    }
+                    else
+                    {
+                        minItem = i;
+                    }
+                }
+            }
+            if (minItem != null)
+            {
+                Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.AInfo, minItem.BInfo, minItem.CInfo, minItem.DInfo);
+            }
+            else
+            {
+                minItem = this.itemList.ElementAt(0);
+                Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.AInfo, minItem.BInfo, minItem.CInfo, minItem.DInfo);
+            }
+
+
+            if (minItem.CInfo == 0)
+            {
+                return minItem.BInfo;
+            }
+            else
+            {
+                return minItem.BInfo + 1;
+            }
+        }
 
         public List<Item> getNonPickedAisleItems(int aPos, int bPos, AislePart aislePart)
         {
@@ -286,7 +391,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return 0;
             }
-            return getNonPickedAisleItems(aPos, bPos, aislePart).Count();
+            return getNonPickedAisleItems(aPos, bPos, aislePart).Count;
         }
 
         public List<int> filterPickAislesOfBlock(int aPos, List<int> pickAisles, AislePart aislePart)
@@ -294,7 +399,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             List<int> rearPickAisles = new List<int>();
             List<int> frontPickAisles = new List<int>();
 
-            for (int i = 0; i < pickAisles.Count(); i++)
+            for (int i = 0; i < pickAisles.Count; i++)
             {
                 if (countAisle(aPos, pickAisles.ElementAt(i), AislePart.Rear) > 0)
                 {

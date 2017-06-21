@@ -113,22 +113,95 @@ namespace ComparisonOfOrderPickingAlgorithms
             wr.Close();
         }
 
-        public static void Main(string[] args)
+        public static void runTestCases()
         {
-            //setting the logistics challenge
             Parameters parameters = new Parameters();
             Picker picker;
             Coordinate depot = new Coordinate(1, 4);
+            Problem room1;
+            Solution solution1, solution2, solution3, solution4, solution5;
 
             //Setting parameters of the basic challenge
-            //int S = 7;
-            //double W = 2.6;
-            //double L = 30.4;
-            //double K = 2.77;
-            //int no_of_horizontal_aisles = 4;
-            //int no_of_vertical_aisles = 8;
+            int S = 7;
+            double W = 2.6;
+            double L = 30.4;
+            double K = 2.77;
+            int no_of_horizontal_aisles = 4;
+            int no_of_vertical_aisles = 8;
+
+            //room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution1 = new Solution(room1, picker, parameters);
+            //solution1.solve(Solution.Methods.SShape);
+            ////assert here
             
-            //Setting parameters of the real world challenge
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution2 = new Solution(room1, picker, parameters);
+            //solution2.solve(Solution.Methods.LargestGap);
+            ////assert here
+
+            S = 10;
+            no_of_horizontal_aisles = 4;
+            no_of_vertical_aisles = 12;
+
+            room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase01.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution3 = new Solution(room1, picker, parameters);
+            //solution3.solve(Solution.Methods.SShape);
+            ////assert here
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase01.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution4 = new Solution(room1, picker, parameters);
+            //solution4.solve(Solution.Methods.LargestGap);
+            //assert here
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase02.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution5 = new Solution(room1, picker, parameters);
+            //solution5.solve(Solution.Methods.SShape);
+            ////assert here
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase02.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution5 = new Solution(room1, picker, parameters);
+            //solution5.solve(Solution.Methods.LargestGap);
+            ////assert here
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase03.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution5 = new Solution(room1, picker, parameters);
+            //solution5.solve(Solution.Methods.SShape);
+            //assert here
+
+            picker = new Picker(depot);
+            parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase03.txt");
+            room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            solution5 = new Solution(room1, picker, parameters);
+            solution5.solve(Solution.Methods.LargestGap);
+            ////assert here
+        }
+
+        public static void runRealWorldChallenge()
+        {
+            Parameters parameters = new Parameters();
+            Picker picker;
+            Coordinate depot = new Coordinate(1, 4);
+            Problem room1;
+            Solution solution1;
+
             int S = 10;
             double W = 2.6;
             double L = 30.4;
@@ -136,16 +209,36 @@ namespace ComparisonOfOrderPickingAlgorithms
             int no_of_horizontal_aisles = 4;
             int no_of_vertical_aisles = 31;
 
-            Problem room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+            room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
 
-            //S_SHAPE
+            parameters.TabuLength = 5;
+            parameters.NumberOfIterations = 20;
             picker = new Picker(depot);
+            parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New5.txt");
+            room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            solution1 = new Solution(room1, picker, parameters);
+            solution1.solve(Solution.Methods.TabuSearch);
+
+            //picker = new Picker(depot);
             //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
             //room1.ItemList = parameters.ItemListSet.ElementAt(0);
-            //Solution solution = new Solution(room1, picker, parameters);
-            //solution.solve(Solution.Methods.TabuSearch);
-            //solution.solve(Solution.Methods.SShape);
-            //solution.solve(Solution.Methods.LargestGap);
+            //solution5 = new Solution(room1, picker, parameters);
+            //solution5.solve(Solution.Methods.SShape);
+            //assert here
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution5 = new Solution(room1, picker, parameters);
+            //solution5.solve(Solution.Methods.LargestGap);
+            ////assert here
+        }
+
+        public static void Main(string[] args)
+        {
+            //runTestCases();
+            //TABU SEARCH BUNUN ICINDE
+            runRealWorldChallenge();
             
             //parameters.TabuLength = 5;
             //parameters.NumberOfIterations = 20;
@@ -162,130 +255,15 @@ namespace ComparisonOfOrderPickingAlgorithms
             //generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
 
             //PARAMETER TUNING--BUNU LIST GENERATION I YAPTIKTAN SONRA AC
-            parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");
+            //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");
             //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize005.txt");
-            parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            //parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             //parameters.TabuLengthList = new int[] { 5, 6 };
-            parameters.NumberOfIterationsList = new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+            //parameters.NumberOfIterationsList = new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
             //parameters.NumberOfIterationsList = new int[] { 10, 20 };
-            tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
+            //tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
 
             Console.ReadLine();
         }
-
-        /* CANSANER COMMENT OUT //I DON'T KNOW WHY THESE FUNCTIONS EXIST!!!
-        public static void reWriteData(int size_of_picklist, List<Item> ITEMLIST) {
-            //Writing items on another text file
-            string FN = "PICKLIST-SIZE" + size_of_picklist + ".txt";
-            TextWriter WriterSolution = new StreamWriter(FN);
-            WriterSolution.WriteLine();
-
-            WriterSolution.WriteLine("\tITEMNO\tA\tB\tC\tD");
-            WriterSolution.WriteLine();
-
-            foreach (Item itm in ITEMLIST)
-            {
-                WriterSolution.WriteLine("\t" + (itm.index + 1) + "\t" + itm.A_info + "\t" + itm.B_info + "\t" + itm.C_info + "\t" + itm.D_info);
-            }
-
-            WriterSolution.Close();
-
-            Console.WriteLine("No of items:{0}", ITEMLIST.Count());
-            //initial solution generated!
-        }
-        
-        public static void findMaximumGap(int aPos, int bPos)
-        {
-            List<Item> aisleItems = getAisleItems(aPos, bPos);
-            List<Item> sortedAisleItems = sortAisleItems(aisleItems);
-            
-            
-        }
-        
-        public static List<Item> getAisleItems(int aPos, int bPos)
-        {
-            List<Item> AISLE_ITEMS = new List<Item>();
-            foreach (Item i in ITEMLIST)
-            {
-                if (i.A_info == aPos)
-                {
-                    if ((i.B_info == bPos && i.C_info == 0) || (i.B_info == bPos - 1 && i.C_info == 1))
-                    {
-                        AISLE_ITEMS.Add(i);
-                    }
-                }
-            }
-            return AISLE_ITEMS;
-        }
-
-         * 
-         * 
-         * //public static int SShapeHeuristic() //http://www.roodbergen.com/whopt/
-        //{
-        //    bool main_aisle_found = false;
-        //    int vertical_aisle_for_main_aisle=0;
-        //    int index_of_last_picked_item=0;
-
-        //    foreach (Item iii in ITEMLIST)
-        //        iii.picked_during_sshape = false;
-            
-        //    foreach (Item iii in ITEMLIST)
-        //        for(int b=1; b<no_of_vertical_aisles-1; b++)
-        //            for(int c=0; c<2; c++)
-        //                if (iii.B_info == b && iii.C_info == c && main_aisle_found == false)
-        //                {
-        //                    main_aisle_found = true;
-        //                    if (c == 0)
-        //                        vertical_aisle_for_main_aisle = iii.B_info;
-        //                    if (c == 1)
-        //                        vertical_aisle_for_main_aisle = iii.B_info + 1;
-        //                }
-
-        //    Console.WriteLine("MAIN VERTICAL AISLE:{0}", vertical_aisle_for_main_aisle);
-
-        //    if (main_aisle_found == true) // && SSHAPE_ITEMS.Count()!=0
-        //    {                
-        //        for (int a = no_of_horizontal_aisles - 1; a > 0; a--)
-        //            for (int d = S; d > 0; d--)
-        //                foreach (Item iii in ITEMLIST) 
-        //                    if ((iii.A_info == a && iii.B_info == vertical_aisle_for_main_aisle - 1 && iii.C_info == 1 && iii.D_info == d) ||
-        //                    (iii.A_info == a && iii.B_info == vertical_aisle_for_main_aisle && iii.C_info == 0 && iii.D_info == d))
-        //                    {
-        //                        Console.WriteLine("ITEM {0} IS PICKED!", iii.index + 1);
-        //                        index_of_last_picked_item = iii.index;
-        //                        iii.picked_during_sshape = true;
-        //                        SSHAPE_ITEMS.Remove(iii); 
-        //                    }
-        //    }//end of if
-
-        //    for (int b = ITEMLIST[index_of_last_picked_item].B_info; b < no_of_horizontal_aisles; b++)
-        //        for (int d = 1; d <= S; d++)
-        //            foreach (Item iii in ITEMLIST)
-        //                if (iii.picked_during_sshape == false && SSHAPE_ITEMS.Count() != 0)
-        //                    if ((iii.A_info == 1 && iii.B_info == b && iii.C_info == 1 && iii.D_info == d) ||
-        //                    (iii.A_info == 1 && iii.B_info == b + 1 && iii.C_info == 0 && iii.D_info == d))
-        //                    {
-        //                        Console.WriteLine("ITEM {0} IS PICKED!", iii.index + 1);
-        //                        index_of_last_picked_item = iii.index;
-        //                        iii.picked_during_sshape = true;
-        //                        SSHAPE_ITEMS.Remove(iii);
-        //                    }
-
-        //    for (int b = ITEMLIST[index_of_last_picked_item].B_info; b < no_of_horizontal_aisles; b++)
-        //        for (int d = S; d > 0; d--)
-        //            foreach (Item iii in ITEMLIST)
-        //                if (iii.picked_during_sshape == false && SSHAPE_ITEMS.Count() != 0)
-        //                    if ((iii.A_info == 1 && iii.B_info == b && iii.C_info == 1 && iii.D_info == d) ||
-        //                    (iii.A_info == 1 && iii.B_info == b + 1 && iii.C_info == 0 && iii.D_info == d))
-        //                    {
-        //                        Console.WriteLine("ITEM {0} IS PICKED!", iii.index + 1);
-        //                        index_of_last_picked_item = iii.index;
-        //                        iii.picked_during_sshape = true;
-        //                        SSHAPE_ITEMS.Remove(iii);
-        //                    }     
-
-        //    return travelled_distance_with_SSHAPEHEURISTIC;
-        //}
-        CANSANER COMMENT OUT */
     }
 }
