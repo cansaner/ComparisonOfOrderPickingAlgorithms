@@ -9,7 +9,6 @@ namespace ComparisonOfOrderPickingAlgorithms
     public class Problem
     {
         public enum Codes { W, L, K, S };
-        public enum AislePart { All, Rear, Front };
 
         private int numberOfShelves;
 
@@ -300,10 +299,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        public List<Item> getNonPickedAisleItems(int aPos, int bPos, AislePart aislePart)
+        public List<Item> getNonPickedAisleItems(int aPos, int bPos)
         {
             List<Item> aisleItems = new List<Item>();
-            int rearMost = (int)Math.Ceiling(System.Convert.ToDouble(this.S) / 2);
+            //int rearMost = (int)Math.Ceiling(System.Convert.ToDouble(this.S) / 2);
 
             foreach (Item i in this.itemList)
             {
@@ -311,27 +310,28 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     if ((i.BInfo == bPos && i.CInfo == 0) || (i.BInfo == bPos - 1 && i.CInfo == 1))
                     {
-                        switch (aislePart)
-                        {
-                            case AislePart.All:
-                                aisleItems.Add(i);
-                                break;
-                            case AislePart.Rear:
-                                if (i.DInfo <= rearMost)
-                                {
-                                    aisleItems.Add(i);
-                                }
-                                break;
-                            case AislePart.Front:
-                                if (i.DInfo > rearMost)
-                                {
-                                    aisleItems.Add(i);
-                                }
-                                break;
-                            default:
-                                aisleItems.Add(i);
-                                break;
-                        }
+                        aisleItems.Add(i);
+                        //switch (aislePart)
+                        //{
+                        //    case AislePart.All:
+                        //        aisleItems.Add(i);
+                        //        break;
+                        //    case AislePart.Rear:
+                        //        if (i.DInfo <= rearMost)
+                        //        {
+                        //            aisleItems.Add(i);
+                        //        }
+                        //        break;
+                        //    case AislePart.Front:
+                        //        if (i.DInfo > rearMost)
+                        //        {
+                        //            aisleItems.Add(i);
+                        //        }
+                        //        break;
+                        //    default:
+                        //        aisleItems.Add(i);
+                        //        break;
+                        //}
                     }
                 }
             }
@@ -377,7 +377,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             List<int> result = new List<int>();
             for (int i = 2; i < this.numberOfAisles; i++)
             {
-                if (countAisle(aPos, i, AislePart.All) > 0)
+                if (countAisle(aPos, i) > 0)
                 {
                     result.Add(i);
                 }
@@ -385,41 +385,13 @@ namespace ComparisonOfOrderPickingAlgorithms
             return result;
         }
 
-        public int countAisle(int aPos, int bPos, AislePart aislePart)
+        public int countAisle(int aPos, int bPos)
         {
-            if (getNonPickedAisleItems(aPos, bPos, aislePart) == null)
+            if (getNonPickedAisleItems(aPos, bPos) == null)
             {
                 return 0;
             }
-            return getNonPickedAisleItems(aPos, bPos, aislePart).Count;
-        }
-
-        public List<int> filterPickAislesOfBlock(int aPos, List<int> pickAisles, AislePart aislePart)
-        {
-            List<int> rearPickAisles = new List<int>();
-            List<int> frontPickAisles = new List<int>();
-
-            for (int i = 0; i < pickAisles.Count; i++)
-            {
-                if (countAisle(aPos, pickAisles.ElementAt(i), AislePart.Rear) > 0)
-                {
-                    rearPickAisles.Add(pickAisles.ElementAt(i));
-                }
-                if (countAisle(aPos, pickAisles.ElementAt(i), AislePart.Front) > 0)
-                {
-                    frontPickAisles.Add(pickAisles.ElementAt(i));
-                }
-            }
-
-            if (aislePart == AislePart.Rear)
-            {
-                return rearPickAisles;
-            }
-            if (aislePart == AislePart.Front)
-            {
-                return frontPickAisles;
-            }
-            return pickAisles;
+            return getNonPickedAisleItems(aPos, bPos).Count;
         }
     }
 }

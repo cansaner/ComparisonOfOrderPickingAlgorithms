@@ -119,7 +119,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             Picker picker;
             Coordinate depot = new Coordinate(1, 4);
             Problem room1;
-            Solution solution1, solution2, solution3, solution4, solution5;
+            Solution solution1, solution2, solution3, solution4, solution5, solution6;
 
             //Setting parameters of the basic challenge
             int S = 7;
@@ -129,13 +129,13 @@ namespace ComparisonOfOrderPickingAlgorithms
             int no_of_horizontal_aisles = 4;
             int no_of_vertical_aisles = 8;
 
-            //room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+            room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
 
-            //picker = new Picker(depot);
-            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
-            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
-            //solution1 = new Solution(room1, picker, parameters);
-            //solution1.solve(Solution.Methods.SShape);
+            picker = new Picker(depot);
+            parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
+            room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            solution1 = new Solution(room1, picker, parameters);
+            solution1.solve(Solution.Methods.SShape);
             ////assert here
             
             //picker = new Picker(depot);
@@ -149,7 +149,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             no_of_horizontal_aisles = 4;
             no_of_vertical_aisles = 12;
 
-            room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+            //room1 = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
 
             //picker = new Picker(depot);
             //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase01.txt");
@@ -186,12 +186,19 @@ namespace ComparisonOfOrderPickingAlgorithms
             //solution5.solve(Solution.Methods.SShape);
             //assert here
 
-            picker = new Picker(depot);
-            parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase03.txt");
-            room1.ItemList = parameters.ItemListSet.ElementAt(0);
-            solution5 = new Solution(room1, picker, parameters);
-            solution5.solve(Solution.Methods.LargestGap);
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase03.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution5 = new Solution(room1, picker, parameters);
+            //solution5.solve(Solution.Methods.LargestGap);
             ////assert here
+
+            //picker = new Picker(depot);
+            //parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase04.txt");
+            //room1.ItemList = parameters.ItemListSet.ElementAt(0);
+            //solution6 = new Solution(room1, picker, parameters);
+            //solution6.solve(Solution.Methods.SShape);
+            //assert here
         }
 
         public static void runRealWorldChallenge()
@@ -236,9 +243,9 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public static void Main(string[] args)
         {
-            //runTestCases();
+            runTestCases();
             //TABU SEARCH BUNUN ICINDE
-            runRealWorldChallenge();
+            //runRealWorldChallenge();
             
             //parameters.TabuLength = 5;
             //parameters.NumberOfIterations = 20;
