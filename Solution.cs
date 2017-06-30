@@ -692,23 +692,24 @@ namespace ComparisonOfOrderPickingAlgorithms
         public void solveUsingSShape()
         {
             picker.printLocation();
+            picker.NextHorizontalMove = true;
+            picker.NextVerticalMove = false;
             picker.goToLocation(picker.AInfo, this.problem.LeftPickAisle, this.problem);
             picker.goToLocation(this.problem.FarthestBlock + 1, picker.BInfo, this.problem);
             List<int> pickAisles = this.problem.getPickAislesOfBlock(this.problem.FarthestBlock);
             picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), this.problem);
+            int farMostBlock;
             bool isItOnlyOne = (pickAisles.Count == 1);
             if (isItOnlyOne)
             {
-                picker.collectAisle(true, true, this.problem);
+                picker.collectAisle(!picker.NextVerticalMove, true, this.problem);
+                farMostBlock = this.problem.FarthestBlock + 1;
             }
             else
             {
                 picker.goToLocation(this.problem.FarthestBlock, picker.BInfo, this.problem);
+                farMostBlock = this.problem.FarthestBlock;
             }
-            int farMostBlock = this.problem.FarthestBlock;
-            //printLocation();
-            bool goRight = true;
-            bool goUp = false;
             while (farMostBlock < this.problem.Depot.Y)
             {
                 pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
@@ -716,75 +717,52 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     int leftMostSubAisleB = pickAisles.ElementAt(0);
                     int rightMostSubAisleB = pickAisles.ElementAt(pickAisles.Count() - 1);
-                    //Console.WriteLine("LEFT MOST SUB AISLE: {0}", leftMostSubAisleB);
-                    //Console.WriteLine("RIGHT MOST SUB AISLE: {0}", rightMostSubAisleB);
                     if (Math.Abs(picker.BInfo - leftMostSubAisleB) < Math.Abs(picker.BInfo - rightMostSubAisleB))
                     {
                         Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
                         picker.goToLocation(picker.AInfo, leftMostSubAisleB, this.problem);
-                        goRight = true;
+                        picker.NextHorizontalMove = true;
                     }
                     else
                     {
                         Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
                         picker.goToLocation(picker.AInfo, rightMostSubAisleB, this.problem);
-                        goRight = false;
+                        picker.NextHorizontalMove = false;
                     }
-                    //printLocation();
                     picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
-                    goUp = true;
-                    //printLocation();
-                }
-                pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
-                while (pickAisles.Count() > 1)
-                {
-                    if (goRight)
-                    {
-                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), this.problem);
-                    }
-                    else
-                    {
-                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count() - 1), this.problem);
-                    }
-                    //printLocation();
-                    if (goUp)
-                    {
-                        picker.goToLocation(farMostBlock, picker.BInfo, this.problem);
-                        goUp = false;
-                    }
-                    else
-                    {
-                        picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
-                        goUp = true;
-                    }
+                    picker.NextVerticalMove = true;
                     pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
-                }
-                if (pickAisles.Count() > 0)
-                {
-                    if (goRight)
+                    while (pickAisles.Count() > 1)
                     {
-                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), this.problem);
+                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt((picker.NextHorizontalMove ? 0 : pickAisles.Count() - 1)), this.problem);
+                        picker.goToLocation(farMostBlock + (picker.NextVerticalMove ? 0 : 1), picker.BInfo, this.problem);
+                        picker.NextVerticalMove = !picker.NextVerticalMove;
+                        pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
                     }
-                    else
+                    if (pickAisles.Count() > 0)
                     {
-                        picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count - 1), this.problem);
+                        if (picker.NextHorizontalMove)
+                        {
+                            picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), this.problem);
+                        }
+                        else
+                        {
+                            picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count - 1), this.problem);
+                        }
+                        if (picker.NextVerticalMove)
+                        {
+                            picker.collectAisle(picker.NextVerticalMove, true, this.problem);
+                        }
+                        else
+                        {
+                            picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
+                        }
                     }
-                }
-                else
-                {
-                    //Step 4.b should be written
-                }
-
-                //printLocation();
-                if (goUp)
-                {
-                    picker.collectAisle(true, true, this.problem);
                 }
                 else
                 {
                     picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
                 }
-                //printLocation();
                 farMostBlock++;
             }
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);
@@ -873,22 +851,24 @@ namespace ComparisonOfOrderPickingAlgorithms
         public void solveUsingLargestGap()
         {
             picker.printLocation();
+            picker.NextHorizontalMove = true;
+            picker.NextVerticalMove = false;
             picker.goToLocation(picker.AInfo, this.problem.LeftPickAisle, this.problem);
             picker.goToLocation(this.problem.FarthestBlock + 1, picker.BInfo, this.problem);
             List<int> pickAisles = this.problem.getPickAislesOfBlock(this.problem.FarthestBlock);
             picker.goToLocation(picker.AInfo, pickAisles.ElementAt(0), this.problem);
+            int farMostBlock;
             bool isItOnlyOne = (pickAisles.Count == 1);
             if (isItOnlyOne)
             {
-                picker.collectAisle(true, true, this.problem);
+                picker.collectAisle(!picker.NextVerticalMove, true, this.problem);
+                farMostBlock = this.problem.FarthestBlock + 1;
             }
             else
             {
                 picker.goToLocation(this.problem.FarthestBlock, picker.BInfo, this.problem);
+                farMostBlock = this.problem.FarthestBlock;
             }
-            bool goRight = true;
-            bool goUp = false;
-            int farMostBlock = this.problem.FarthestBlock;
             while (farMostBlock < this.problem.Depot.Y)
             {
                 pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
@@ -899,17 +879,17 @@ namespace ComparisonOfOrderPickingAlgorithms
                     if (Math.Abs(picker.BInfo - leftMostSubAisleB) < Math.Abs(picker.BInfo - rightMostSubAisleB))
                     {
                         Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
-                        goRight = true;
+                        picker.NextHorizontalMove = true;
                     }
                     else
                     {
                         Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
-                        goRight = false;
+                        picker.NextHorizontalMove = false;
                     }
-                }
-                if (goRight == false)
-                {
-                    pickAisles.Reverse();
+                    if (picker.NextHorizontalMove == false)
+                    {
+                        pickAisles.Reverse();
+                    }
                 }
                 if (pickAisles.Count() > 1)
                 {
@@ -919,18 +899,18 @@ namespace ComparisonOfOrderPickingAlgorithms
                         if (aisle.LowLargestGap > 0)
                         {
                             picker.goToLocation(picker.AInfo, pickAisles.ElementAt(i), this.problem);
-                            picker.collectLGAisle(goUp, aisle, this.problem);
+                            picker.collectLGAisle(picker.NextVerticalMove, aisle, this.problem);
                         }
                     }
-                }
-                picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count - 1), this.problem);
-                picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
-                goRight = !goRight;
-                goUp = true;
-                pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
-                if (goRight == false)
-                {
-                    pickAisles.Reverse();
+                    picker.goToLocation(picker.AInfo, pickAisles.ElementAt(pickAisles.Count - 1), this.problem);
+                    picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
+                    picker.NextHorizontalMove = !picker.NextHorizontalMove;
+                    picker.NextVerticalMove = true;
+                    pickAisles = this.problem.getPickAislesOfBlock(farMostBlock);
+                    if (picker.NextHorizontalMove == false)
+                    {
+                        pickAisles.Reverse();
+                    }
                 }
                 if (pickAisles.Count() > 0)
                 {
@@ -938,10 +918,14 @@ namespace ComparisonOfOrderPickingAlgorithms
                     {
                         picker.goToLocation(picker.AInfo, pickAisles.ElementAt(i), this.problem);
                         Aisle aisle = getLargestGapLimits(this.problem.getNonPickedAisleItems(picker.AInfo - 1, pickAisles.ElementAt(i)));
-                        picker.collectLGAisle(goUp, aisle, this.problem);
+                        picker.collectLGAisle(picker.NextVerticalMove, aisle, this.problem);
                     }
                 }
-                goUp = false;
+                else
+                {
+                    picker.goToLocation(farMostBlock + 1, picker.BInfo, this.problem);
+                }
+                picker.NextVerticalMove = false;
                 farMostBlock++;
             }
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);

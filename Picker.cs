@@ -7,8 +7,6 @@ namespace ComparisonOfOrderPickingAlgorithms
 {
     public class Picker
     {
-        public enum FaceType { Up, Down, Right, Left};
-
         private Coordinate location;
 
         public Coordinate Location
@@ -44,6 +42,34 @@ namespace ComparisonOfOrderPickingAlgorithms
             set
             {
                 location.X = value;
+            }
+        }
+
+        private bool right;
+
+        public bool NextHorizontalMove
+        {
+            get
+            {
+                return right;
+            }
+            set
+            {
+                right = value;
+            }
+        }
+
+        private bool up;
+
+        public bool NextVerticalMove
+        {
+            get
+            {
+                return up;
+            }
+            set
+            {
+                up = value;
             }
         }
 
@@ -114,20 +140,6 @@ namespace ComparisonOfOrderPickingAlgorithms
             protected set
             {
                 travelledDistances = value;
-            }
-        }
-
-        private FaceType face;
-
-        public FaceType Face
-        {
-            get
-            {
-                return face;
-            }
-            protected set
-            {
-                face = value;
             }
         }
 
