@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ILOG.Concert;
 using ILOG.CPLEX;
+using System.Diagnostics;
 
 namespace ComparisonOfOrderPickingAlgorithms
 {
@@ -135,7 +136,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             switch (method)
             {
                 case Algorithm.TabuSearch:
-                    solveUsingTabuSearch(this.parameters.NumberOfIterations, this.parameters.TabuLength, new Item(this.problem.ItemList.Count,this.problem.NumberOfCrossAisles-1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(this.problem.ItemList.Count+1,this.problem.NumberOfCrossAisles-1, 1, 0, this.problem.S));
                     break;
                 case Algorithm.SShape:
                     solveUsingSShape();
@@ -144,7 +145,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingLargestGap();
                     break;
                 default:
-                    solveUsingTabuSearch(this.parameters.NumberOfIterations, this.parameters.TabuLength, new Item(this.problem.ItemList.Count, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(this.problem.ItemList.Count+1, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
             }
             DateTime etTime = DateTime.Now;
@@ -669,7 +670,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             return cloneOfList;
         }
 
-        private void solveUsingTabuSearch(int numberOfIterations, int tabuLength, Item picker)
+        private void solveUsingTabuSearch(int tabuLength, Item picker)
         {
             //generating an initial solution list
             List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Random);
@@ -685,14 +686,15 @@ namespace ComparisonOfOrderPickingAlgorithms
                 currentSolution[i] = initialSolutionList[i].Index;
             }
 
-            DateTime dmStTime = DateTime.Now;
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             prepareDistanceMatrix(picker);
-            DateTime dmEtTime = DateTime.Now;
-            TimeSpan dmElapsed_Time = dmEtTime.Subtract(dmStTime);
-            double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
+            stopwatch.Stop();
+            double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
             this.distanceMatrixRunningTime = dmElapsedTime;
 
-            DateTime stTime = DateTime.Now;
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
 
@@ -700,11 +702,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
             double bestCost = calculateTabuSearchObjectiveFunctionValue(bestSolution);
 
-            int ozgursNumberOfIterations = initialSolutionList.Count - 2;
+            int numberOfIterations = initialSolutionList.Count - 2;
             int counter = 0;
-            int howManyIterationsCount = 0;
+            int iterationCount = 0;
 
-            while (counter < ozgursNumberOfIterations)
+            while (counter < numberOfIterations)
             {
                 currentSolution = getBestNeighbour(tabuList, currentSolution);
                 //printTabuPath(currentSolution);
@@ -721,32 +723,15 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     counter++;
                 }
-                howManyIterationsCount++;
+                iterationCount++;
             }
-
-            //for (int i = 0; i < numberOfIterations; i++)
-            //{
-
-            //    currentSolution = getBestNeighbour(tabuList, currentSolution);
-            //    //printTabuPath(currentSolution);
-            //    //tabuList.printTabuList();
-
-            //    double currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
-            //    if (currentCost < bestCost)
-            //    {
-            //        Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
-            //        bestCost = currentCost;
-            //    }
-            //}
 
             //Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
             this.totalTravelledDistance = bestCost;
 
             //printTabuPath(bestSolution);
-
-            DateTime etTime = DateTime.Now;
-            TimeSpan elapsed_Time = etTime.Subtract(stTime);
-            double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
+            stopwatch.Stop();
+            double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
             this.runningTime = elapsedTime;
         }
 
@@ -815,6 +800,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 farMostBlock++;
             }
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);
+            this.totalTravelledDistance = picker.Distance;
             picker.printAllGatheredData();
         }
 
@@ -964,6 +950,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 farMostBlock++;
             }
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);
+            this.totalTravelledDistance = picker.Distance;
             picker.printAllGatheredData();
         }
     }
