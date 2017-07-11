@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ComparisonOfOrderPickingAlgorithms
 {
-    public class Item : IComparable<Item>
+    public class Item : IComparable<Item>, ICloneable
     {
         private int index;
         private Coordinate location;
@@ -136,6 +136,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             else //if (other.B_info < this.B_info)
                 return 1;
          }//end of Int IComparable
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
 
     }//end of class Item
 

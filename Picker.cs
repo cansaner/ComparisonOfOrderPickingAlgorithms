@@ -419,5 +419,17 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
             return pickedItems;
         }
+
+        public void printAllGatheredData()
+        {
+            Console.WriteLine("PICKER IS FINISHED ITS JOB");
+            Console.WriteLine("Travelled path: " + printPath());
+            Console.WriteLine();
+            Console.WriteLine("Travelled distances: " + printTravelledDistances());
+            Console.WriteLine();
+            Console.WriteLine("Item Picking Sequence: " + printPickedItems());
+            Console.WriteLine();
+            Console.WriteLine("Picker travelled {0}M totally", printTravelledTotalDistance());
+        }
     }
 }

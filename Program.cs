@@ -102,7 +102,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     {
                         parameters.TabuLength = parameters.TabuLengthList[i];
                         Solution solution = new Solution(problem, picker, parameters);
-                        solution.solve(Solution.Methods.TabuSearch);
+                        solution.solve(Solution.Algorithm.TabuSearch);
                         Console.WriteLine("{0}:{1}:{2}:{3}", parameters.TabuLength, parameters.NumberOfIterations, solution.TravelledDistance, solution.RunningTime);
                         wr.WriteLine("{0}:{1}:{2}:{3}", parameters.TabuLength, parameters.NumberOfIterations, solution.TravelledDistance, solution.RunningTime);
                     }
@@ -135,7 +135,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution1 = new Solution(room1, picker, parameters);
-            solution1.solve(Solution.Methods.SShape);
+            solution1.solve(Solution.Algorithm.SShape);
             String path01 = picker.printPath();
             String travelledDistances01 = picker.printTravelledDistances();
             String pickedItems01 = picker.printPickedItems();
@@ -145,7 +145,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution2 = new Solution(room1, picker, parameters);
-            solution2.solve(Solution.Methods.LargestGap);
+            solution2.solve(Solution.Algorithm.LargestGap);
             String path02 = picker.printPath();
             String travelledDistances02 = picker.printTravelledDistances();
             String pickedItems02 = picker.printPickedItems();
@@ -161,7 +161,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase01.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution3 = new Solution(room1, picker, parameters);
-            solution3.solve(Solution.Methods.SShape);
+            solution3.solve(Solution.Algorithm.SShape);
             String path03 = picker.printPath();
             String travelledDistances03 = picker.printTravelledDistances();
             String pickedItems03 = picker.printPickedItems();
@@ -171,7 +171,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase01.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution4 = new Solution(room1, picker, parameters);
-            solution4.solve(Solution.Methods.LargestGap);
+            solution4.solve(Solution.Algorithm.LargestGap);
             String path04 = picker.printPath();
             String travelledDistances04 = picker.printTravelledDistances();
             String pickedItems04 = picker.printPickedItems();
@@ -181,7 +181,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase02.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution5 = new Solution(room1, picker, parameters);
-            solution5.solve(Solution.Methods.SShape);
+            solution5.solve(Solution.Algorithm.SShape);
             String path05 = picker.printPath();
             String travelledDistances05 = picker.printTravelledDistances();
             String pickedItems05 = picker.printPickedItems();
@@ -191,7 +191,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase02.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution6 = new Solution(room1, picker, parameters);
-            solution6.solve(Solution.Methods.LargestGap);
+            solution6.solve(Solution.Algorithm.LargestGap);
             String path06 = picker.printPath();
             String travelledDistances06 = picker.printTravelledDistances();
             String pickedItems06 = picker.printPickedItems();
@@ -201,7 +201,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase03.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution7 = new Solution(room1, picker, parameters);
-            solution7.solve(Solution.Methods.SShape);
+            solution7.solve(Solution.Algorithm.SShape);
             String path07 = picker.printPath();
             String travelledDistances07 = picker.printTravelledDistances();
             String pickedItems07 = picker.printPickedItems();
@@ -211,7 +211,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase03.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution8 = new Solution(room1, picker, parameters);
-            solution8.solve(Solution.Methods.LargestGap);
+            solution8.solve(Solution.Algorithm.LargestGap);
             String path08 = picker.printPath();
             String travelledDistances08 = picker.printTravelledDistances();
             String pickedItems08 = picker.printPickedItems();
@@ -221,7 +221,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase04.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution9 = new Solution(room1, picker, parameters);
-            solution9.solve(Solution.Methods.SShape);
+            solution9.solve(Solution.Algorithm.SShape);
             String path09 = picker.printPath();
             String travelledDistances09 = picker.printTravelledDistances();
             String pickedItems09 = picker.printPickedItems();
@@ -231,7 +231,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/SStestCase04.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution10 = new Solution(room1, picker, parameters);
-            solution10.solve(Solution.Methods.LargestGap);
+            solution10.solve(Solution.Algorithm.LargestGap);
             String path10 = picker.printPath();
             String travelledDistances10 = picker.printTravelledDistances();
             String pickedItems10 = picker.printPickedItems();
@@ -362,28 +362,28 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New5.txt");
             room1.ItemList = parameters.ItemListSet.ElementAt(0);
             solution1 = new Solution(room1, picker, parameters);
-            solution1.solve(Solution.Methods.TabuSearch);
+            solution1.solve(Solution.Algorithm.TabuSearch);
 
             //picker = new Picker(depot);
             //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
             //room1.ItemList = parameters.ItemListSet.ElementAt(0);
             //solution5 = new Solution(room1, picker, parameters);
-            //solution5.solve(Solution.Methods.SShape);
+            //solution5.solve(Solution.Algorithm.SShape);
             //assert here
 
             //picker = new Picker(depot);
             //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
             //room1.ItemList = parameters.ItemListSet.ElementAt(0);
             //solution5 = new Solution(room1, picker, parameters);
-            //solution5.solve(Solution.Methods.LargestGap);
+            //solution5.solve(Solution.Algorithm.LargestGap);
             ////assert here
         }
 
         public static void Main(string[] args)
         {
-            runTestCases();
+            //runTestCases();
             //TABU SEARCH BUNUN ICINDE
-            //runRealWorldChallenge();
+            runRealWorldChallenge();
             
             //parameters.TabuLength = 5;
             //parameters.NumberOfIterations = 20;
