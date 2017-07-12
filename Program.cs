@@ -145,7 +145,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //Test.runTestCases();
             //TABU SEARCH BUNUN ICINDE
             //runRealWorldChallenge();
-            String listFilePath = "../../../files/testListForAlgorithmComparison.txt";
+            String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
             //String listFilePath = "../../../files/testListWithSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             compareAlgorithms(listFilePath, reportFilePath);
@@ -162,7 +162,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //parameters.SizeOfLists = new int[] { 25, 50, 100 };
             //parameters.SizeOfLists = new int[] { 5 };
             //parameters.NumberOfLists = 5;
-            //generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
+            //Utils.generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
 
             //PARAMETER TUNING--BUNU LIST GENERATION I YAPTIKTAN SONRA AC
             //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");

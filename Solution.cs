@@ -17,6 +17,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         private INumVar[, , ,] X;
         private IObjective obj;
         private ILinearNumExpr objective;
+        private Stopwatch stopWatch;
 
         //Helpers... we are using helper arrays for simplicity
         private int[] arrayA; // an array to hold coordinate A of all items
@@ -132,7 +133,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         public void solve(Algorithm method)
         {
             populateHelperArrays();
-            DateTime stTime = DateTime.Now;
+            stopWatch = Stopwatch.StartNew();
             switch (method)
             {
                 case Algorithm.TabuSearch:
@@ -148,8 +149,8 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingTabuSearch(this.parameters.TabuLength, new Item(this.problem.ItemList.Count+1, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
             }
-            DateTime etTime = DateTime.Now;
-            TimeSpan elapsed_Time = etTime.Subtract(stTime);
+            stopWatch.Stop();
+            TimeSpan elapsed_Time = stopWatch.Elapsed;
             double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
             if (method != Algorithm.TabuSearch)
                 this.runningTime = elapsedTime;
@@ -686,16 +687,15 @@ namespace ComparisonOfOrderPickingAlgorithms
                 currentSolution[i] = initialSolutionList[i].Index;
             }
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            stopWatch = Stopwatch.StartNew();
             prepareDistanceMatrix(picker);
-            stopwatch.Stop();
-            double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
+            stopWatch.Stop();
+            TimeSpan dmElapsed_Time = stopWatch.Elapsed;
+            double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
+            //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
             this.distanceMatrixRunningTime = dmElapsedTime;
 
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-
+            stopWatch = Stopwatch.StartNew();
             TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
 
             int[] bestSolution = new int[currentSolution.GetLength(0)];
@@ -730,8 +730,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.totalTravelledDistance = bestCost;
 
             //printTabuPath(bestSolution);
-            stopwatch.Stop();
-            double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
+            stopWatch.Stop();
+            TimeSpan elapsed_Time = stopWatch.Elapsed;
+            double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
+            //double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
             this.runningTime = elapsedTime;
         }
 
