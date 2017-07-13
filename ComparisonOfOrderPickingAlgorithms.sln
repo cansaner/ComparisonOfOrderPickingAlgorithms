@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tabu-Java", "Tabu-Java.csproj", "{F6EA2073-3C9A-4C62-BCD2-F25FFB0C5E7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComparisonOfOrderPickingAlgorithms", "ComparisonOfOrderPickingAlgorithms.csproj", "{F6EA2073-3C9A-4C62-BCD2-F25FFB0C5E7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
