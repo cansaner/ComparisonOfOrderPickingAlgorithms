@@ -673,20 +673,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         private void solveUsingTabuSearch(int tabuLength, Item picker)
         {
-            //generating an initial solution list
-            List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Random);
-            
-            //adding starting point to the start and to the end of the list
-            initialSolutionList.Insert(0, picker);
-            initialSolutionList.Add(picker);
-
-            //Tabu Search is using only item indexes to define solution
-            int[] currentSolution = new int[initialSolutionList.Count];
-            for (int i = 0; i < initialSolutionList.Count; i++)
-            {
-                currentSolution[i] = initialSolutionList[i].Index;
-            }
-
+            //preparing distance matrix
             stopWatch = Stopwatch.StartNew();
             prepareDistanceMatrix(picker);
             stopWatch.Stop();
@@ -695,39 +682,64 @@ namespace ComparisonOfOrderPickingAlgorithms
             //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
             this.distanceMatrixRunningTime = dmElapsedTime;
 
+            double totalBestCost = 0;
             stopWatch = Stopwatch.StartNew();
-            TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
-
-            int[] bestSolution = new int[currentSolution.GetLength(0)];
-            Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
-            double bestCost = calculateTabuSearchObjectiveFunctionValue(bestSolution);
-
-            int numberOfIterations = initialSolutionList.Count - 2;
-            int counter = 0;
-            int iterationCount = 0;
-
-            while (counter < numberOfIterations)
+            for (int j = 0; j < this.problem.ItemList.Count; j++)
             {
-                currentSolution = getBestNeighbour(tabuList, currentSolution);
-                //printTabuPath(currentSolution);
-                //tabuList.printTabuList();
+                //generating an initial solution list
+                List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Random);
 
-                double currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
-                if (currentCost < bestCost)
+                //adding starting point to the start and to the end of the list
+                initialSolutionList.Insert(0, picker);
+                initialSolutionList.Add(picker);
+
+                //Tabu Search is using only item indexes to define solution
+                int[] currentSolution = new int[initialSolutionList.Count];
+                for (int i = 0; i < initialSolutionList.Count; i++)
                 {
-                    Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
-                    bestCost = currentCost;
-                    counter = 0;
+                    currentSolution[i] = initialSolutionList[i].Index;
                 }
-                else
+
+                TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
+
+                int[] bestSolution = new int[currentSolution.GetLength(0)];
+                Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
+                double bestCost = calculateTabuSearchObjectiveFunctionValue(bestSolution);
+                if (j == 0){
+                    totalBestCost = bestCost;
+                }
+
+                int numberOfIterations = initialSolutionList.Count - 2;
+                int counter = 0;
+                int iterationCount = 0;
+
+                while (counter < numberOfIterations)
                 {
-                    counter++;
+                    currentSolution = getBestNeighbour(tabuList, currentSolution);
+                    //printTabuPath(currentSolution);
+                    //tabuList.printTabuList();
+
+                    double currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
+                    if (currentCost < bestCost)
+                    {
+                        Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
+                        bestCost = currentCost;
+                        counter = 0;
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                    iterationCount++;
                 }
-                iterationCount++;
+
+                if (bestCost < totalBestCost)
+                {
+                    totalBestCost = bestCost;
+                }
             }
-
             //Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
-            this.totalTravelledDistance = bestCost;
+            this.totalTravelledDistance = totalBestCost;
 
             //printTabuPath(bestSolution);
             stopWatch.Stop();
