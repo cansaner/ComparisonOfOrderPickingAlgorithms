@@ -611,7 +611,8 @@ namespace ComparisonOfOrderPickingAlgorithms
                     //printTabuPath(newBestSolution);
                     double newBestCost = calculateTabuSearchObjectiveFunctionValue(newBestSolution);
 
-                    if ((newBestCost > bestCost || firstNeighbor) && tabuList.List[i, j] == 0) //tabuList.tabuList[i,j] == 0 means It is not in the list so that move can be performed
+                    //if ((newBestCost > bestCost || firstNeighbor) && tabuList.List[i, j] == 0) //tabuList.tabuList[i,j] == 0 means It is not in the list so that move can be performed
+                    if (((newBestCost > bestCost || firstNeighbor) && tabuList.List[i, j] == 0) || ((newBestCost > bestCost) && tabuList.List[i, j] != 0))
                     { //if better move found, store it
                         firstNeighbor = false;
                         city1 = i;
@@ -709,11 +710,13 @@ namespace ComparisonOfOrderPickingAlgorithms
                     totalBestCost = bestCost;
                 }
 
-                int numberOfIterations = initialSolutionList.Count - 2;
+                //int numberOfIterations = initialSolutionList.Count - 2;
+                int numberOfIterations = 10000;
                 int counter = 0;
                 int iterationCount = 0;
 
-                while (counter < numberOfIterations)
+                while (iterationCount < numberOfIterations)
+                //while (counter < numberOfIterations)
                 {
                     currentSolution = getBestNeighbour(tabuList, currentSolution);
                     //printTabuPath(currentSolution);
