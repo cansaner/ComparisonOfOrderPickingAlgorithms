@@ -29,6 +29,37 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
+        /// <summary>
+		/// Gets an integer array with unique values between minimum value (inclusive) and maximum value (exclusive).
+		/// </summary>
+		/// <returns>The integer array.</returns>
+		/// <param name="length">The array length</param>
+		/// <param name="min">Minimum value (inclusive).</param>
+		/// <param name="max">Maximum value (exclusive).</param>
+		public static int[] GetUniqueInts(int length, int min, int max)
+        {
+            var diff = max - min;
+
+            if (diff < length)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "length",
+                    "The length is "+length+", but the possible unique values between "+min+" (inclusive) and "+max+" (exclusive) are "+diff+".");
+            }
+
+            var orderedValues = Enumerable.Range(min, diff).ToList();
+            var ints = new int[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                var removeIndex = ThreadSafeRandom.ThisThreadsRandom.Next(0, orderedValues.Count);
+                ints[i] = orderedValues[removeIndex];
+                orderedValues.RemoveAt(removeIndex);
+            }
+
+            return ints;
+        }
+
         //Method to write a random item pick list for specified warehouse
         public static void writeRandomItemList(Problem warehouse, int sizeOfList, String filepath, Random rand)
         {

@@ -41,10 +41,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.tabuLength = tabuLength;
         }
 
-        public void tabuMove(int city1, int city2)
+        public void tabuMove(int item1, int item2)
         {
-            list[city1, city2] += this.tabuLength; //Why 5 but not 10? 5+5=10??? (1,2)=5 ve (2,1)=5 ve toplamda mı 10?
-            list[city2, city1] += this.tabuLength; //Why 5?
+            list[item1, item2] += this.tabuLength;
+            list[item2, item1] += this.tabuLength;
         }
 
         public void decrementTabu()
@@ -53,12 +53,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 for (int j = 0; j < list.GetLength(0); j++)
                 {
-                    //tabuList[i, j] -= tabuList[i, j] <= 0 ? 0 : 1;
-                    if (list[i, j] <= 0)
-                        list[i, j] = (list[i, j] - 0);
-                    else //if(tabuList[i, j] > 0)
-                        list[i, j] = (list[i, j] - 1);
-
+                    list[i, j] -= list[i, j] <= 0 ? 0 : 1;
                 }
             }
         }

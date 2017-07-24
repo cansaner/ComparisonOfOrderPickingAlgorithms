@@ -301,7 +301,6 @@ namespace ComparisonOfOrderPickingAlgorithms
         public List<Item> getNonPickedAisleItems(int aPos, int bPos)
         {
             List<Item> aisleItems = new List<Item>();
-            //int rearMost = (int)Math.Ceiling(System.Convert.ToDouble(this.S) / 2);
 
             foreach (Item i in this.itemList)
             {
@@ -310,27 +309,6 @@ namespace ComparisonOfOrderPickingAlgorithms
                     if ((i.BInfo == bPos && i.CInfo == 0) || (i.BInfo == bPos - 1 && i.CInfo == 1))
                     {
                         aisleItems.Add(i);
-                        //switch (aislePart)
-                        //{
-                        //    case AislePart.All:
-                        //        aisleItems.Add(i);
-                        //        break;
-                        //    case AislePart.Rear:
-                        //        if (i.DInfo <= rearMost)
-                        //        {
-                        //            aisleItems.Add(i);
-                        //        }
-                        //        break;
-                        //    case AislePart.Front:
-                        //        if (i.DInfo > rearMost)
-                        //        {
-                        //            aisleItems.Add(i);
-                        //        }
-                        //        break;
-                        //    default:
-                        //        aisleItems.Add(i);
-                        //        break;
-                        //}
                     }
                 }
             }

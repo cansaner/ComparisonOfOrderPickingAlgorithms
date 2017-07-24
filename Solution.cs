@@ -11,7 +11,7 @@ namespace ComparisonOfOrderPickingAlgorithms
     public class Solution
     {
         public enum Algorithm { TabuSearch, SShape, LargestGap };
-        public enum InitialSolutionType { Ordered, Random};
+        public enum InitialSolutionType { Ordered, Random, Greedy};
 
         private Cplex cplex;
         private INumVar[, , ,] X;
@@ -19,11 +19,19 @@ namespace ComparisonOfOrderPickingAlgorithms
         private ILinearNumExpr objective;
         private Stopwatch stopWatch;
 
-        //Helpers... we are using helper arrays for simplicity
-        private int[] arrayA; // an array to hold coordinate A of all items
-        private int[] arrayB; // an array to hold coordinate B of all items
-        private int[] arrayC; // an array to hold coordinate C of all items
-        private int[] arrayD; // an array to hold coordinate D of all items
+        private IDictionary<int, Item> indexedItemDictionary = new Dictionary<int, Item>();
+
+        public IDictionary<int, Item> IndexedItemDictionary
+        {
+            get
+            {
+                return indexedItemDictionary;
+            }
+            protected set
+            {
+                indexedItemDictionary = value;
+            }
+        }
 
         private double[,] distances;
 
@@ -132,12 +140,12 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public void solve(Algorithm method)
         {
-            populateHelperArrays();
+            populateItemDictionary();
             stopWatch = Stopwatch.StartNew();
             switch (method)
             {
                 case Algorithm.TabuSearch:
-                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(this.problem.ItemList.Count+1,this.problem.NumberOfCrossAisles-1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(0,this.problem.NumberOfCrossAisles-1, 1, 0, this.problem.S));
                     break;
                 case Algorithm.SShape:
                     solveUsingSShape();
@@ -146,7 +154,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingLargestGap();
                     break;
                 default:
-                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(this.problem.ItemList.Count+1, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
             }
             stopWatch.Stop();
@@ -171,20 +179,14 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        private void populateHelperArrays()
+        private void populateItemDictionary()
         {
-            int itemCount = this.problem.ItemList.Count;
-            arrayA = new int[itemCount];
-            arrayB = new int[itemCount];
-            arrayC = new int[itemCount];
-            arrayD = new int[itemCount];
-
             foreach (Item i in this.problem.ItemList)
             {
-                arrayA[i.Index-1] = i.AInfo;
-                arrayB[i.Index-1] = i.BInfo;
-                arrayC[i.Index-1] = i.CInfo;
-                arrayD[i.Index-1] = i.DInfo;
+                if (!this.indexedItemDictionary.ContainsKey(i.Index))
+                    this.indexedItemDictionary.Add(i.Index, i);
+                else
+                    Console.WriteLine("Encountered item with duplicate index while preparing item dictionary");
             }
         }
 
@@ -192,14 +194,12 @@ namespace ComparisonOfOrderPickingAlgorithms
         {
             if (picker != null)
             {
-                this.distances = new double[this.problem.ItemList.Count+2, this.problem.ItemList.Count+2];
+                this.distances = new double[this.problem.ItemList.Count + 1, this.problem.ItemList.Count + 1];
             }
-            else 
+            else
             {
                 this.distances = new double[this.problem.ItemList.Count, this.problem.ItemList.Count];
             }
-
-            int iA, iB, iC, iD, fA, fB, fC, fD;
             for (int i = 0; i < this.distances.GetLength(0); i++)
             {
                 for (int j = 0; j < this.distances.GetLength(1); j++)
@@ -212,62 +212,32 @@ namespace ComparisonOfOrderPickingAlgorithms
                     {
                         if (picker != null)
                         {
-                            if (i == 0 || i == this.distances.GetLength(0) - 1)
+                            if (j > i)
                             {
-                                iA = picker.AInfo;
-                                iB = picker.BInfo;
-                                iC = picker.CInfo;
-                                iD = picker.DInfo;
-                                if (j == 0 || j == this.distances.GetLength(1) - 1)
+                                if (i == 0)
                                 {
-                                    fA = picker.AInfo;
-                                    fB = picker.BInfo;
-                                    fC = picker.CInfo;
-                                    fD = picker.DInfo;
+                                    this.distances[i, j] = Solve_Shortest_Path(picker.AInfo, picker.BInfo, picker.CInfo, picker.DInfo, this.indexedItemDictionary[j].AInfo, this.indexedItemDictionary[j].BInfo, this.indexedItemDictionary[j].CInfo, this.indexedItemDictionary[j].DInfo);
                                 }
                                 else
                                 {
-                                    fA = arrayA[j - 1];
-                                    fB = arrayB[j - 1];
-                                    fC = arrayC[j - 1];
-                                    fD = arrayD[j - 1];
+                                    this.distances[i, j] = Solve_Shortest_Path(this.indexedItemDictionary[i].AInfo, this.indexedItemDictionary[i].BInfo, this.indexedItemDictionary[i].CInfo, this.indexedItemDictionary[i].DInfo, this.indexedItemDictionary[j].AInfo, this.indexedItemDictionary[j].BInfo, this.indexedItemDictionary[j].CInfo, this.indexedItemDictionary[j].DInfo);
                                 }
-                                this.distances[i, j] = Solve_Shortest_Path(iA, iB, iC, iD, fA, fB, fC, fD);
                             }
-                            else 
+                            else
                             {
-                                iA = arrayA[i - 1]; //ITEMLIST[i - 1].A_info;
-                                iB = arrayB[i - 1];
-                                iC = arrayC[i - 1];
-                                iD = arrayD[i - 1];
-                                if (j == 0 || j == this.distances.GetLength(1) - 1)
-                                {
-                                    fA = picker.AInfo;
-                                    fB = picker.BInfo;
-                                    fC = picker.CInfo;
-                                    fD = picker.DInfo;
-                                }
-                                else
-                                {
-                                    fA = arrayA[j - 1];
-                                    fB = arrayB[j - 1];
-                                    fC = arrayC[j - 1];
-                                    fD = arrayD[j - 1];
-                                }
-                                this.distances[i, j] = Solve_Shortest_Path(iA, iB, iC, iD, fA, fB, fC, fD);
+                                this.distances[i, j] = this.distances[j, i];
                             }
                         }
                         else
                         {
-                            iA = arrayA[i]; //ITEMLIST[i - 1].A_info;
-                            iB = arrayB[i];
-                            iC = arrayC[i];
-                            iD = arrayD[i];
-                            fA = arrayA[j];
-                            fB = arrayB[j];
-                            fC = arrayC[j];
-                            fD = arrayD[j];
-                            this.distances[i, j] = Solve_Shortest_Path(iA, iB, iC, iD, fA, fB, fC, fD);
+                            if (j > i)
+                            {
+                                this.distances[i, j] = Solve_Shortest_Path(this.indexedItemDictionary[i+1].AInfo, this.indexedItemDictionary[i+1].BInfo, this.indexedItemDictionary[i+1].CInfo, this.indexedItemDictionary[i+1].DInfo, this.indexedItemDictionary[j+1].AInfo, this.indexedItemDictionary[j+1].BInfo, this.indexedItemDictionary[j+1].CInfo, this.indexedItemDictionary[j+1].DInfo);
+                            }
+                            else
+                            {
+                                this.distances[i, j] = this.distances[j, i];
+                            }
                         }
                     }
                 }
@@ -574,69 +544,122 @@ namespace ComparisonOfOrderPickingAlgorithms
         //    }
         //}
 
-        public double calculateTabuSearchObjectiveFunctionValue(int[] solution)
-        { 
-            double cost = 0;
+        public double calculateTabuSearchObjectiveFunctionValue(int[] solutionIndices)
+        {
+            double distanceSum = 0.0;
 
-            for (int i = 0; i < (solution.GetLength(0) - 1); i++)
+            if (solutionIndices.Length == 0)
+                return distanceSum;
+
+            for (int i = 1; i < solutionIndices.Length; i++)
             {
-                cost += this.distances[solution[i], solution[i + 1]];
+                distanceSum += this.distances[solutionIndices[i-1], solutionIndices[i]];
             }
 
-            return cost;
+            distanceSum += this.distances[solutionIndices[solutionIndices.Length-1], solutionIndices[0]];
+
+            return distanceSum;
         }
 
-        public int[] getBestNeighbour(TabuList tabuList, int[] initialSolution)
+        public int[] getBestNeighbour(TabuList tabuList, int[] initialSolution, double bestCost)
         {
-            int[] bestSolution = new int[initialSolution.GetLength(0)]; //this is the best Solution So Far
-            Array.Copy(initialSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
-            double bestCost = calculateTabuSearchObjectiveFunctionValue(initialSolution);
-            int city1 = 0;
-            int city2 = 0;
-            bool firstNeighbor = true;
+            int[] currentSolution;
+            double currentCost;
 
-            for (int i = 1; i < (bestSolution.GetLength(0) - 1); i++)
+            int item1 = -1;
+            int item2 = -1;
+
+            SortedDictionary<double, List<int[]>> allNeighbors = new SortedDictionary<double, List<int[]>>();
+
+            for (int i = 0; i < initialSolution.Length - 1; i++)
             {
-                for (int j = 2; j < (bestSolution.GetLength(0) - 1); j++)
+                int[] nextSolutionIndices = Utils.GetUniqueInts(2, 0, initialSolution.Length);
+
+                currentSolution = swapOperator(nextSolutionIndices[0], nextSolutionIndices[1], initialSolution); //Swapping 2 items to get a neighbor
+                currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
+
+                if (allNeighbors.ContainsKey(currentCost))
                 {
-                    if (i == j)
-                    {
-                        continue;
-                    }
-
-                    int[] newBestSolution = new int[bestSolution.GetLength(0)]; //this is the best Solution So Far
-                    Array.Copy(bestSolution, 0, newBestSolution, 0, newBestSolution.GetLength(0));
-
-                    newBestSolution = swapOperator(i, j, initialSolution); //Try swapping cities i and j
-                    //printTabuPath(newBestSolution);
-                    double newBestCost = calculateTabuSearchObjectiveFunctionValue(newBestSolution);
-
-                    //if ((newBestCost > bestCost || firstNeighbor) && tabuList.List[i, j] == 0) //tabuList.tabuList[i,j] == 0 means It is not in the list so that move can be performed
-                    if (((newBestCost > bestCost || firstNeighbor) && tabuList.List[i, j] == 0) || ((newBestCost > bestCost) && tabuList.List[i, j] != 0))
-                    { //if better move found, store it
-                        firstNeighbor = false;
-                        city1 = i;
-                        city2 = j;
-                        Array.Copy(newBestSolution, 0, bestSolution, 0, newBestSolution.GetLength(0));
-                        bestCost = newBestCost;
-                    }
+                    allNeighbors[currentCost].Add(nextSolutionIndices);
+                }
+                else
+                {
+                    allNeighbors.Add(currentCost, new List<int[]> { nextSolutionIndices });
                 }
             }
 
-            if (city1 != 0)
+            bool bestNeighborFound = false;
+            int neighborIndexToCheck = 0;
+            int[] solutionToCheck = new int[initialSolution.Length];
+
+            while (!bestNeighborFound)
             {
-                tabuList.decrementTabu();
-                tabuList.tabuMove(city1, city2);
+                int[] bestNeighborsSwappedIndices = getSolutionAtIndex(allNeighbors, neighborIndexToCheck);
+
+                if (tabuList.List[initialSolution[bestNeighborsSwappedIndices[0]], initialSolution[bestNeighborsSwappedIndices[1]]] > 0)
+                {
+                    solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
+                    double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
+                    if (costToCheck <= bestCost) //Tabu is overridden
+                    {
+                        bestNeighborFound = true;
+                        item1 = initialSolution[bestNeighborsSwappedIndices[0]];
+                        item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
+                {
+                    bestNeighborFound = true;
+                    solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
+                    item1 = initialSolution[bestNeighborsSwappedIndices[0]];
+                    item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                }
+                neighborIndexToCheck++;
             }
-            return bestSolution;
+
+            tabuList.decrementTabu();
+            tabuList.tabuMove(item1, item2);
+
+            return solutionToCheck;
         }
 
-        public int[] swapOperator(int city1, int city2, int[] solution)
+        private int[] getSolutionAtIndex(SortedDictionary<double, List<int[]>> allsolutions, int index)
         {
-            int temp = solution[city1];
-            solution[city1] = solution[city2];
-            solution[city2] = temp;
-            return solution;
+            if (allsolutions == null || allsolutions.Count == 0)
+                return null;
+
+            List<int[]> sortedSolutionsList = new List<int[]>();
+
+            for(int i=0; i < allsolutions.Count; i++)
+            {
+                for (int j=0; j < allsolutions.ElementAt(i).Value.Count; j++)
+                {
+                    sortedSolutionsList.Add(allsolutions.ElementAt(i).Value.ElementAt(j));
+                }
+            }
+
+            if (index < sortedSolutionsList.Count)
+            {
+                return sortedSolutionsList.ElementAt(index);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public int[] swapOperator(int item1, int item2, int[] solutionIndices)
+        {
+            int[] copyOfIndices = new int[solutionIndices.Length];
+            Array.Copy(solutionIndices, 0, copyOfIndices, 0, copyOfIndices.Length);
+            int temp = copyOfIndices[item1];
+            copyOfIndices[item1] = copyOfIndices[item2];
+            copyOfIndices[item2] = temp;
+            return copyOfIndices;
         }
 
         public void printTabuPath(int[] solution)
@@ -654,22 +677,125 @@ namespace ComparisonOfOrderPickingAlgorithms
             Console.WriteLine();
         }
 
-        private List<Item> generateInitialSolutionList(List<Item> itemList, InitialSolutionType type)
+        private List<Item> generateInitialSolutionList(List<Item> itemList, InitialSolutionType type, Item picker)
         {
             List<Item> cloneOfList = Utils.Clone<Item>(itemList);
             switch (type)
             {
                 case InitialSolutionType.Ordered:
                     cloneOfList.Sort();
+                    if (picker != null)
+                    {
+                        cloneOfList.Insert(0, picker); //adding starting point to the start of the list
+                    }
                     break;
                 case InitialSolutionType.Random:
                     Utils.Shuffle<Item>(cloneOfList);
+                    if (picker != null)
+                    {
+                        cloneOfList.Insert(0, picker); //adding starting point to the start of the list
+                    }
+                    break;
+                case InitialSolutionType.Greedy:
+                    cloneOfList = prepareGreedySolution(picker);
                     break;
                 default:
                     cloneOfList.Sort();
                     break;
             }
             return cloneOfList;
+        }
+
+        private List<Item> prepareGreedySolution(Item picker)
+        {
+            List<Item> solutionListOfItems = new List<Item>();
+            IEnumerable<int> enumerable = Enumerable.Range(0, this.distances.GetLength(0));
+            List<int> availableItemIndices = enumerable.ToList();
+            if (this.distances.GetLength(0) < 2)
+            {
+                if (picker == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    solutionListOfItems = new List<Item>();
+                    solutionListOfItems.Add(picker);
+                    return solutionListOfItems;
+                }
+            }
+            double minValue = this.distances[0, 1];
+            int selectedFirstIndex = 0;
+            int selectedSecondındex = 1;
+            for (int i = 0; i < this.distances.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.distances.GetLength(1); j++)
+                {
+                    if (j > i && this.distances[i, j] < minValue)
+                    {
+                        minValue = this.distances[i, j];
+                        selectedFirstIndex = i;
+                        selectedSecondındex = j;
+                    }
+                }
+            }
+            solutionListOfItems = addItemToSolutionList(solutionListOfItems, selectedFirstIndex);
+            solutionListOfItems = addItemToSolutionList(solutionListOfItems, selectedSecondındex);
+            availableItemIndices.Remove(selectedFirstIndex);
+            availableItemIndices.Remove(selectedSecondındex);
+
+            for (int i = 0; i < this.distances.GetLength(0)-2; i++)
+            {
+                int selectedIndex = availableItemIndices.ElementAt(0);
+                double minNextValue = this.distances[solutionListOfItems.ElementAt(solutionListOfItems.Count - 1).Index, selectedIndex];
+                for (int j = 0; j < this.distances.GetLength(1); j++)
+                {
+                    if (j != solutionListOfItems.ElementAt(solutionListOfItems.Count - 1).Index)
+                    {
+                        if (this.distances[solutionListOfItems.ElementAt(solutionListOfItems.Count - 1).Index, j] < minNextValue && availableItemIndices.Contains(j))
+                        {
+                            minNextValue = this.distances[solutionListOfItems.ElementAt(solutionListOfItems.Count - 1).Index, j];
+                            selectedIndex = j;
+                        }
+
+                    }
+                }
+                solutionListOfItems = addItemToSolutionList(solutionListOfItems, selectedIndex);
+                availableItemIndices.Remove(selectedIndex);
+            }
+            return solutionListOfItems;
+        }
+        
+
+        private bool itemAlreadyInSolutionList(List<Item> itemList, int index)
+        {
+            foreach (Item item in itemList)
+            {
+                if (item.Index == index)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private List<Item> addItemToSolutionList(List<Item> itemList, int itemIndex)
+        {
+            Item pickerItem = new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S);
+            if (itemList == null || (!this.indexedItemDictionary.ContainsKey(itemIndex) && itemIndex != 0))
+            {
+                return itemList;
+            }
+
+            if (itemIndex == 0)
+            {
+                itemList.Add(pickerItem);
+            }
+            else
+            {
+                itemList.Add(this.indexedItemDictionary[itemIndex]);
+            }
+            return itemList;
         }
 
         private void solveUsingTabuSearch(int tabuLength, Item picker)
@@ -688,12 +814,8 @@ namespace ComparisonOfOrderPickingAlgorithms
             for (int j = 0; j < this.problem.ItemList.Count; j++)
             {
                 //generating an initial solution list
-                List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Random);
-
-                //adding starting point to the start and to the end of the list
-                initialSolutionList.Insert(0, picker);
-                initialSolutionList.Add(picker);
-
+                List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, picker);
+                
                 //Tabu Search is using only item indexes to define solution
                 int[] currentSolution = new int[initialSolutionList.Count];
                 for (int i = 0; i < initialSolutionList.Count; i++)
@@ -710,15 +832,15 @@ namespace ComparisonOfOrderPickingAlgorithms
                     totalBestCost = bestCost;
                 }
 
-                //int numberOfIterations = initialSolutionList.Count - 2;
-                int numberOfIterations = 10000;
+                int numberOfIterations = initialSolutionList.Count - 1;
+                //int numberOfIterations = 10000;
                 int counter = 0;
                 int iterationCount = 0;
 
-                while (iterationCount < numberOfIterations)
-                //while (counter < numberOfIterations)
+                //while (iterationCount < numberOfIterations)
+                while (counter < numberOfIterations)
                 {
-                    currentSolution = getBestNeighbour(tabuList, currentSolution);
+                    currentSolution = getBestNeighbour(tabuList, currentSolution, bestCost);
                     //printTabuPath(currentSolution);
                     //tabuList.printTabuList();
 
