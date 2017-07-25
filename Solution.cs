@@ -216,11 +216,11 @@ namespace ComparisonOfOrderPickingAlgorithms
                             {
                                 if (i == 0)
                                 {
-                                    this.distances[i, j] = Solve_Shortest_Path(picker.AInfo, picker.BInfo, picker.CInfo, picker.DInfo, this.indexedItemDictionary[j].AInfo, this.indexedItemDictionary[j].BInfo, this.indexedItemDictionary[j].CInfo, this.indexedItemDictionary[j].DInfo);
+                                    this.distances[i, j] = Solve_Shortest_Path(picker, this.indexedItemDictionary[j]);
                                 }
                                 else
                                 {
-                                    this.distances[i, j] = Solve_Shortest_Path(this.indexedItemDictionary[i].AInfo, this.indexedItemDictionary[i].BInfo, this.indexedItemDictionary[i].CInfo, this.indexedItemDictionary[i].DInfo, this.indexedItemDictionary[j].AInfo, this.indexedItemDictionary[j].BInfo, this.indexedItemDictionary[j].CInfo, this.indexedItemDictionary[j].DInfo);
+                                    this.distances[i, j] = Solve_Shortest_Path(this.indexedItemDictionary[i], this.indexedItemDictionary[j]);
                                 }
                             }
                             else
@@ -232,7 +232,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                         {
                             if (j > i)
                             {
-                                this.distances[i, j] = Solve_Shortest_Path(this.indexedItemDictionary[i+1].AInfo, this.indexedItemDictionary[i+1].BInfo, this.indexedItemDictionary[i+1].CInfo, this.indexedItemDictionary[i+1].DInfo, this.indexedItemDictionary[j+1].AInfo, this.indexedItemDictionary[j+1].BInfo, this.indexedItemDictionary[j+1].CInfo, this.indexedItemDictionary[j+1].DInfo);
+                                this.distances[i, j] = Solve_Shortest_Path(this.indexedItemDictionary[i+1], this.indexedItemDictionary[j+1]);
                             }
                             else
                             {
@@ -244,14 +244,15 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        public double Solve_Shortest_Path(int A, int B, int C, int D, int APRIME, int BPRIME, int CPRIME, int DPRIME)
+        public double Solve_Shortest_Path(Item sourceItem, Item destinationItem)
         {
             cplex = new Cplex();
             cplex.SetOut(null);
 
             Decision_Variables();
-            Constraints(A, B, C, APRIME, BPRIME, CPRIME);
-            Objective_Function(A, B, C, D, APRIME, BPRIME, CPRIME, DPRIME);
+            Constraints(sourceItem.AInfo, sourceItem.BInfo, sourceItem.CInfo, destinationItem.AInfo, destinationItem.BInfo, destinationItem.CInfo);
+            Objective_Function(sourceItem.AInfo, sourceItem.BInfo, sourceItem.CInfo, sourceItem.DInfo, destinationItem.AInfo, destinationItem.BInfo, destinationItem.CInfo, destinationItem.DInfo);
+            Console.WriteLine("CPLEX runs from (" + sourceItem.Index + ") to (" + destinationItem.Index + ")");
 
             bool conclusion = cplex.Solve();
             string conclude = cplex.GetStatus().ToString();
@@ -264,7 +265,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //    Console.WriteLine("Optimal value: " + cplex.ObjValue);
             //}
 
-            //Assignments();
+            Assignments();
 
             double travelled_distance = cplex.GetObjValue();
 
@@ -498,51 +499,52 @@ namespace ComparisonOfOrderPickingAlgorithms
         }
 
         //This functions exists only for testing and printing purpose.
-        //public void Assignments()
-        //{
-        //    //Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, A, B+C, (int)cplex.GetValue(X[0, 0, A, B+C]));
+        public void Assignments()
+        {
+            //Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, A, B+C, (int)cplex.GetValue(X[0, 0, A, B+C]));
 
-        //    for (int iprime = 1; iprime <= this.problem.NumberOfCrossAisles; iprime++)
-        //    {
-        //        for (int jprime = 1; jprime <= this.problem.NumberOfAisles; jprime++)
-        //        {
-        //            //if ((iprime == A && jprime == B + C) || (iprime == A + 1 && jprime == B + C))
-        //            if ((int)(cplex.GetValue(X[0, 0, iprime, jprime])) != 0) // || ((iprime == A + 1 &&  jprime == B + C) && ((int)(cplex.GetValue(X[0, 0, iprime, jprime])) != 0)))
-        //                Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, iprime, jprime, (int)cplex.GetValue(X[0, 0, iprime, jprime]));
-        //        }
-        //    }
-
-
-        //    for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
-        //    {
-        //        for (int j = 1; j <= this.problem.NumberOfAisles; j++)
-        //        {
-        //            for (int iprime = 1; iprime <= this.problem.NumberOfCrossAisles; iprime++)
-        //            {
-        //                for (int jprime = 1; jprime <= this.problem.NumberOfAisles; jprime++)
-        //                {
-        //                    if (
-        //                     (iprime < this.problem.NumberOfCrossAisles + 1 && jprime < this.problem.NumberOfAisles + 1 && i < this.problem.NumberOfCrossAisles + 1 && j < this.problem.NumberOfAisles + 1)
-        //                     &&
-        //                     ((i == iprime - 1 || i == iprime || i == iprime + 1) && (((i == iprime && jprime == j - 1) || (i == iprime && jprime == j + 1)) || (i != iprime && jprime == j)))
-        //                        )
-        //                        if ((int)cplex.GetValue(X[i, j, iprime, jprime]) != 0)
-        //                            Console.WriteLine("X[{0},{1},{2},{3}]={4}", i, j, iprime, jprime, (int)cplex.GetValue(X[i, j, iprime, jprime]));
-        //                }
-        //            }
-        //        }
-        //    }
+            for (int iprime = 1; iprime <= this.problem.NumberOfCrossAisles; iprime++)
+            {
+                for (int jprime = 1; jprime <= this.problem.NumberOfAisles; jprime++)
+                {
+                    //if ((iprime == A && jprime == B + C) || (iprime == A + 1 && jprime == B + C))
+                    if ((int)(cplex.GetValue(X[0, 0, iprime, jprime])) != 0) // || ((iprime == A + 1 &&  jprime == B + C) && ((int)(cplex.GetValue(X[0, 0, iprime, jprime])) != 0)))
+                        Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, iprime, jprime, (int)cplex.GetValue(X[0, 0, iprime, jprime]));
+                        
+                }
+            }
 
 
-        //    for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
-        //    {
-        //        for (int j = 1; j <= this.problem.NumberOfAisles; j++)
-        //        {
-        //            if ((int)cplex.GetValue(X[i, j, 100, 100]) != 0)
-        //                Console.WriteLine("X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
-        //        }
-        //    }
-        //}
+            for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+            {
+                for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                {
+                    for (int iprime = 1; iprime <= this.problem.NumberOfCrossAisles; iprime++)
+                    {
+                        for (int jprime = 1; jprime <= this.problem.NumberOfAisles; jprime++)
+                        {
+                            if (
+                             (iprime < this.problem.NumberOfCrossAisles + 1 && jprime < this.problem.NumberOfAisles + 1 && i < this.problem.NumberOfCrossAisles + 1 && j < this.problem.NumberOfAisles + 1)
+                             &&
+                             ((i == iprime - 1 || i == iprime || i == iprime + 1) && (((i == iprime && jprime == j - 1) || (i == iprime && jprime == j + 1)) || (i != iprime && jprime == j)))
+                                )
+                                if ((int)cplex.GetValue(X[i, j, iprime, jprime]) != 0)
+                                    Console.WriteLine("X[{0},{1},{2},{3}]={4}", i, j, iprime, jprime, (int)cplex.GetValue(X[i, j, iprime, jprime]));
+                        }
+                    }
+                }
+            }
+
+
+            for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+            {
+                for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                {
+                    if ((int)cplex.GetValue(X[i, j, 100, 100]) != 0)
+                        Console.WriteLine("X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
+                }
+            }
+        }
 
         public double calculateTabuSearchObjectiveFunctionValue(int[] solutionIndices)
         {
