@@ -10,7 +10,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 {
     public class Solution
     {
-        public enum Algorithm { TabuSearch, SShape, LargestGap };
+        public enum Algorithm { TabuSearch, SShape, LargestGap, GeneticAlgorithm };
         public enum InitialSolutionType { Ordered, Random, Greedy};
 
         private Cplex cplex;
@@ -44,6 +44,20 @@ namespace ComparisonOfOrderPickingAlgorithms
             protected set
             {
                 distances = value;
+            }
+        }
+
+        private List<Coordinate>[,] paths;
+
+        public List<Coordinate>[,] PathMatrix
+        {
+            get
+            {
+                return paths;
+            }
+            protected set
+            {
+                paths = value;
             }
         }
 
@@ -145,13 +159,16 @@ namespace ComparisonOfOrderPickingAlgorithms
             switch (method)
             {
                 case Algorithm.TabuSearch:
-                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(0,this.problem.NumberOfCrossAisles-1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
                 case Algorithm.SShape:
                     solveUsingSShape();
                     break;
                 case Algorithm.LargestGap:
                     solveUsingLargestGap();
+                    break;
+                case Algorithm.GeneticAlgorithm:
+                    solveUsingGeneticAlgorithm();
                     break;
                 default:
                     solveUsingTabuSearch(this.parameters.TabuLength, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
@@ -195,10 +212,12 @@ namespace ComparisonOfOrderPickingAlgorithms
             if (picker != null)
             {
                 this.distances = new double[this.problem.ItemList.Count + 1, this.problem.ItemList.Count + 1];
+                this.paths = new List<Coordinate>[this.problem.ItemList.Count + 1, this.problem.ItemList.Count + 1];
             }
             else
             {
                 this.distances = new double[this.problem.ItemList.Count, this.problem.ItemList.Count];
+                this.paths = new List<Coordinate>[this.problem.ItemList.Count, this.problem.ItemList.Count];
             }
             for (int i = 0; i < this.distances.GetLength(0); i++)
             {
@@ -266,6 +285,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //}
 
             Assignments();
+            extractShortestPath(sourceItem, destinationItem);
 
             double travelled_distance = cplex.GetObjValue();
 
@@ -498,6 +518,44 @@ namespace ComparisonOfOrderPickingAlgorithms
             obj = cplex.AddMinimize(objective, "shortestdistance");
         }
 
+        private void extractShortestPath(Item sourceItem, Item destinationItem)
+        {
+            List<Coordinate> path = new List<Coordinate>();
+            Coordinate currentNode = new Coordinate(0, 0);
+
+            //getting sourceNode coordinate
+            for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+            {
+                for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                {
+                    if ((int)(cplex.GetValue(X[0, 0, i, j])) != 0)
+                    {
+                        Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
+                        currentNode.Y = i;
+                        currentNode.X = j;
+                        path.Add(new Coordinate(currentNode.X, currentNode.Y));
+                    }
+                }
+            }
+
+            while (currentNode.X != 100 && currentNode.Y != 100)
+            {
+                for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+                {
+                    for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                    {
+                        if ((X[currentNode.Y, currentNode.X, i, j] != null) && (int)(cplex.GetValue(X[currentNode.Y, currentNode.X, i, j])) == 1)
+                        {
+                            Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
+                            currentNode.Y = i;
+                            currentNode.X = j;
+                            path.Add(new Coordinate(currentNode.X, currentNode.Y));
+                        }
+                    }
+                }
+            }
+        }
+
         //This functions exists only for testing and printing purpose.
         public void Assignments()
         {
@@ -514,7 +572,6 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
             }
 
-
             for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
             {
                 for (int j = 1; j <= this.problem.NumberOfAisles; j++)
@@ -523,18 +580,17 @@ namespace ComparisonOfOrderPickingAlgorithms
                     {
                         for (int jprime = 1; jprime <= this.problem.NumberOfAisles; jprime++)
                         {
-                            if (
-                             (iprime < this.problem.NumberOfCrossAisles + 1 && jprime < this.problem.NumberOfAisles + 1 && i < this.problem.NumberOfCrossAisles + 1 && j < this.problem.NumberOfAisles + 1)
-                             &&
-                             ((i == iprime - 1 || i == iprime || i == iprime + 1) && (((i == iprime && jprime == j - 1) || (i == iprime && jprime == j + 1)) || (i != iprime && jprime == j)))
-                                )
-                                if ((int)cplex.GetValue(X[i, j, iprime, jprime]) != 0)
+                            //if (
+                            // (iprime < this.problem.NumberOfCrossAisles + 1 && jprime < this.problem.NumberOfAisles + 1 && i < this.problem.NumberOfCrossAisles + 1 && j < this.problem.NumberOfAisles + 1)
+                            // &&
+                            // ((i == iprime - 1 || i == iprime || i == iprime + 1) && (((i == iprime && jprime == j - 1) || (i == iprime && jprime == j + 1)) || (i != iprime && jprime == j)))
+                            //    )
+                                if (( X[i, j, iprime, jprime] != null ) &&(int)cplex.GetValue(X[i, j, iprime, jprime]) != 0)
                                     Console.WriteLine("X[{0},{1},{2},{3}]={4}", i, j, iprime, jprime, (int)cplex.GetValue(X[i, j, iprime, jprime]));
                         }
                     }
                 }
             }
-
 
             for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
             {
@@ -746,7 +802,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             availableItemIndices.Remove(selectedFirstIndex);
             availableItemIndices.Remove(selectedSecondındex);
 
-            for (int i = 0; i < this.distances.GetLength(0)-2; i++)
+            for (int i = 0; i < this.distances.GetLength(0) - 2; i++)
             {
                 int selectedIndex = availableItemIndices.ElementAt(0);
                 double minNextValue = this.distances[solutionListOfItems.ElementAt(solutionListOfItems.Count - 1).Index, selectedIndex];
@@ -759,26 +815,12 @@ namespace ComparisonOfOrderPickingAlgorithms
                             minNextValue = this.distances[solutionListOfItems.ElementAt(solutionListOfItems.Count - 1).Index, j];
                             selectedIndex = j;
                         }
-
                     }
                 }
                 solutionListOfItems = addItemToSolutionList(solutionListOfItems, selectedIndex);
                 availableItemIndices.Remove(selectedIndex);
             }
             return solutionListOfItems;
-        }
-        
-
-        private bool itemAlreadyInSolutionList(List<Item> itemList, int index)
-        {
-            foreach (Item item in itemList)
-            {
-                if (item.Index == index)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private List<Item> addItemToSolutionList(List<Item> itemList, int itemIndex)
@@ -1093,6 +1135,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);
             this.totalTravelledDistance = picker.Distance;
             picker.printAllGatheredData();
+        }
+
+        public void solveUsingGeneticAlgorithm()
+        {
+
         }
     }
 }
