@@ -285,7 +285,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //}
 
             Assignments();
-            extractShortestPath(sourceItem, destinationItem);
+            //extractShortestPath(sourceItem, destinationItem);
 
             double travelled_distance = cplex.GetObjValue();
 

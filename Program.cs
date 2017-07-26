@@ -144,8 +144,8 @@ namespace ComparisonOfOrderPickingAlgorithms
             //Test.runTestCases();
             //TABU SEARCH BUNUN ICINDE
             //runRealWorldChallenge();
-            String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
-            //String listFilePath = "../../../files/testListWithSize005.txt";
+            //String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
+            String listFilePath = "../../../files/testListWithSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             compareAlgorithms(listFilePath, reportFilePath);
             
