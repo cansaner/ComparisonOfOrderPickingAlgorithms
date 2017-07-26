@@ -57,11 +57,29 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GeneticSharp.Domain, Version=1.1.6378.25009, Culture=neutral, PublicKeyToken=d63d2a65268366c6, processorArchitecture=MSIL">
+      <HintPath>packages\GeneticSharp.1.1.19\lib\net35\GeneticSharp.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="GeneticSharp.Extensions, Version=1.1.6378.25011, Culture=neutral, PublicKeyToken=f24c5e2578f0ecff, processorArchitecture=MSIL">
+      <HintPath>packages\GeneticSharp.1.1.19\lib\net35\GeneticSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="GeneticSharp.Infrastructure.Framework, Version=1.1.6378.25008, Culture=neutral, PublicKeyToken=f24c5e2578f0ecff, processorArchitecture=MSIL">
+      <HintPath>packages\GeneticSharp.1.1.19\lib\net35\GeneticSharp.Infrastructure.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="GeneticSharp.Infrastructure.Threading, Version=1.1.6378.25010, Culture=neutral, PublicKeyToken=f24c5e2578f0ecff, processorArchitecture=MSIL">
+      <HintPath>packages\GeneticSharp.1.1.19\lib\net35\GeneticSharp.Infrastructure.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="ILOG.Concert">
       <HintPath>lib\ILOG.Concert.dll</HintPath>
     </Reference>
     <Reference Include="ILOG.CPLEX">
       <HintPath>lib\ILOG.CPLEX.dll</HintPath>
+    </Reference>
+    <Reference Include="NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL">
+      <HintPath>packages\GeneticSharp.1.1.19\lib\net35\NCalc.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartThreadPool, Version=2.2.4.0, Culture=neutral, PublicKeyToken=1126fe8b671e8a79, processorArchitecture=MSIL">
+      <HintPath>packages\SmartThreadPool.dll.2.2.4\lib\net40\SmartThreadPool.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -113,6 +131,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
