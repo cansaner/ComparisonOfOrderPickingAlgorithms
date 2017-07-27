@@ -178,6 +178,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.pickedItems.Add(item);
         }
 
+        public void goToLocation(Coordinate coord, Problem room)
+        {
+            goToLocation(coord.Y, coord.X, room);
+        }
+
         public void goToLocation(int aLoc, int bLoc, Problem room)
         {
             LinkDistance travelledDistance;

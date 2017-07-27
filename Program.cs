@@ -97,6 +97,12 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.TabuLength = 5;
             parameters.ItemListSet = Utils.readTestList(listFilePath);
 
+            //Add one additional Tabu search solution at the beginning to initiate multi-core process and having less values for distance matrix calculation at report
+            room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
+            picker = new Picker(depot);
+            solution = new Solution(room, picker, parameters);
+            solution.solve(Solution.Algorithm.TabuSearch);
+
             for (int i = 0; i < parameters.ItemListSet.Count; i++)
             {
                 room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(i));
@@ -144,8 +150,8 @@ namespace ComparisonOfOrderPickingAlgorithms
             //Test.runTestCases();
             //TABU SEARCH BUNUN ICINDE
             //runRealWorldChallenge();
-            //String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
-            String listFilePath = "../../../files/testListWithSize005.txt";
+            String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
+            //String listFilePath = "../../../files/testListWithSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             compareAlgorithms(listFilePath, reportFilePath);
             

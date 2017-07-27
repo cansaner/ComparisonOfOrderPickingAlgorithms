@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ComparisonOfOrderPickingAlgorithms
 {
-    public class Coordinate
+    public class Coordinate : ICloneable
     {
         private int x;
 
@@ -45,6 +45,11 @@ namespace ComparisonOfOrderPickingAlgorithms
         {
             this.x = x;
             this.y = y;
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

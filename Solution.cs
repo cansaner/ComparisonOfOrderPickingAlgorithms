@@ -245,6 +245,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                             else
                             {
                                 this.distances[i, j] = this.distances[j, i];
+                                List<Coordinate> reversedPath = Utils.Clone<Coordinate>(this.paths[j, i]);
+                                reversedPath.Reverse();
+                                this.paths[i, j] = reversedPath;
                             }
                         }
                         else
@@ -256,6 +259,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                             else
                             {
                                 this.distances[i, j] = this.distances[j, i];
+                                List<Coordinate> reversedPath = Utils.Clone<Coordinate>(this.paths[j, i]);
+                                reversedPath.Reverse();
+                                this.paths[i, j] = reversedPath;
                             }
                         }
                     }
@@ -271,7 +277,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             Decision_Variables();
             Constraints(sourceItem.AInfo, sourceItem.BInfo, sourceItem.CInfo, destinationItem.AInfo, destinationItem.BInfo, destinationItem.CInfo);
             Objective_Function(sourceItem.AInfo, sourceItem.BInfo, sourceItem.CInfo, sourceItem.DInfo, destinationItem.AInfo, destinationItem.BInfo, destinationItem.CInfo, destinationItem.DInfo);
-            Console.WriteLine("CPLEX runs from (" + sourceItem.Index + ") to (" + destinationItem.Index + ")");
+            //Console.WriteLine("CPLEX runs from (" + sourceItem.Index + ") to (" + destinationItem.Index + ")");
 
             bool conclusion = cplex.Solve();
             string conclude = cplex.GetStatus().ToString();
@@ -284,8 +290,8 @@ namespace ComparisonOfOrderPickingAlgorithms
             //    Console.WriteLine("Optimal value: " + cplex.ObjValue);
             //}
 
-            Assignments();
-            //extractShortestPath(sourceItem, destinationItem);
+            //Assignments();
+            extractShortestPath(sourceItem, destinationItem);
 
             double travelled_distance = cplex.GetObjValue();
 
@@ -294,6 +300,61 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             //Console.WriteLine("TOTAL TRAVELLED DISTANCE={0}", travelled_distance);
             return travelled_distance;
+        }
+
+        private void extractShortestPath(Item sourceItem, Item destinationItem)
+        {
+            List<Coordinate> path = new List<Coordinate>();
+            Coordinate endNode = new Coordinate(0, 0);
+
+            for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+            {
+                for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                {
+                    if ((int)cplex.GetValue(X[i, j, 100, 100]) != 0)
+                    {
+                        //Console.WriteLine("End Node: X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
+                        endNode.Y = i;
+                        endNode.X = j;
+                    }
+                }
+            }
+
+            Coordinate currentNode = new Coordinate(0, 0);
+
+            //getting sourceNode coordinate
+            for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+            {
+                for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                {
+                    if ((int)(cplex.GetValue(X[0, 0, i, j])) != 0)
+                    {
+                        //Console.WriteLine("Start Node: X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
+                        currentNode.Y = i;
+                        currentNode.X = j;
+                        path.Add(new Coordinate(currentNode.X, currentNode.Y));
+                    }
+                }
+            }
+
+            while (currentNode.X != endNode.X || currentNode.Y != endNode.Y)
+            {
+                for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
+                {
+                    for (int j = 1; j <= this.problem.NumberOfAisles; j++)
+                    {
+                        if ((X[currentNode.Y, currentNode.X, i, j] != null) && (int)(cplex.GetValue(X[currentNode.Y, currentNode.X, i, j])) == 1)
+                        {
+                            //Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
+                            currentNode.Y = i;
+                            currentNode.X = j;
+                            path.Add(new Coordinate(currentNode.X, currentNode.Y));
+                        }
+                    }
+                }
+            }
+
+            this.paths[sourceItem.Index, destinationItem.Index] = path;
         }
 
         public void Decision_Variables()
@@ -516,44 +577,6 @@ namespace ComparisonOfOrderPickingAlgorithms
             objective.AddTerm(this.problem.K * (DPRIME - 1), X[APRIME, BPRIME + CPRIME, 100, 100]);
 
             obj = cplex.AddMinimize(objective, "shortestdistance");
-        }
-
-        private void extractShortestPath(Item sourceItem, Item destinationItem)
-        {
-            List<Coordinate> path = new List<Coordinate>();
-            Coordinate currentNode = new Coordinate(0, 0);
-
-            //getting sourceNode coordinate
-            for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
-            {
-                for (int j = 1; j <= this.problem.NumberOfAisles; j++)
-                {
-                    if ((int)(cplex.GetValue(X[0, 0, i, j])) != 0)
-                    {
-                        Console.WriteLine("X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
-                        currentNode.Y = i;
-                        currentNode.X = j;
-                        path.Add(new Coordinate(currentNode.X, currentNode.Y));
-                    }
-                }
-            }
-
-            while (currentNode.X != 100 && currentNode.Y != 100)
-            {
-                for (int i = 1; i <= this.problem.NumberOfCrossAisles; i++)
-                {
-                    for (int j = 1; j <= this.problem.NumberOfAisles; j++)
-                    {
-                        if ((X[currentNode.Y, currentNode.X, i, j] != null) && (int)(cplex.GetValue(X[currentNode.Y, currentNode.X, i, j])) == 1)
-                        {
-                            Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
-                            currentNode.Y = i;
-                            currentNode.X = j;
-                            path.Add(new Coordinate(currentNode.X, currentNode.Y));
-                        }
-                    }
-                }
-            }
         }
 
         //This functions exists only for testing and printing purpose.
@@ -853,62 +876,67 @@ namespace ComparisonOfOrderPickingAlgorithms
             //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
             this.distanceMatrixRunningTime = dmElapsedTime;
 
-            double totalBestCost = 0;
             stopWatch = Stopwatch.StartNew();
-            for (int j = 0; j < this.problem.ItemList.Count; j++)
+            //generating an initial solution list
+            List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, picker);
+
+            //Tabu Search is using only item indexes to define solution
+            int[] currentSolution = new int[initialSolutionList.Count];
+            for (int i = 0; i < initialSolutionList.Count; i++)
             {
-                //generating an initial solution list
-                List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, picker);
-                
-                //Tabu Search is using only item indexes to define solution
-                int[] currentSolution = new int[initialSolutionList.Count];
-                for (int i = 0; i < initialSolutionList.Count; i++)
+                currentSolution[i] = initialSolutionList[i].Index;
+            }
+
+            TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
+
+            int[] bestSolution = new int[currentSolution.Length];
+            Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.Length);
+            double bestCost = calculateTabuSearchObjectiveFunctionValue(bestSolution);
+            
+            int numberOfIterations = initialSolutionList.Count - 1;
+            //int numberOfIterations = 10000;
+            int counter = 0;
+            int iterationCount = 0;
+
+            //while (iterationCount < numberOfIterations)
+            while (counter < numberOfIterations)
+            {
+                currentSolution = getBestNeighbour(tabuList, currentSolution, bestCost);
+                //printTabuPath(currentSolution);
+                //tabuList.printTabuList();
+
+                double currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
+                if (currentCost < bestCost)
                 {
-                    currentSolution[i] = initialSolutionList[i].Index;
+                    Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
+                    bestCost = currentCost;
+                    counter = 0;
                 }
-
-                TabuList tabuList = new TabuList(this.distances.GetLength(0), tabuLength);
-
-                int[] bestSolution = new int[currentSolution.GetLength(0)];
-                Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
-                double bestCost = calculateTabuSearchObjectiveFunctionValue(bestSolution);
-                if (j == 0){
-                    totalBestCost = bestCost;
-                }
-
-                int numberOfIterations = initialSolutionList.Count - 1;
-                //int numberOfIterations = 10000;
-                int counter = 0;
-                int iterationCount = 0;
-
-                //while (iterationCount < numberOfIterations)
-                while (counter < numberOfIterations)
+                else
                 {
-                    currentSolution = getBestNeighbour(tabuList, currentSolution, bestCost);
-                    //printTabuPath(currentSolution);
-                    //tabuList.printTabuList();
-
-                    double currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
-                    if (currentCost < bestCost)
-                    {
-                        Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.GetLength(0));
-                        bestCost = currentCost;
-                        counter = 0;
-                    }
-                    else
-                    {
-                        counter++;
-                    }
-                    iterationCount++;
+                    counter++;
                 }
+                iterationCount++;
+            }
+            
+            //Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
+            
+            //total travelled distance calculation will be done according to simulation of solution with picker
+            //this.totalTravelledDistance = bestCost;
 
-                if (bestCost < totalBestCost)
+            int[] depotFirstBestSolution = new int[bestSolution.Length];
+
+            //shifting best solution to make its first element to be depot item
+            for (int i = 0; i < bestSolution.Length; i++)
+            {
+                if (bestSolution[i] == 0)
                 {
-                    totalBestCost = bestCost;
+                    Array.Copy(bestSolution, i, depotFirstBestSolution, 0, bestSolution.Length - i);
+                    Array.Copy(bestSolution, 0, depotFirstBestSolution, bestSolution.Length - i, i);
                 }
             }
-            //Console.WriteLine("\n\nSearch done! \nBest Solution cost found = " + bestCost + "\nBest Solution :");
-            this.totalTravelledDistance = totalBestCost;
+
+            simulateDepotFirstBestSolution(depotFirstBestSolution);
 
             //printTabuPath(bestSolution);
             stopWatch.Stop();
@@ -916,6 +944,95 @@ namespace ComparisonOfOrderPickingAlgorithms
             double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
             //double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
             this.runningTime = elapsedTime;
+            this.totalTravelledDistance = this.picker.Distance;
+            this.picker.printAllGatheredData();
+        }
+
+        private void simulateDepotFirstBestSolution(int[] depotFirstBestSolution)
+        {
+            Coordinate depot = new Coordinate(1, this.problem.NumberOfCrossAisles);
+
+            Coordinate firstNodeOfFirstPath = this.paths[depotFirstBestSolution[0], depotFirstBestSolution[1]].ElementAt(0);
+            if (depot.X!= firstNodeOfFirstPath.X || depot.Y!= firstNodeOfFirstPath.Y)
+            {
+                picker.goToLocation(firstNodeOfFirstPath, this.problem);
+            }
+
+            for (int i = 0; i < depotFirstBestSolution.Length - 1; i++)
+            {
+                Item currentItemToPick = this.indexedItemDictionary[depotFirstBestSolution[i + 1]];
+                List<Coordinate> pathForCurrentItem = this.paths[depotFirstBestSolution[i], depotFirstBestSolution[i + 1]];
+                Coordinate lastNodeOfPathForCurrentItem = pathForCurrentItem.Last();
+
+                if (pathForCurrentItem.Count <= 1)
+                {
+                    continue;
+                }
+
+                for (int j = 1; j < pathForCurrentItem.Count; j++)
+                {
+                    picker.goToLocation(pathForCurrentItem.ElementAt(j), this.problem);
+                }
+
+                List<Coordinate> pathForNextItem;
+                if (i >= depotFirstBestSolution.Length - 2)
+                {
+                    pathForNextItem = this.paths[depotFirstBestSolution[depotFirstBestSolution.Length - 1], depotFirstBestSolution[0]];
+                }
+                else
+                {
+                    pathForNextItem = this.paths[depotFirstBestSolution[i + 1], depotFirstBestSolution[i + 2]];
+                }
+                Coordinate firstNodeOfPathForNextItem = pathForNextItem.First();
+
+                if (lastNodeOfPathForCurrentItem.X != firstNodeOfPathForNextItem.X || lastNodeOfPathForCurrentItem.Y != firstNodeOfPathForNextItem.Y)
+                {
+                    if (lastNodeOfPathForCurrentItem.Y != firstNodeOfPathForNextItem.Y)
+                    {
+                        picker.goToLocation(firstNodeOfPathForNextItem.Y, picker.Location.X, this.problem);
+                    }
+                    if (lastNodeOfPathForCurrentItem.X != firstNodeOfPathForNextItem.X)
+                    {
+                        if (pathForNextItem.ElementAt(1) != null)
+                        {
+                            Coordinate secondNodeOfPathForNextItem = pathForNextItem.ElementAt(1);
+                            if (picker.Location.X != secondNodeOfPathForNextItem.X)
+                            {
+                                picker.goToLocation(picker.Location.Y, firstNodeOfPathForNextItem.X, this.problem);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //picker will only pick item going down
+                    if (!currentItemToPick.Picked)
+                    {
+                        if (currentItemToPick.AInfo == lastNodeOfPathForCurrentItem.Y)
+                        {
+                            picker.collectAisle(false, true, this.problem);
+                        }
+                        //picker will only pick item going up
+                        else
+                        {
+                            picker.collectAisle(true, true, this.problem);
+                        }
+                    }
+                }
+            }
+
+            List<Coordinate> pathForDepot = this.paths[depotFirstBestSolution[depotFirstBestSolution.Length - 1], depotFirstBestSolution[0]];
+            Coordinate lastNodeOfPathForDepot = pathForDepot.Last();
+
+            for (int j = 1; j < pathForDepot.Count; j++)
+            {
+                picker.goToLocation(pathForDepot.ElementAt(j), this.problem);
+            }
+            
+            if (depot.X != lastNodeOfPathForDepot.X || depot.Y != lastNodeOfPathForDepot.Y)
+            {
+                picker.goToLocation(depot, this.problem);
+            }
         }
 
         public void solveUsingSShape()
