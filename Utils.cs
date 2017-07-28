@@ -61,7 +61,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         }
 
         //Method to write a random item pick list for specified warehouse
-        public static void writeRandomItemList(Problem warehouse, int sizeOfList, String filepath, Random rand)
+        public static void writeRandomItemList(Problem warehouse, int sizeOfList, String filepath)
         {
             List<Item> itemList = new List<Item>();
             StreamWriter wr = new StreamWriter(filepath, true);
@@ -70,10 +70,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 Item j = new Item();
                 j.Index = i + 1;
-                j.AInfo = rand.Next(1, warehouse.NumberOfCrossAisles); //inclusive lower bound & exclusive upper bound
-                j.BInfo = rand.Next(1, warehouse.NumberOfAisles);
-                j.CInfo = rand.Next(0, 2); //(0,1): 1 is exclusive
-                j.DInfo = rand.Next(1, warehouse.S + 1);
+                j.AInfo = ThreadSafeRandom.ThisThreadsRandom.Next(1, warehouse.NumberOfCrossAisles); //inclusive lower bound & exclusive upper bound
+                j.BInfo = ThreadSafeRandom.ThisThreadsRandom.Next(1, warehouse.NumberOfAisles);
+                j.CInfo = ThreadSafeRandom.ThisThreadsRandom.Next(0, 2); //(0,1): 1 is exclusive
+                j.DInfo = ThreadSafeRandom.ThisThreadsRandom.Next(1, warehouse.S + 1);
                 itemList.Add(j);
                 wr.WriteLine("{0},{1},{2},{3},{4}", j.Index, j.AInfo, j.BInfo, j.CInfo, j.DInfo);
             }
@@ -83,23 +83,29 @@ namespace ComparisonOfOrderPickingAlgorithms
         }
 
         //Method to automate generation of random pick lists for specified warehouse with different item pick list criteria
-        public static void generateTestLists(Problem warehouse, int[] sizeOfLists, int numberOfLists)
+        public static void generateTestLists(Problem warehouse, int[] pickListSizesOfTestLists, int numberOfPickLists)
         {
             String filepath;
             String fileNumberZeros;
-            Random rand = new Random();
 
-            for (int i = 0; i < sizeOfLists.Length; i++)
+            for (int i = 0; i < pickListSizesOfTestLists.Length; i++)
             {
-                if (sizeOfLists[i] < 1 || sizeOfLists[i] > 999)
+                if (pickListSizesOfTestLists[i] < 1 || pickListSizesOfTestLists[i] > 999)
                     continue;
-                fileNumberZeros = (sizeOfLists[i] < 10) ? "00" : ((sizeOfLists[i] < 100) ? "0" : "");
-                filepath = "../../../files/testListWithSize" + fileNumberZeros + sizeOfLists[i] + ".txt";
-                for (int j = 0; j < numberOfLists; j++)
+                fileNumberZeros = (pickListSizesOfTestLists[i] < 10) ? "00" : ((pickListSizesOfTestLists[i] < 100) ? "0" : "");
+                filepath = "../../../files/testListWithPickListSize" + fileNumberZeros + pickListSizesOfTestLists[i] + ".txt";
+                if (File.Exists(filepath))
                 {
-                    writeRandomItemList(warehouse, sizeOfLists[i], filepath, rand);
+                    Console.WriteLine("{0} already exists. Generating a test list with same name would append more lines to the file if any previously test list exists with same name though It will mess previously created test list. Please remove previously created test list with same name manually on the path or try to create another test list with pick list size other than {1}", filepath, pickListSizesOfTestLists[i]);
                 }
-                Console.WriteLine("Finished generating pick list of {0} items", sizeOfLists[i]);
+                else
+                {
+                    for (int j = 0; j < numberOfPickLists; j++)
+                    {
+                        writeRandomItemList(warehouse, pickListSizesOfTestLists[i], filepath);
+                    }
+                    Console.WriteLine("Finished generating {0} pick list(s) of {1} items", numberOfPickLists, pickListSizesOfTestLists[i]);
+                }
             }
         }
         

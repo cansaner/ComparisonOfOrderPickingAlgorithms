@@ -7,30 +7,30 @@ namespace ComparisonOfOrderPickingAlgorithms
 {
     public class ListGenerationParameters
     {
-        private int[] sizeOfLists;
-        private int numberOfLists;
+        private int[] pickListSizesOfTestLists;
+        private int numberOfPickLists;
 
-        public int[] SizeOfLists
+        public int[] PickListSizesOfTestLists
         {
             get
             {
-                return sizeOfLists;
+                return pickListSizesOfTestLists;
             }
             set
             {
-                sizeOfLists = value;
+                pickListSizesOfTestLists = value;
             }
         }
 
-        public int NumberOfLists
+        public int NumberOfPickLists
         {
             get
             {
-                return numberOfLists;
+                return numberOfPickLists;
             }
             set
             {
-                numberOfLists = value;
+                numberOfPickLists = value;
             }
         }
 

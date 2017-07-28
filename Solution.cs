@@ -159,7 +159,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             switch (method)
             {
                 case Algorithm.TabuSearch:
-                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
                 case Algorithm.SShape:
                     solveUsingSShape();
@@ -171,7 +171,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingGeneticAlgorithm();
                     break;
                 default:
-                    solveUsingTabuSearch(this.parameters.TabuLength, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
             }
             stopWatch.Stop();
@@ -672,40 +672,51 @@ namespace ComparisonOfOrderPickingAlgorithms
             bool bestNeighborFound = false;
             int neighborIndexToCheck = 0;
             int[] solutionToCheck = new int[initialSolution.Length];
+            int[] bestNeighborsSwappedIndices = getSolutionAtIndex(allNeighbors, neighborIndexToCheck);
 
-            while (!bestNeighborFound)
+            while (!bestNeighborFound && bestNeighborsSwappedIndices != null)
             {
-                int[] bestNeighborsSwappedIndices = getSolutionAtIndex(allNeighbors, neighborIndexToCheck);
-
-                if (tabuList.List[initialSolution[bestNeighborsSwappedIndices[0]], initialSolution[bestNeighborsSwappedIndices[1]]] > 0)
+                if (neighborIndexToCheck > 0)
                 {
-                    solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
-                    double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
-                    if (costToCheck <= bestCost) //Tabu is overridden
+                    bestNeighborsSwappedIndices = getSolutionAtIndex(allNeighbors, neighborIndexToCheck);
+                }
+
+                if (bestNeighborsSwappedIndices != null)
+                {
+                    if (tabuList.List[initialSolution[bestNeighborsSwappedIndices[0]], initialSolution[bestNeighborsSwappedIndices[1]]] > 0)
                     {
-                        bestNeighborFound = true;
-                        item1 = initialSolution[bestNeighborsSwappedIndices[0]];
-                        item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                        solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
+                        double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
+                        if (costToCheck <= bestCost) //Tabu is overridden
+                        {
+                            bestNeighborFound = true;
+                            item1 = initialSolution[bestNeighborsSwappedIndices[0]];
+                            item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                        }
+                        else
+                        {
+
+                        }
                     }
                     else
                     {
-
+                        bestNeighborFound = true;
+                        solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
+                        item1 = initialSolution[bestNeighborsSwappedIndices[0]];
+                        item2 = initialSolution[bestNeighborsSwappedIndices[1]];
                     }
-                }
-                else
-                {
-                    bestNeighborFound = true;
-                    solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
-                    item1 = initialSolution[bestNeighborsSwappedIndices[0]];
-                    item2 = initialSolution[bestNeighborsSwappedIndices[1]];
                 }
                 neighborIndexToCheck++;
             }
 
-            tabuList.decrementTabu();
-            tabuList.tabuMove(item1, item2);
+            if (bestNeighborFound)
+            {
+                tabuList.decrementTabu();
+                tabuList.tabuMove(item1, item2);
 
-            return solutionToCheck;
+                return solutionToCheck;
+            }
+            return initialSolution;
         }
 
         private int[] getSolutionAtIndex(SortedDictionary<double, List<int[]>> allsolutions, int index)
@@ -865,7 +876,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             return itemList;
         }
 
-        private void solveUsingTabuSearch(int tabuLength, Item picker)
+        private void solveUsingTabuSearch(int tabuLength, int numberOfIterations, Item picker)
         {
             //preparing distance matrix
             stopWatch = Stopwatch.StartNew();
@@ -893,7 +904,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             Array.Copy(currentSolution, 0, bestSolution, 0, bestSolution.Length);
             double bestCost = calculateTabuSearchObjectiveFunctionValue(bestSolution);
             
-            int numberOfIterations = initialSolutionList.Count - 1;
+            if (numberOfIterations <= 0)
+            {
+                numberOfIterations = initialSolutionList.Count - 1;
+            }
             //int numberOfIterations = 10000;
             int counter = 0;
             int iterationCount = 0;

@@ -14,13 +14,19 @@ namespace ComparisonOfOrderPickingAlgorithms
         private static Solution solution;
 
         //Method to make a set of item pick list tryouts to tune parameters of Tabu Search algorithm
-        public static void tuneParameters(Problem problem, Coordinate depot, Parameters parameters, String filePath)
+        public static void tuneTabuSearchParameters(String pickListsFilePath, String outputFilePath)
         {
-            StreamWriter wr = new StreamWriter(filePath, true);
-            Picker picker;
+            parameters.ItemListSet = Utils.readTestList(pickListsFilePath);
+            String delimiter = "\t";            
+            StreamWriter wr = new StreamWriter(outputFilePath, true);
+            wr.WriteLine("{0}" + delimiter + "{1}", 
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
+                pickListsFilePath);
+            wr.WriteLine("tabuLength" + delimiter + "numberOfIterations" + delimiter + "travelledDistance" + delimiter + "runningTime");
+
             foreach (List<Item> itemList in parameters.ItemListSet)
             {
-                problem.ItemList = itemList;
+                room.ItemList = itemList;
                 picker = new Picker(depot);
                 for (int j = 0; j < parameters.NumberOfIterationsList.Length; j++)
                 {
@@ -28,10 +34,18 @@ namespace ComparisonOfOrderPickingAlgorithms
                     for (int i = 0; i < parameters.TabuLengthList.Length; i++)
                     {
                         parameters.TabuLength = parameters.TabuLengthList[i];
-                        Solution solution = new Solution(problem, picker, parameters);
+                        Solution solution = new Solution(room, picker, parameters);
                         solution.solve(Solution.Algorithm.TabuSearch);
-                        Console.WriteLine("{0}:{1}:{2}:{3}", parameters.TabuLength, parameters.NumberOfIterations, solution.TravelledDistance, solution.RunningTime);
-                        wr.WriteLine("{0}:{1}:{2}:{3}", parameters.TabuLength, parameters.NumberOfIterations, solution.TravelledDistance, solution.RunningTime);
+                        Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}",
+                            parameters.TabuLength,
+                            parameters.NumberOfIterations,
+                            solution.TravelledDistance,
+                            solution.RunningTime);
+                        wr.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}",
+                            parameters.TabuLength,
+                            parameters.NumberOfIterations,
+                            solution.TravelledDistance,
+                            solution.RunningTime);
                     }
                 }
                 wr.WriteLine("");
@@ -55,26 +69,12 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters = new Parameters();
 
             parameters.TabuLength = 5;
-            //parameters.NumberOfIterations = 20;
+            parameters.NumberOfIterations = 0;
             picker = new Picker(depot);
             parameters.ItemListSet = Utils.readTestList("C:\\masterTez/sshape1New5.txt");
             room.ItemList = parameters.ItemListSet.ElementAt(0);
             solution = new Solution(room, picker, parameters);
             solution.solve(Solution.Algorithm.TabuSearch);
-
-            //picker = new Picker(depot);
-            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
-            //room.ItemList = parameters.ItemListSet.ElementAt(0);
-            //solution5 = new Solution(room, picker, parameters);
-            //solution5.solve(Solution.Algorithm.SShape);
-            //assert here
-
-            //picker = new Picker(depot);
-            //parameters.ItemListSet = readTestList("C:\\masterTez/sshape1New.txt");
-            //room.ItemList = parameters.ItemListSet.ElementAt(0);
-            //solution5 = new Solution(room, picker, parameters);
-            //solution5.solve(Solution.Algorithm.LargestGap);
-            ////assert here
         }
 
         //Method to compare solution algorithms
@@ -145,39 +145,60 @@ namespace ComparisonOfOrderPickingAlgorithms
             wr.Close();
         }
 
+        //Method to setup parameter tuning of Tabu Search algorithm
+        public static void setupTabuSearchParameterTuning(bool generateNewTestLists)
+        {
+            int S = 10;
+            double W = 2.6;
+            double L = 30.4;
+            double K = 2.77;
+            int no_of_horizontal_aisles = 4;
+            int no_of_vertical_aisles = 31;
+
+            depot = new Coordinate(1, no_of_horizontal_aisles);
+            room = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+            parameters = new Parameters();
+
+            if (generateNewTestLists)
+            {
+                //Setup test list generation parameters here
+                parameters.PickListSizesOfTestLists = new int[] { 25, 50, 100 };
+                //parameters.PickListSizesOfTestLists = new int[] { 5 };
+                parameters.NumberOfPickLists = 50;
+                Utils.generateTestLists(room, parameters.PickListSizesOfTestLists, parameters.NumberOfPickLists);
+            }
+
+            parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            //parameters.TabuLengthList = new int[] { 5, 6 };
+            parameters.NumberOfIterationsList = new int[] { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }; //if parameters.NumberOfIterations <=0 than numberOfIterations will be taken as ItemList.Count
+            //parameters.NumberOfIterationsList = new int[] { 10, 20 };
+
+            String[] itemListFilePaths = new String[]
+            {
+                "../../../files/testListWithPickListSize025.txt",
+                "../../../files/testListWithPickListSize050.txt",
+                "../../../files/testListWithPickListSize100.txt"
+            };
+            String parameterTuningReportFilePath = "../../../files/parameterTuning.txt";
+
+            foreach (string path in itemListFilePaths)
+            {
+                if (File.Exists(path))
+                {
+                    tuneTabuSearchParameters(path, parameterTuningReportFilePath);
+                }
+            }
+        }
+
         public static void Main(string[] args)
         {
             //Test.runTestCases();
-            //TABU SEARCH BUNUN ICINDE
             //runRealWorldChallenge();
+            setupTabuSearchParameterTuning(true);
             String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
-            //String listFilePath = "../../../files/testListWithSize005.txt";
+            //String listFilePath = "../../../files/testListWithPickListSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
-            compareAlgorithms(listFilePath, reportFilePath);
-            
-            //parameters.TabuLength = 5;
-            //parameters.NumberOfIterations = 20;
-            //Solution solution = new Solution(room1, picker, parameters);
-            //solution.solve(Solution.Methods.TabuSearch);
-            //solve((int)Methods.TabuSearch);
-            //solve((int)Methods.SShape);
-            //solve((int)Methods.LargestGap);
-
-            //LIST GENERATION--BUNU BIR KERE YAP YAPARKEN PARAMETER TUNING KISMINI KAPAT SONRA LIST GENERATION I KAPAT
-            //parameters.SizeOfLists = new int[] { 25, 50, 100 };
-            //parameters.SizeOfLists = new int[] { 5 };
-            //parameters.NumberOfLists = 5;
-            //Utils.generateTestLists(room1, parameters.SizeOfLists, parameters.NumberOfLists);
-
-            //PARAMETER TUNING--BUNU LIST GENERATION I YAPTIKTAN SONRA AC
-            //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize025.txt");
-            //parameters.ItemListSet = readTestList("C:\\masterTez/testListWithSize005.txt");
-            //parameters.TabuLengthList = new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-            //parameters.TabuLengthList = new int[] { 5, 6 };
-            //parameters.NumberOfIterationsList = new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
-            //parameters.NumberOfIterationsList = new int[] { 10, 20 };
-            //tuneParameters(room1, depot, parameters, "C:\\masterTez/parameterTuning.txt");
-
+            //compareAlgorithms(listFilePath, reportFilePath);
             Console.ReadLine();
         }
     }

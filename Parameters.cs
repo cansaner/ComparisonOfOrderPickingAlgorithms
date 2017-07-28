@@ -59,27 +59,27 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        public int[] SizeOfLists
+        public int[] PickListSizesOfTestLists
         {
             get
             {
-                return listGenerationParameters.SizeOfLists;
+                return listGenerationParameters.PickListSizesOfTestLists;
             }
             set
             {
-                listGenerationParameters.SizeOfLists = value;
+                listGenerationParameters.PickListSizesOfTestLists = value;
             }
         }
 
-        public int NumberOfLists
+        public int NumberOfPickLists
         {
             get
             {
-                return listGenerationParameters.NumberOfLists;
+                return listGenerationParameters.NumberOfPickLists;
             }
             set
             {
-                listGenerationParameters.NumberOfLists = value;
+                listGenerationParameters.NumberOfPickLists = value;
             }
         }
 
