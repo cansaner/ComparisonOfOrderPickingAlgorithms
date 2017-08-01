@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ILOG.Concert;
 using ILOG.CPLEX;
 using System.Diagnostics;
+using GeneticSharp.Domain;
+using GeneticSharp.Domain.Chromosomes;
+using GeneticSharp.Domain.Crossovers;
+using GeneticSharp.Domain.Mutations;
+using GeneticSharp.Domain.Selections;
+using GeneticSharp.Domain.Terminations;
+using GeneticSharp.Domain.Populations;
 
 namespace ComparisonOfOrderPickingAlgorithms
 {
@@ -168,7 +174,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingLargestGap();
                     break;
                 case Algorithm.GeneticAlgorithm:
-                    solveUsingGeneticAlgorithm();
+                    solveUsingGeneticAlgorithm(new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
                 default:
                     solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
@@ -177,7 +183,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             stopWatch.Stop();
             TimeSpan elapsed_Time = stopWatch.Elapsed;
             double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
-            if (method != Algorithm.TabuSearch)
+            if (method != Algorithm.TabuSearch || method != Algorithm.GeneticAlgorithm)
                 this.runningTime = elapsedTime;
             switch (method)
             {
@@ -189,6 +195,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                     break;
                 case Algorithm.LargestGap:
                     Console.WriteLine("LARGEST GAP RUNNING TIME: {0} Seconds", this.runningTime);
+                    break;
+                case Algorithm.GeneticAlgorithm:
+                    Console.WriteLine("GENETIC ALGOTITHM RUNNING TIME: {0} Seconds", this.runningTime);
                     break;
                 default:
                     Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", this.runningTime);
@@ -876,11 +885,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             return itemList;
         }
 
-        private void solveUsingTabuSearch(int tabuLength, int numberOfIterations, Item picker)
+        private void solveUsingTabuSearch(int tabuLength, int numberOfIterations, Item depot)
         {
             //preparing distance matrix
             stopWatch = Stopwatch.StartNew();
-            prepareDistanceMatrix(picker);
+            prepareDistanceMatrix(depot);
             stopWatch.Stop();
             TimeSpan dmElapsed_Time = stopWatch.Elapsed;
             double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
@@ -889,7 +898,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             stopWatch = Stopwatch.StartNew();
             //generating an initial solution list
-            List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, picker);
+            List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, depot);
 
             //Tabu Search is using only item indexes to define solution
             int[] currentSolution = new int[initialSolutionList.Count];
@@ -1268,9 +1277,136 @@ namespace ComparisonOfOrderPickingAlgorithms
             picker.printAllGatheredData();
         }
 
-        public void solveUsingGeneticAlgorithm()
+        public void solveUsingGeneticAlgorithm(Item depot)
         {
+            //preparing distance matrix
+            stopWatch = Stopwatch.StartNew();
+            prepareDistanceMatrix(depot);
+            stopWatch.Stop();
+            TimeSpan dmElapsed_Time = stopWatch.Elapsed;
+            double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
+            //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
+            this.distanceMatrixRunningTime = dmElapsedTime;
 
+            stopWatch = Stopwatch.StartNew();
+            //generating an initial solution list
+            List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, depot);
+
+            //Tabu Search is using only item indexes to define solution
+            int[] currentSolution = new int[initialSolutionList.Count];
+            for (int i = 0; i < initialSolutionList.Count; i++)
+            {
+                currentSolution[i] = initialSolutionList[i].Index;
+            }
+
+            EliteSelection GASelection = new EliteSelection();
+            OrderedCrossover GACrossover = new OrderedCrossover();
+            ReverseSequenceMutation GAMutation = new ReverseSequenceMutation();
+            PickListFitness GAFitness = new PickListFitness(initialSolutionList, this);
+            Population GAPopulation = new Population(100, 200, new PickListChromosome(currentSolution));
+            GAPopulation.GenerationStrategy = new PerformanceGenerationStrategy();
+
+            var ga = new GeneticAlgorithm(GAPopulation, GAFitness, GASelection, GACrossover, GAMutation);
+            ga.Termination = new OrTermination(new TimeEvolvingTermination(TimeSpan.FromMinutes(1)), new FitnessStagnationTermination(500));
+
+            var terminationName = ga.Termination.GetType().Name;
+
+            ga.GenerationRan += delegate
+            {
+                DrawSampleName("Genetic Algorithm");
+
+                var bestChromosome = ga.Population.BestChromosome;
+                Console.WriteLine("Termination: {0}", terminationName);
+                Console.WriteLine("Generations: {0}", ga.Population.GenerationsNumber);
+                Console.WriteLine("Fitness: {0,10}", bestChromosome.Fitness);
+                Console.WriteLine("Time: {0}", ga.TimeEvolving);
+                Draw(bestChromosome);
+            };
+
+            try
+            {
+                ga.Start();
+            }
+            catch (System.Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine();
+                Console.WriteLine("Error: {0}", ex.Message);
+                Console.ResetColor();
+                Console.ReadKey();
+                return;
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine();
+            Console.WriteLine("Evolved.");
+            Console.ResetColor();
+
+            int[] bestSolution = extractBestChromosome(ga.Population.BestChromosome);
+
+            int[] depotFirstBestSolution = new int[bestSolution.Length];
+
+            //shifting best solution to make its first element to be depot item
+            for (int i = 0; i < bestSolution.Length; i++)
+            {
+                if (bestSolution[i] == 0)
+                {
+                    Array.Copy(bestSolution, i, depotFirstBestSolution, 0, bestSolution.Length - i);
+                    Array.Copy(bestSolution, 0, depotFirstBestSolution, bestSolution.Length - i, i);
+                }
+            }
+
+            simulateDepotFirstBestSolution(depotFirstBestSolution);
+
+            //printTabuPath(bestSolution);
+            stopWatch.Stop();
+            TimeSpan elapsed_Time = stopWatch.Elapsed;
+            double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
+            //double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
+            this.runningTime = elapsedTime;
+            this.totalTravelledDistance = this.picker.Distance;
+            this.picker.printAllGatheredData();
+        }
+
+        private static void DrawSampleName(string selectedSampleName)
+        {
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Can Saner - ConsoleApp");
+            Console.WriteLine();
+            Console.WriteLine(selectedSampleName);
+            Console.ResetColor();
+        }
+
+        private void Draw(IChromosome bestChromosome)
+        {
+            var c = bestChromosome as PickListChromosome;
+            Console.WriteLine("Distance: {0:n2}", c.Distance);
+
+            var items = bestChromosome.GetGenes().Select(g => g.Value.ToString()).ToArray();
+            Console.WriteLine("Item Pick List: {0}", string.Join(", ", items));
+        }
+
+        private int[] extractBestChromosome(IChromosome bestChromosome)
+        {
+            var c = bestChromosome as PickListChromosome;
+
+            var items = bestChromosome.GetGenes().Select(g => g.Value.ToString()).ToArray();
+            int[] intItems = new int[items.Length];
+
+            try
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    intItems[i] = Convert.ToInt32(items[i]);
+                }
+            }
+            catch (System.Exception e)
+            {
+
+            }
+            return intItems;
         }
     }
 }

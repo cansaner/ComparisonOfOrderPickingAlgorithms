@@ -101,6 +101,7 @@
     <Compile Include="ParameterTuningParameters.cs" />
     <Compile Include="Picker.cs" />
     <Compile Include="PickListChromosome.cs" />
+    <Compile Include="PickListFitness.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="Solution.cs" />
     <Compile Include="StorageUnit.cs" />

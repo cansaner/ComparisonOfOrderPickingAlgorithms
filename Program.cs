@@ -71,10 +71,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.TabuLength = 5;
             parameters.NumberOfIterations = 0;
             picker = new Picker(depot);
-            parameters.ItemListSet = Utils.readTestList("C:\\masterTez/sshape1New5.txt");
+            parameters.ItemListSet = Utils.readTestList("../../../files/testListWithPickListSize005.txt");
             room.ItemList = parameters.ItemListSet.ElementAt(0);
             solution = new Solution(room, picker, parameters);
-            solution.solve(Solution.Algorithm.TabuSearch);
+            solution.solve(Solution.Algorithm.GeneticAlgorithm);
         }
 
         //Method to compare solution algorithms
@@ -193,10 +193,10 @@ namespace ComparisonOfOrderPickingAlgorithms
         public static void Main(string[] args)
         {
             //Test.runTestCases();
-            //runRealWorldChallenge();
-            setupTabuSearchParameterTuning(true);
-            String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
-            //String listFilePath = "../../../files/testListWithPickListSize005.txt";
+            runRealWorldChallenge();
+            //setupTabuSearchParameterTuning(true);
+            //String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
+            String listFilePath = "../../../files/testListWithPickListSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             //compareAlgorithms(listFilePath, reportFilePath);
             Console.ReadLine();

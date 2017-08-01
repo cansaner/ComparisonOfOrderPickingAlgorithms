@@ -6,6 +6,12 @@ using GeneticSharp.Domain.Chromosomes;
 
 namespace ComparisonOfOrderPickingAlgorithms
 {
+    /// <summary>
+    /// Warehouses with Multiple Cross Aisles Problem chromosome.
+    /// <remarks>
+    /// Each gene represents an item index.
+    /// </remarks>
+    /// </summary>
     [Serializable]
     public class PickListChromosome : ChromosomeBase
     {
@@ -18,12 +24,21 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// Initializes a new instance of the ComparisonOfOrderPickingAlgorithms.PickListChromosome class.
         /// </summary>
         /// <param name="numberOfItems">Number of items in pick list.</param>
-        public PickListChromosome(int numberOfItems) : base(numberOfItems)
+        public PickListChromosome(int numberOfItems) : base(numberOfItems+1)
         {
-            this.numberOfItems = numberOfItems + 1;//Picker is included with index 0
+            this.numberOfItems = numberOfItems;//Picker is included with index 0
             int[] itemIndices = Utils.GetUniqueInts(numberOfItems + 1, 0, numberOfItems + 1);
 
-            for (int i = 0; i < numberOfItems; i++)
+            for (int i = 0; i < numberOfItems + 1; i++)
+            {
+                ReplaceGene(i, new Gene(itemIndices[i]));
+            }
+        }
+
+        public PickListChromosome(int[] itemIndices) : base(itemIndices.Length)
+        {
+            this.numberOfItems = itemIndices.Length - 1;//Number of items is the number of items with indices having index value more than 0, 0 is the depot item.
+            for (int i = 0; i < itemIndices.Length; i++)
             {
                 ReplaceGene(i, new Gene(itemIndices[i]));
             }
