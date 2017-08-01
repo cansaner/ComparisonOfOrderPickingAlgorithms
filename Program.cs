@@ -24,8 +24,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                 pickListsFilePath);
             wr.WriteLine("tabuLength" + delimiter + "numberOfIterations" + delimiter + "travelledDistance" + delimiter + "runningTime");
             
-            foreach (List<Item> itemList in parameters.ItemListSet)
+            for (int k = 0; k < parameters.ItemListSet.Count; k++)
             {
+                List<Item> itemList = parameters.ItemListSet.ElementAt(k);
                 for (int j = 0; j < parameters.NumberOfIterationsList.Length; j++)
                 {
                     parameters.NumberOfIterations = parameters.NumberOfIterationsList[j];
@@ -35,12 +36,16 @@ namespace ComparisonOfOrderPickingAlgorithms
                         room.ItemList = Utils.Clone<Item>(itemList);
                         picker = new Picker(depot);
                         Solution solution = new Solution(room, picker, parameters);
+                        Console.WriteLine("Solving #{0} pick list of test file: {1}", k+1, pickListsFilePath);
                         solution.solve(Solution.Algorithm.TabuSearch);
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}",
                             parameters.TabuLength,
                             parameters.NumberOfIterations,
                             solution.TravelledDistance,
                             solution.RunningTime);
+                        Console.WriteLine();
+                        Console.ResetColor();
                         wr.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}",
                             parameters.TabuLength,
                             parameters.NumberOfIterations,
@@ -74,7 +79,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             parameters.ItemListSet = Utils.readTestList("../../../files/testListWithPickListSize005.txt");
             room.ItemList = parameters.ItemListSet.ElementAt(0);
             solution = new Solution(room, picker, parameters);
-            solution.solve(Solution.Algorithm.GeneticAlgorithm);
+            solution.solve(Solution.Algorithm.TabuSearch);
+            //solution.solve(Solution.Algorithm.SShape);
+            //solution.solve(Solution.Algorithm.LargestGap);
+            //solution.solve(Solution.Algorithm.GeneticAlgorithm);
         }
 
         //Method to compare solution algorithms
@@ -194,7 +202,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         {
             //Test.runTestCases();
             //runRealWorldChallenge();
-            setupTabuSearchParameterTuning(true);
+            setupTabuSearchParameterTuning(true);//false yaparsan generate etmez
             //String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
             String listFilePath = "../../../files/testListWithPickListSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";

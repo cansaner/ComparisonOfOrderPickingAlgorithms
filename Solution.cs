@@ -276,6 +276,17 @@ namespace ComparisonOfOrderPickingAlgorithms
                     }
                 }
             }
+
+            Console.WriteLine("Prepared Distance Matrix:");
+            for (int i = 0; i < this.distances.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.distances.GetLength(1); j++)
+                {
+                    Console.Write(this.distances[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
 
         public double Solve_Shortest_Path(Item sourceItem, Item destinationItem)
@@ -659,14 +670,19 @@ namespace ComparisonOfOrderPickingAlgorithms
             int item1 = -1;
             int item2 = -1;
 
+            Console.WriteLine("Current Initial Sequence :" + string.Join(", ", initialSolution) + " -> " + calculateTabuSearchObjectiveFunctionValue(initialSolution));
+            Console.WriteLine("Best Cost :" + bestCost);
+
             SortedDictionary<double, List<int[]>> allNeighbors = new SortedDictionary<double, List<int[]>>();
 
             for (int i = 0; i < initialSolution.Length - 1; i++)
             {
                 int[] nextSolutionIndices = Utils.GetUniqueInts(2, 0, initialSolution.Length);
+                Console.WriteLine("Swapping indexes:{0} and {1}", nextSolutionIndices[0], nextSolutionIndices[1]);
 
                 currentSolution = swapOperator(nextSolutionIndices[0], nextSolutionIndices[1], initialSolution); //Swapping 2 items to get a neighbor
                 currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
+                Console.WriteLine("Neighbor {0}: {1} -> {2}" , i + 1, string.Join(", ", currentSolution), currentCost);
 
                 if (allNeighbors.ContainsKey(currentCost))
                 {
@@ -698,9 +714,11 @@ namespace ComparisonOfOrderPickingAlgorithms
                         double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
                         if (costToCheck <= bestCost) //Tabu is overridden
                         {
+                            Console.WriteLine("Tabu is overridden");
                             bestNeighborFound = true;
                             item1 = initialSolution[bestNeighborsSwappedIndices[0]];
                             item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                            Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
                         }
                         else
                         {
@@ -713,6 +731,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                         solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
                         item1 = initialSolution[bestNeighborsSwappedIndices[0]];
                         item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                        Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
                     }
                 }
                 neighborIndexToCheck++;
@@ -722,7 +741,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 tabuList.decrementTabu();
                 tabuList.tabuMove(item1, item2);
-
+                tabuList.printTabuList();
                 return solutionToCheck;
             }
             return initialSolution;
