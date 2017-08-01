@@ -23,17 +23,17 @@ namespace ComparisonOfOrderPickingAlgorithms
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
                 pickListsFilePath);
             wr.WriteLine("tabuLength" + delimiter + "numberOfIterations" + delimiter + "travelledDistance" + delimiter + "runningTime");
-
+            
             foreach (List<Item> itemList in parameters.ItemListSet)
             {
-                room.ItemList = itemList;
-                picker = new Picker(depot);
                 for (int j = 0; j < parameters.NumberOfIterationsList.Length; j++)
                 {
                     parameters.NumberOfIterations = parameters.NumberOfIterationsList[j];
                     for (int i = 0; i < parameters.TabuLengthList.Length; i++)
                     {
                         parameters.TabuLength = parameters.TabuLengthList[i];
+                        room.ItemList = Utils.Clone<Item>(itemList);
+                        picker = new Picker(depot);
                         Solution solution = new Solution(room, picker, parameters);
                         solution.solve(Solution.Algorithm.TabuSearch);
                         Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}",
@@ -193,8 +193,8 @@ namespace ComparisonOfOrderPickingAlgorithms
         public static void Main(string[] args)
         {
             //Test.runTestCases();
-            runRealWorldChallenge();
-            //setupTabuSearchParameterTuning(true);
+            //runRealWorldChallenge();
+            setupTabuSearchParameterTuning(true);
             //String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
             String listFilePath = "../../../files/testListWithPickListSize005.txt";
             String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
