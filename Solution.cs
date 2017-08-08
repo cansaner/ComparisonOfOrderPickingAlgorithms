@@ -695,6 +695,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
 
             bool bestNeighborFound = false;
+            bool tabuOverridden = false;
             int neighborIndexToCheck = 0;
             int[] solutionToCheck = new int[initialSolution.Length];
             int[] bestNeighborsSwappedIndices = getSolutionAtIndex(allNeighbors, neighborIndexToCheck);
@@ -716,6 +717,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                         {
                             Console.WriteLine("Tabu is overridden");
                             bestNeighborFound = true;
+                            tabuOverridden = true;
                             item1 = initialSolution[bestNeighborsSwappedIndices[0]];
                             item2 = initialSolution[bestNeighborsSwappedIndices[1]];
                             Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
@@ -737,7 +739,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 neighborIndexToCheck++;
             }
 
-            if (bestNeighborFound)
+            if (bestNeighborFound && !tabuOverridden)
             {
                 tabuList.decrementTabu();
                 tabuList.tabuMove(item1, item2);
