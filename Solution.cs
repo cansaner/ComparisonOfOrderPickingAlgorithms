@@ -324,6 +324,18 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         private void extractShortestPath(Item sourceItem, Item destinationItem)
         {
+            Console.WriteLine("Going From Item Number {0}: {1},{2},{3},{4} To Item Number {5}: {6},{7},{8},{9}", 
+                sourceItem.Index,
+                sourceItem.AInfo,
+                sourceItem.BInfo,
+                sourceItem.CInfo,
+                sourceItem.DInfo,
+                destinationItem.Index,
+                destinationItem.AInfo,
+                destinationItem.BInfo,
+                destinationItem.CInfo,
+                destinationItem.DInfo
+                );
             List<Coordinate> path = new List<Coordinate>();
             Coordinate endNode = new Coordinate(0, 0);
 
@@ -333,7 +345,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     if ((int)cplex.GetValue(X[i, j, 100, 100]) != 0)
                     {
-                        //Console.WriteLine("End Node: X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
+                        Console.WriteLine("End Node: X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
                         endNode.Y = i;
                         endNode.X = j;
                     }
@@ -349,7 +361,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     if ((int)(cplex.GetValue(X[0, 0, i, j])) != 0)
                     {
-                        //Console.WriteLine("Start Node: X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
+                        Console.WriteLine("Start Node: X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
                         currentNode.Y = i;
                         currentNode.X = j;
                         path.Add(new Coordinate(currentNode.X, currentNode.Y));
@@ -365,7 +377,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     {
                         if ((X[currentNode.Y, currentNode.X, i, j] != null) && (int)(cplex.GetValue(X[currentNode.Y, currentNode.X, i, j])) == 1)
                         {
-                            //Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
+                            Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
                             currentNode.Y = i;
                             currentNode.X = j;
                             path.Add(new Coordinate(currentNode.X, currentNode.Y));
