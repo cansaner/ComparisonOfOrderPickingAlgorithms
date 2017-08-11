@@ -1,0 +1,569 @@
+../../../files/testListWithPickListSize025.txt already exists. Generating a test list with same name would append more lines to the file if any previously test list exists with same name though It will mess previously created test list. Please remove previously created test list with same name manually on the path or try to create another test list with pick list size other than 25
+../../../files/testListWithPickListSize050.txt already exists. Generating a test list with same name would append more lines to the file if any previously test list exists with same name though It will mess previously created test list. Please remove previously created test list with same name manually on the path or try to create another test list with pick list size other than 50
+../../../files/testListWithPickListSize100.txt already exists. Generating a test list with same name would append more lines to the file if any previously test list exists with same name though It will mess previously created test list. Please remove previously created test list with same name manually on the path or try to create another test list with pick list size other than 100
+Min Item Info: 2, 4, 0, 5
+LEFT PICK AISLE: 4
+FARTHEST BLOCK: 1
+Picker is dropped into the room
+Solving #1 pick list of test file: ../../../files/testListWithPickListSize004.txt
+Going From Item Number 0: 3,1,0,10 To Item Number 1: 2,4,0,5
+End Node: X[3,4,100,100]=1
+Start Node: X[0,0,3,1]=1
+X[3,1,3,2]=1
+X[3,2,3,3]=1
+X[3,3,3,4]=1
+Going From Item Number 0: 3,1,0,10 To Item Number 2: 1,27,0,7
+End Node: X[2,27,100,100]=1
+Start Node: X[0,0,3,1]=1
+X[3,1,3,2]=1
+X[3,2,3,3]=1
+X[3,3,3,4]=1
+X[3,4,3,5]=1
+X[3,5,3,6]=1
+X[3,6,3,7]=1
+X[3,7,3,8]=1
+X[3,8,3,9]=1
+X[3,9,3,10]=1
+X[3,10,3,11]=1
+X[3,11,3,12]=1
+X[3,12,3,13]=1
+X[3,13,3,14]=1
+X[3,14,3,15]=1
+X[3,15,3,16]=1
+X[3,16,3,17]=1
+X[3,17,3,18]=1
+X[3,18,2,18]=1
+X[2,18,2,19]=1
+X[2,19,2,20]=1
+X[2,20,2,21]=1
+X[2,21,2,22]=1
+X[2,22,2,23]=1
+X[2,23,2,24]=1
+X[2,24,2,25]=1
+X[2,25,2,26]=1
+X[2,26,2,27]=1
+Going From Item Number 0: 3,1,0,10 To Item Number 3: 2,28,0,1
+End Node: X[3,28,100,100]=1
+Start Node: X[0,0,3,1]=1
+X[3,1,3,2]=1
+X[3,2,3,3]=1
+X[3,3,3,4]=1
+X[3,4,3,5]=1
+X[3,5,3,6]=1
+X[3,6,3,7]=1
+X[3,7,3,8]=1
+X[3,8,3,9]=1
+X[3,9,3,10]=1
+X[3,10,3,11]=1
+X[3,11,3,12]=1
+X[3,12,3,13]=1
+X[3,13,3,14]=1
+X[3,14,3,15]=1
+X[3,15,3,16]=1
+X[3,16,3,17]=1
+X[3,17,3,18]=1
+X[3,18,3,19]=1
+X[3,19,3,20]=1
+X[3,20,3,21]=1
+X[3,21,3,22]=1
+X[3,22,3,23]=1
+X[3,23,3,24]=1
+X[3,24,3,25]=1
+X[3,25,3,26]=1
+X[3,26,3,27]=1
+X[3,27,3,28]=1
+Going From Item Number 0: 3,1,0,10 To Item Number 4: 3,26,1,5
+End Node: X[4,27,100,100]=1
+Start Node: X[0,0,4,1]=1
+X[4,1,4,2]=1
+X[4,2,4,3]=1
+X[4,3,4,4]=1
+X[4,4,4,5]=1
+X[4,5,4,6]=1
+X[4,6,4,7]=1
+X[4,7,4,8]=1
+X[4,8,4,9]=1
+X[4,9,4,10]=1
+X[4,10,4,11]=1
+X[4,11,4,12]=1
+X[4,12,4,13]=1
+X[4,13,4,14]=1
+X[4,14,4,15]=1
+X[4,15,4,16]=1
+X[4,16,4,17]=1
+X[4,17,4,18]=1
+X[4,18,4,19]=1
+X[4,19,4,20]=1
+X[4,20,4,21]=1
+X[4,21,4,22]=1
+X[4,22,4,23]=1
+X[4,23,4,24]=1
+X[4,24,4,25]=1
+X[4,25,4,26]=1
+X[4,26,4,27]=1
+Going From Item Number 1: 2,4,0,5 To Item Number 2: 1,27,0,7
+End Node: X[2,27,100,100]=1
+Start Node: X[0,0,2,4]=1
+X[2,4,2,5]=1
+X[2,5,2,6]=1
+X[2,6,2,7]=1
+X[2,7,2,8]=1
+X[2,8,2,9]=1
+X[2,9,2,10]=1
+X[2,10,2,11]=1
+X[2,11,2,12]=1
+X[2,12,2,13]=1
+X[2,13,2,14]=1
+X[2,14,2,15]=1
+X[2,15,2,16]=1
+X[2,16,2,17]=1
+X[2,17,2,18]=1
+X[2,18,2,19]=1
+X[2,19,2,20]=1
+X[2,20,2,21]=1
+X[2,21,2,22]=1
+X[2,22,2,23]=1
+X[2,23,2,24]=1
+X[2,24,2,25]=1
+X[2,25,2,26]=1
+X[2,26,2,27]=1
+Going From Item Number 1: 2,4,0,5 To Item Number 3: 2,28,0,1
+End Node: X[2,28,100,100]=1
+Start Node: X[0,0,2,4]=1
+X[2,4,2,5]=1
+X[2,5,2,6]=1
+X[2,6,2,7]=1
+X[2,7,2,8]=1
+X[2,8,2,9]=1
+X[2,9,2,10]=1
+X[2,10,2,11]=1
+X[2,11,2,12]=1
+X[2,12,2,13]=1
+X[2,13,2,14]=1
+X[2,14,2,15]=1
+X[2,15,2,16]=1
+X[2,16,2,17]=1
+X[2,17,2,18]=1
+X[2,18,2,19]=1
+X[2,19,2,20]=1
+X[2,20,2,21]=1
+X[2,21,2,22]=1
+X[2,22,2,23]=1
+X[2,23,2,24]=1
+X[2,24,2,25]=1
+X[2,25,2,26]=1
+X[2,26,2,27]=1
+X[2,27,2,28]=1
+Going From Item Number 1: 2,4,0,5 To Item Number 4: 3,26,1,5
+End Node: X[3,27,100,100]=1
+Start Node: X[0,0,3,4]=1
+X[3,4,3,5]=1
+X[3,5,3,6]=1
+X[3,6,3,7]=1
+X[3,7,3,8]=1
+X[3,8,3,9]=1
+X[3,9,3,10]=1
+X[3,10,3,11]=1
+X[3,11,3,12]=1
+X[3,12,3,13]=1
+X[3,13,3,14]=1
+X[3,14,3,15]=1
+X[3,15,3,16]=1
+X[3,16,3,17]=1
+X[3,17,3,18]=1
+X[3,18,3,19]=1
+X[3,19,3,20]=1
+X[3,20,3,21]=1
+X[3,21,3,22]=1
+X[3,22,3,23]=1
+X[3,23,3,24]=1
+X[3,24,3,25]=1
+X[3,25,3,26]=1
+X[3,26,3,27]=1
+Going From Item Number 2: 1,27,0,7 To Item Number 3: 2,28,0,1
+End Node: X[2,28,100,100]=1
+Start Node: X[0,0,2,27]=1
+X[2,27,2,28]=1
+Going From Item Number 2: 1,27,0,7 To Item Number 4: 3,26,1,5
+End Node: X[3,27,100,100]=1
+Start Node: X[0,0,2,27]=1
+X[2,27,3,27]=1
+Going From Item Number 3: 2,28,0,1 To Item Number 4: 3,26,1,5
+End Node: X[3,27,100,100]=1
+Start Node: X[0,0,3,28]=1
+X[3,28,3,27]=1
+Prepared Distance Matrix:
+0       46,58   131,24  120,06  81,45
+46,58   0       79,19   73,48   84,73
+131,24  79,19   0       10,91   49,79
+120,06  73,48   10,91   0       38,61
+81,45   84,73   49,79   38,61   0
+
+Current Initial Sequence :2, 3, 4, 0, 1 -> 256,74
+Best Cost :256,74
+Swapping indexes:1 and 4
+Neighbor 1: 2, 1, 4, 0, 3 -> 376,34
+Swapping indexes:0 and 1
+Neighbor 2: 3, 2, 4, 0, 1 -> 262,21
+Swapping indexes:1 and 4
+Neighbor 3: 2, 1, 4, 0, 3 -> 376,34
+Swapping indexes:4 and 3
+Neighbor 4: 2, 3, 4, 1, 0 -> 312,07
+Best Neighbor Found swapping items 2 and 3 forming neighbor -> 3, 2, 4, 0, 1
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       0
+0       0       0       5       0
+0       0       5       0       0
+0       0       0       0       0
+
+Current Initial Sequence :3, 2, 4, 0, 1 -> 262,21
+Best Cost :256,74
+Swapping indexes:2 and 4
+Neighbor 1: 3, 2, 1, 0, 4 -> 256,74
+Swapping indexes:3 and 4
+Neighbor 2: 3, 2, 4, 1, 0 -> 312,07
+Swapping indexes:0 and 1
+Neighbor 3: 2, 3, 4, 0, 1 -> 256,74
+Swapping indexes:1 and 4
+Neighbor 4: 3, 1, 4, 0, 2 -> 381,81
+Best Neighbor Found swapping items 4 and 1 forming neighbor -> 3, 2, 1, 0, 4
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       5
+0       0       0       4       0
+0       0       4       0       0
+0       5       0       0       0
+
+Current Initial Sequence :3, 2, 1, 0, 4 -> 256,74
+Best Cost :256,74
+Swapping indexes:4 and 1
+Neighbor 1: 3, 4, 1, 0, 2 -> 312,07
+Swapping indexes:0 and 4
+Neighbor 2: 4, 2, 1, 0, 3 -> 334,23
+Swapping indexes:4 and 0
+Neighbor 3: 4, 2, 1, 0, 3 -> 334,23
+Swapping indexes:3 and 1
+Neighbor 4: 3, 0, 1, 2, 4 -> 334,23
+Best Neighbor Found swapping items 4 and 2 forming neighbor -> 3, 4, 1, 0, 2
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       4
+0       0       0       3       5
+0       0       3       0       0
+0       4       5       0       0
+
+Current Initial Sequence :3, 4, 1, 0, 2 -> 312,07
+Best Cost :256,74
+Swapping indexes:1 and 4
+Neighbor 1: 3, 2, 1, 0, 4 -> 256,74
+Swapping indexes:3 and 2
+Neighbor 2: 3, 4, 0, 1, 2 -> 256,74
+Swapping indexes:3 and 4
+Neighbor 3: 3, 4, 1, 2, 0 -> 453,83
+Swapping indexes:3 and 0
+Neighbor 4: 0, 4, 1, 3, 2 -> 381,81
+Tabu is overridden
+Best Neighbor Found swapping items 4 and 2 forming neighbor -> 3, 2, 1, 0, 4
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       3
+0       0       0       2       4
+0       0       2       0       0
+0       3       4       0       0
+
+Current Initial Sequence :3, 2, 1, 0, 4 -> 256,74
+Best Cost :256,74
+Swapping indexes:0 and 2
+Neighbor 1: 1, 2, 3, 0, 4 -> 376,34
+Swapping indexes:4 and 3
+Neighbor 2: 3, 2, 1, 4, 0 -> 376,34
+Swapping indexes:0 and 4
+Neighbor 3: 4, 2, 1, 0, 3 -> 334,23
+Swapping indexes:1 and 0
+Neighbor 4: 2, 3, 1, 0, 4 -> 262,21
+Best Neighbor Found swapping items 3 and 4 forming neighbor -> 4, 2, 1, 0, 3
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       2
+0       0       0       1       3
+0       0       1       0       5
+0       2       3       5       0
+
+Current Initial Sequence :4, 2, 1, 0, 3 -> 334,23
+Best Cost :256,74
+Swapping indexes:4 and 0
+Neighbor 1: 3, 2, 1, 0, 4 -> 256,74
+Swapping indexes:2 and 3
+Neighbor 2: 4, 2, 0, 1, 3 -> 339,7
+Swapping indexes:3 and 0
+Neighbor 3: 0, 2, 1, 4, 3 -> 453,83
+Swapping indexes:4 and 3
+Neighbor 4: 4, 2, 1, 3, 0 -> 403,97
+Tabu is overridden
+Best Neighbor Found swapping items 3 and 4 forming neighbor -> 3, 2, 1, 0, 4
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       1
+0       0       0       0       2
+0       0       0       0       4
+0       1       2       4       0
+
+Current Initial Sequence :3, 2, 1, 0, 4 -> 256,74
+Best Cost :256,74
+Swapping indexes:0 and 1
+Neighbor 1: 2, 3, 1, 0, 4 -> 262,21
+Swapping indexes:2 and 0
+Neighbor 2: 1, 2, 3, 0, 4 -> 376,34
+Swapping indexes:4 and 3
+Neighbor 3: 3, 2, 1, 4, 0 -> 376,34
+Swapping indexes:0 and 2
+Neighbor 4: 1, 2, 3, 0, 4 -> 376,34
+Best Neighbor Found swapping items 3 and 2 forming neighbor -> 2, 3, 1, 0, 4
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       0       0       0
+0       0       0       5       1
+0       0       5       0       3
+0       0       1       3       0
+
+Current Initial Sequence :2, 3, 1, 0, 4 -> 262,21
+Best Cost :256,74
+Swapping indexes:1 and 4
+Neighbor 1: 2, 4, 1, 0, 3 -> 312,07
+Swapping indexes:4 and 1
+Neighbor 2: 2, 4, 1, 0, 3 -> 312,07
+Swapping indexes:0 and 2
+Neighbor 3: 1, 3, 2, 0, 4 -> 381,81
+Swapping indexes:0 and 3
+Neighbor 4: 0, 3, 1, 2, 4 -> 403,97
+Best Neighbor Found swapping items 2 and 1 forming neighbor -> 1, 3, 2, 0, 4
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       0
+0       0       5       0       0
+0       5       0       4       0
+0       0       4       0       2
+0       0       0       2       0
+
+Current Initial Sequence :1, 3, 2, 0, 4 -> 381,81
+Best Cost :256,74
+Swapping indexes:0 and 3
+Neighbor 1: 0, 3, 2, 1, 4 -> 376,34
+Swapping indexes:4 and 3
+Neighbor 2: 1, 3, 2, 4, 0 -> 262,21
+Swapping indexes:1 and 2
+Neighbor 3: 1, 2, 3, 0, 4 -> 376,34
+Swapping indexes:3 and 0
+Neighbor 4: 0, 3, 2, 1, 4 -> 376,34
+Best Neighbor Found swapping items 4 and 0 forming neighbor -> 1, 3, 2, 4, 0
+Taking Tabu List actions since any best neighbor is found
+0       0       0       0       5
+0       0       4       0       0
+0       4       0       3       0
+0       0       3       0       1
+5       0       0       1       0
+
+Current Initial Sequence :1, 3, 2, 4, 0 -> 262,21
+Best Cost :256,74
+Swapping indexes:4 and 0
+Neighbor 1: 0, 3, 2, 4, 1 -> 312,07
+Swapping indexes:4 and 2
+Neighbor 2: 1, 3, 0, 4, 2 -> 403,97
+Swapping indexes:2 and 0
+Neighbor 3: 2, 3, 1, 4, 0 -> 381,81
+Swapping indexes:2 and 0
+Neighbor 4: 2, 3, 1, 4, 0 -> 381,81
+Best Neighbor Found swapping items 0 and 1 forming neighbor -> 0, 3, 2, 4, 1
+Taking Tabu List actions since any best neighbor is found
+0       5       0       0       4
+5       0       3       0       0
+0       3       0       2       0
+0       0       2       0       0
+4       0       0       0       0
+
+Picker went up
+Picker is moved from: (4, 1) to: (3, 1)
+Picker is travelled 1L
+Picker went right
+Picker is moved from: (3, 1) to: (3, 2)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (3, 2) to: (3, 3)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (3, 3) to: (3, 4)
+Picker is travelled 1W
+Picker went up
+Picker is moved from: (3, 4) to: (2, 4)
+Picker is travelled 1L
+Picker went right
+Picker is moved from: (2, 4) to: (2, 5)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 5) to: (2, 6)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 6) to: (2, 7)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 7) to: (2, 8)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 8) to: (2, 9)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 9) to: (2, 10)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 10) to: (2, 11)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 11) to: (2, 12)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 12) to: (2, 13)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 13) to: (2, 14)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 14) to: (2, 15)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 15) to: (2, 16)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 16) to: (2, 17)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 17) to: (2, 18)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 18) to: (2, 19)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 19) to: (2, 20)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 20) to: (2, 21)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 21) to: (2, 22)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 22) to: (2, 23)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 23) to: (2, 24)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 24) to: (2, 25)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 25) to: (2, 26)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (2, 26) to: (2, 27)
+Picker is travelled 1W
+Picker is travelled 4K
+Picker is travelled 4K
+Picker went right
+Picker is moved from: (2, 27) to: (2, 28)
+Picker is travelled 1W
+Picker went down
+Picker is moved from: (2, 28) to: (3, 28)
+Picker is travelled 1L
+Picker went left
+Picker is moved from: (3, 28) to: (3, 27)
+Picker is travelled 1W
+Picker went down
+Picker is moved from: (3, 27) to: (4, 27)
+Picker is travelled 1L
+Picker went left
+Picker is moved from: (4, 27) to: (4, 26)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 26) to: (4, 25)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 25) to: (4, 24)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 24) to: (4, 23)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 23) to: (4, 22)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 22) to: (4, 21)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 21) to: (4, 20)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 20) to: (4, 19)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 19) to: (4, 18)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 18) to: (4, 17)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 17) to: (4, 16)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 16) to: (4, 15)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 15) to: (4, 14)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 14) to: (4, 13)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 13) to: (4, 12)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 12) to: (4, 11)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 11) to: (4, 10)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 10) to: (4, 9)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 9) to: (4, 8)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 8) to: (4, 7)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 7) to: (4, 6)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 6) to: (4, 5)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 5) to: (4, 4)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 4) to: (4, 3)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 3) to: (4, 2)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (4, 2) to: (4, 1)
+Picker is travelled 1W
+PICKER IS FINISHED ITS JOB
+Travelled path: (4,1) -> (3,1) -> (3,2) -> (3,3) -> (3,4) -> (2,4) -> (2,5) -> (2,6) -> (2,7) -> (2,8) -> (2,9) -> (2,10) -> (2,11) -> (2,12) -> (2,13) -> (2,14) -> (2,15) -> (2,16) -> (2,17) -> (2,18) -> (2,19) -> (2,20) -> (2,21) -> (2,22) -> (2,23) -> (2,24) -> (2,25) -> (2,26) -> (2,27) -> (2,28) -> (3,28) -> (3,27) -> (4,27) -> (4,26) -> (4,25) -> (4,24) -> (4,23) -> (4,22) -> (4,21) -> (4,20) -> (4,19) -> (4,18) -> (4,17) -> (4,16) -> (4,15) -> (4,14) -> (4,13) -> (4,12) -> (4,11) -> (4,10) -> (4,9) -> (4,8) -> (4,7) -> (4,6) -> (4,5) -> (4,4) -> (4,3) -> (4,2) -> (4,1)
+
+Travelled distances: 1L + 1W + 1W + 1W + 1L + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 4K + 4K + 1W + 1L + 1W + 1L + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W
+
+Item Picking Sequence: 1 -> 2 -> 3 -> 4
+
+Picker travelled 284,16M totally
+TABU SEARCH RUNNING TIME: 0,199 Seconds
+5       10      284,16  0,199

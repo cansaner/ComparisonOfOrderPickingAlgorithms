@@ -751,13 +751,19 @@ namespace ComparisonOfOrderPickingAlgorithms
                 neighborIndexToCheck++;
             }
 
-            if (bestNeighborFound && !tabuOverridden)
+            if (bestNeighborFound)
             {
+                Console.WriteLine("Taking Tabu List actions since any best neighbor is found");
                 tabuList.decrementTabu();
-                tabuList.tabuMove(item1, item2);
+                if (!tabuOverridden)
+                {
+                    tabuList.tabuMove(item1, item2);
+                }
                 tabuList.printTabuList();
                 return solutionToCheck;
             }
+            Console.WriteLine("Taking no actions on Tabu List since no best neighbor is found, we are so unlucky to get any random index that is not in tabu list. Keeping Tabu List same.");
+            tabuList.printTabuList();
             return initialSolution;
         }
 
