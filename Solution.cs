@@ -174,7 +174,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingLargestGap();
                     break;
                 case Algorithm.GeneticAlgorithm:
-                    solveUsingGeneticAlgorithm(new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingGeneticAlgorithm(this.parameters.PickListGAParameters, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
                 default:
                     solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
@@ -183,7 +183,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             stopWatch.Stop();
             TimeSpan elapsed_Time = stopWatch.Elapsed;
             double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
-            if (method != Algorithm.TabuSearch || method != Algorithm.GeneticAlgorithm)
+            if (method == Algorithm.SShape || method == Algorithm.LargestGap)
                 this.runningTime = elapsedTime;
             switch (method)
             {
@@ -1316,7 +1316,58 @@ namespace ComparisonOfOrderPickingAlgorithms
             picker.printAllGatheredData();
         }
 
-        public void solveUsingGeneticAlgorithm(Item depot)
+        public PickListGA setupPickListGeneticAlgorithm(PickListGAParameters parameters, List<Item> initialItemList, int[] itemIndices)
+        {
+            //Selection operator
+            PickListGARouletteWheelSelection GASelection = new PickListGARouletteWheelSelection();
+
+            ICrossover GACrossover;
+            //Crossover operator
+            switch (parameters.CrossoverOperator)
+            {
+                case PickListGAParameters.Crossover.Cycle:
+                    GACrossover = new PickListGACycleCrossover();
+                    break;
+                case PickListGAParameters.Crossover.PMX:
+                    GACrossover = new PickListGAPartiallyMappedCrossover();
+                    break;
+                case PickListGAParameters.Crossover.Ordered:
+                    GACrossover = new PickListGAOrderCrossover();
+                    break;
+                default:
+                    GACrossover = new PickListGAOrderCrossover();
+                    break;
+            }
+
+            IMutation GAMutation;
+            //Mutation operator
+            switch (parameters.MutationOperator)
+            {
+                case PickListGAParameters.Mutation.Swap:
+                    GAMutation = new PickListGASwapMutation();
+                    break;
+                case PickListGAParameters.Mutation.Inversion:
+                    GAMutation = new PickListGAInversionMutation();
+                    break;
+                default:
+                    GAMutation = new PickListGAInversionMutation();
+                    break;
+            }
+
+            PickListGAFitness GAFitness = new PickListGAFitness(initialItemList, this);
+            PickListGAPopulation GAPopulation = new PickListGAPopulation(parameters.PopulationSize, parameters.PopulationSize, new PickListGAChromosome(itemIndices));
+            GAPopulation.GenerationStrategy = new TrackingGenerationStrategy();
+
+            PickListGA ga = new PickListGA(GAPopulation, GAFitness, GASelection, GACrossover, GAMutation);
+            ga.Reinsertion = new PickListGAElitistReinsertion();
+            ga.Termination = new OrTermination(new PickListGATimeEvolvingTermination(TimeSpan.FromMinutes(1)), new PickListGAFitnessStagnationTermination(parameters.NumberOfStagnantGeneration));
+            ga.CrossoverProbability = parameters.CrossoverProbability;
+            ga.MutationProbability = parameters.MutationProbability;
+
+            return ga;
+        }
+
+        public void solveUsingGeneticAlgorithm(PickListGAParameters parameters, Item depot)
         {
             //preparing distance matrix
             stopWatch = Stopwatch.StartNew();
@@ -1338,28 +1389,38 @@ namespace ComparisonOfOrderPickingAlgorithms
                 currentSolution[i] = initialSolutionList[i].Index;
             }
 
-            EliteSelection GASelection = new EliteSelection();
-            OrderedCrossover GACrossover = new OrderedCrossover();
-            ReverseSequenceMutation GAMutation = new ReverseSequenceMutation();
-            PickListFitness GAFitness = new PickListFitness(initialSolutionList, this);
-            Population GAPopulation = new Population(100, 200, new PickListChromosome(currentSolution));
-            GAPopulation.GenerationStrategy = new PerformanceGenerationStrategy();
+            //parameters.PopulationSize = 10;
+            //parameters.NumberOfStagnantGeneration = 10;
+            //parameters.CrossoverProbability = 0.5f;
+            //parameters.MutationProbability = 0.5f;
+            //parameters.CrossoverOperator = PickListGAParameters.Crossover.Ordered;
+            //parameters.MutationOperator = PickListGAParameters.Mutation.Inversion;
 
-            var ga = new GeneticAlgorithm(GAPopulation, GAFitness, GASelection, GACrossover, GAMutation);
-            ga.Termination = new OrTermination(new TimeEvolvingTermination(TimeSpan.FromMinutes(1)), new FitnessStagnationTermination(500));
+            PickListGA ga = setupPickListGeneticAlgorithm(parameters, initialSolutionList, currentSolution);
 
-            var terminationName = ga.Termination.GetType().Name;
-
+            var terminationName = ga.Termination.ToString();
+            
             ga.GenerationRan += delegate
             {
-                DrawSampleName("Genetic Algorithm");
-
+                if (ga.Population.GenerationsNumber == 1)
+                {
+                    DrawSampleName("Pick List Genetic Algorithm started with initial population");
+                }
+                else
+                {
+                    DrawSampleName("Pick List Genetic Algorithm evolved one generation");
+                }
+                
+                Console.WriteLine("Generation summary:");
+                Console.WriteLine("***************************************************************************************************************");
                 var bestChromosome = ga.Population.BestChromosome;
                 Console.WriteLine("Termination: {0}", terminationName);
-                Console.WriteLine("Generations: {0}", ga.Population.GenerationsNumber);
-                Console.WriteLine("Fitness: {0,10}", bestChromosome.Fitness);
+                Console.WriteLine("Generation Number: {0}", ga.Population.GenerationsNumber);
+                Console.WriteLine("Best Chromosome Fitness: {0}", bestChromosome.Fitness);
                 Console.WriteLine("Time: {0}", ga.TimeEvolving);
                 Draw(bestChromosome);
+                Console.WriteLine("***************************************************************************************************************");
+                Console.WriteLine("Trying to decide whether to terminate algorithm or continue to evolve...");
             };
 
             try
@@ -1380,8 +1441,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             Console.WriteLine();
             Console.WriteLine("Evolved.");
             Console.ResetColor();
+            Console.WriteLine("Best Chromosome list over generations:");
+            ga.Population.Generations.ToList().Select((item, index) => new { Generation = item, Index = index+1 }).ToList().ForEach(g => Console.WriteLine("Generation: {0} ==> [{1}].Fitness = {2}", g.Index, string.Join(", ", Solution.extractChromosome(g.Generation.BestChromosome)), g.Generation.BestChromosome.Fitness.Value));
+            Console.WriteLine();
 
-            int[] bestSolution = extractBestChromosome(ga.Population.BestChromosome);
+            int[] bestSolution = extractChromosome(ga.Population.BestChromosome);
 
             int[] depotFirstBestSolution = new int[bestSolution.Length];
 
@@ -1409,27 +1473,25 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         private static void DrawSampleName(string selectedSampleName)
         {
-            Console.Clear();
+            //Console.Clear();
 
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("Can Saner - ConsoleApp");
-            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(selectedSampleName);
             Console.ResetColor();
         }
 
         private void Draw(IChromosome bestChromosome)
         {
-            var c = bestChromosome as PickListChromosome;
+            var c = bestChromosome as PickListGAChromosome;
             Console.WriteLine("Distance: {0:n2}", c.Distance);
 
             var items = bestChromosome.GetGenes().Select(g => g.Value.ToString()).ToArray();
             Console.WriteLine("Item Pick List: {0}", string.Join(", ", items));
         }
 
-        private int[] extractBestChromosome(IChromosome bestChromosome)
+        public static int[] extractChromosome(IChromosome bestChromosome)
         {
-            var c = bestChromosome as PickListChromosome;
+            var c = bestChromosome as PickListGAChromosome;
 
             var items = bestChromosome.GetGenes().Select(g => g.Value.ToString()).ToArray();
             int[] intItems = new int[items.Length];

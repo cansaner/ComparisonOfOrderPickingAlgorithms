@@ -13,7 +13,7 @@ namespace ComparisonOfOrderPickingAlgorithms
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class PickListChromosome : ChromosomeBase
+    public class PickListGAChromosome : ChromosomeBase
     {
         #region Fields
         private int numberOfItems;
@@ -24,7 +24,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// Initializes a new instance of the ComparisonOfOrderPickingAlgorithms.PickListChromosome class.
         /// </summary>
         /// <param name="numberOfItems">Number of items in pick list.</param>
-        public PickListChromosome(int numberOfItems) : base(numberOfItems+1)
+        public PickListGAChromosome(int numberOfItems) : base(numberOfItems+1)
         {
             this.numberOfItems = numberOfItems;//Picker is included with index 0
             int[] itemIndices = Utils.GetUniqueInts(numberOfItems + 1, 0, numberOfItems + 1);
@@ -35,7 +35,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        public PickListChromosome(int[] itemIndices) : base(itemIndices.Length)
+        public PickListGAChromosome(int[] itemIndices) : base(itemIndices.Length)
         {
             this.numberOfItems = itemIndices.Length - 1;//Number of items is the number of items with indices having index value more than 0, 0 is the depot item.
             for (int i = 0; i < itemIndices.Length; i++)
@@ -70,7 +70,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <returns>The new chromosome.</returns>
         public override IChromosome CreateNew()
         {
-            return new PickListChromosome(this.numberOfItems);
+            return new PickListGAChromosome(this.numberOfItems);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <returns>The chromosome clone.</returns>
         public override IChromosome Clone()
         {
-            var clone = base.Clone() as PickListChromosome;
+            var clone = base.Clone() as PickListGAChromosome;
             clone.Distance = Distance;
 
             return clone;

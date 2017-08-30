@@ -8,6 +8,7 @@ namespace ComparisonOfOrderPickingAlgorithms
     public class Parameters
     {
         private TabuSearchParameters tabuSearchParameters;
+        private PickListGAParameters pickListGAParameters;
         private ListGenerationParameters listGenerationParameters;
         private ParameterTuningParameters parameterTuningParameters;
 
@@ -44,6 +45,90 @@ namespace ComparisonOfOrderPickingAlgorithms
             set
             {
                 tabuSearchParameters.TabuLength = value;
+            }
+        }
+
+        public PickListGAParameters PickListGAParameters
+        {
+            get
+            {
+                return pickListGAParameters;
+            }
+            set
+            {
+                pickListGAParameters = value;
+            }
+        }
+
+        public int NumberOfStagnantGeneration
+        {
+            get
+            {
+                return pickListGAParameters.NumberOfStagnantGeneration;
+            }
+            set
+            {
+                pickListGAParameters.NumberOfStagnantGeneration = value;
+            }
+        }
+
+        public int PopulationSize
+        {
+            get
+            {
+                return pickListGAParameters.PopulationSize;
+            }
+            set
+            {
+                pickListGAParameters.PopulationSize = value;
+            }
+        }
+
+        public float CrossoverProbability
+        {
+            get
+            {
+                return pickListGAParameters.CrossoverProbability;
+            }
+            set
+            {
+                pickListGAParameters.CrossoverProbability = value;
+            }
+        }
+
+        public float MutationProbability
+        {
+            get
+            {
+                return pickListGAParameters.MutationProbability;
+            }
+            set
+            {
+                pickListGAParameters.MutationProbability = value;
+            }
+        }
+
+        public PickListGAParameters.Crossover CrossoverOperator
+        {
+            get
+            {
+                return pickListGAParameters.CrossoverOperator;
+            }
+            set
+            {
+                pickListGAParameters.CrossoverOperator = value;
+            }
+        }
+
+        public PickListGAParameters.Mutation MutationOperator
+        {
+            get
+            {
+                return pickListGAParameters.MutationOperator;
+            }
+            set
+            {
+                pickListGAParameters.MutationOperator = value;
             }
         }
 
@@ -131,9 +216,82 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
+        public int[] NumberOfStagnantGenerationList
+        {
+            get
+            {
+                return parameterTuningParameters.NumberOfStagnantGenerationList;
+            }
+            set
+            {
+                parameterTuningParameters.NumberOfStagnantGenerationList = value;
+            }
+        }
+
+        public int[] PopulationSizeList
+        {
+            get
+            {
+                return parameterTuningParameters.PopulationSizeList;
+            }
+            set
+            {
+                parameterTuningParameters.PopulationSizeList = value;
+            }
+        }
+
+        public float[] CrossoverProbabilityList
+        {
+            get
+            {
+                return parameterTuningParameters.CrossoverProbabilityList;
+            }
+            set
+            {
+                parameterTuningParameters.CrossoverProbabilityList = value;
+            }
+        }
+
+        public float[] MutationProbabilityList
+        {
+            get
+            {
+                return parameterTuningParameters.MutationProbabilityList;
+            }
+            set
+            {
+                parameterTuningParameters.MutationProbabilityList = value;
+            }
+        }
+
+        public PickListGAParameters.Crossover[] CrossoverOperatorList
+        {
+            get
+            {
+                return parameterTuningParameters.CrossoverOperatorList;
+            }
+            set
+            {
+                parameterTuningParameters.CrossoverOperatorList = value;
+            }
+        }
+
+        public PickListGAParameters.Mutation[] MutationOperatorList
+        {
+            get
+            {
+                return parameterTuningParameters.MutationOperatorList;
+            }
+            set
+            {
+                parameterTuningParameters.MutationOperatorList = value;
+            }
+        }
+
         public Parameters()
         {
             tabuSearchParameters = new TabuSearchParameters();
+            pickListGAParameters = new PickListGAParameters();
             listGenerationParameters = new ListGenerationParameters();
             parameterTuningParameters = new ParameterTuningParameters();
         }

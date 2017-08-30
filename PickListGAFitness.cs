@@ -16,7 +16,7 @@ namespace ComparisonOfOrderPickingAlgorithms
     /// route that visits each item exactly once and returns to the depot as starting point?
     /// </remarks>
     /// </summary>
-    public class PickListFitness : IFitness
+    public class PickListGAFitness : IFitness
     {
         #region Constructors
         /// <summary>
@@ -24,7 +24,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// </summary>
         /// <param name="itemList">The list of items with depot item indexed on first elemet</param>
         /// <param name="solution">The solution that GA is used to solve.</param>
-        public PickListFitness(List<Item> itemList, Solution solution)
+        public PickListGAFitness(List<Item> itemList, Solution solution)
         {
             Items = itemList;
             Solution = solution;
@@ -68,9 +68,10 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             distanceSum += Solution.DistanceMatrix[itemIndices.Last(), itemIndices.First()];
 
-            var fitness = 1.0 - (distanceSum / (Items.Count * 1000.0));
+            //var fitness = 1.0 - (distanceSum / (Items.Count * 1000.0)); //Used fitness function for TSP
+            var fitness = (1.0 / distanceSum) * 1000;
 
-            ((PickListChromosome)chromosome).Distance = distanceSum;
+            ((PickListGAChromosome)chromosome).Distance = distanceSum;
 
             if (fitness < 0)
             {
