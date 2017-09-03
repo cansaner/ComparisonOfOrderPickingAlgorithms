@@ -152,7 +152,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.path.Add(this.location);
             this.travelledDistances = new List<LinkDistance>();
             this.pickedItems = new List<Item>();
-            Console.WriteLine("Picker is dropped into the room");
+            //Console.WriteLine("Picker is dropped into the room");
         }
 
         public Picker(int x, int y) : this(new Coordinate(x,y)) {
@@ -170,7 +170,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         public void addToTravelledDistances(LinkDistance distance)
         {
             this.travelledDistances.Add(distance);
-            Console.WriteLine("Picker is travelled {0}{1}", distance.Count, distance.Code);
+            //Console.WriteLine("Picker is travelled {0}{1}", distance.Count, distance.Code);
         }
 
         public void addToPickedItems(Item item)
@@ -191,7 +191,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 if (bLoc == this.BInfo)
                 {
-                    Console.WriteLine("Destination location is same with picker location. Picker is not moved any coordinate");
+                    //Console.WriteLine("Destination location is same with picker location. Picker is not moved any coordinate");
                     return;
                 }
                 else
@@ -199,13 +199,13 @@ namespace ComparisonOfOrderPickingAlgorithms
                     //Picker is going horizontal
                     if (bLoc > this.BInfo)
                     {
-                        Console.WriteLine("Picker went right");
+                        //Console.WriteLine("Picker went right");
                     }
                     else
                     {
-                        Console.WriteLine("Picker went left");
+                        //Console.WriteLine("Picker went left");
                     }
-                    Console.WriteLine("Picker is moved from: ({0}, {1}) to: ({2}, {3})", this.AInfo, this.BInfo, aLoc, bLoc);
+                    //Console.WriteLine("Picker is moved from: ({0}, {1}) to: ({2}, {3})", this.AInfo, this.BInfo, aLoc, bLoc);
                     travelledDistance = new LinkDistance(Math.Abs(bLoc - this.BInfo), Problem.Codes.W);
                     distanceToIncrement = Math.Abs(bLoc - this.BInfo) * room.W;
                     this.location = new Coordinate(bLoc, this.AInfo);
@@ -226,8 +226,8 @@ namespace ComparisonOfOrderPickingAlgorithms
                         for (int a = this.AInfo; a < aLoc; a = a + 1)
                         {
                             collectAisle(false, false, room);
-                            Console.WriteLine("Picker went down");
-                            Console.WriteLine("Picker is moved from: ({0}, {1}) to: ({2}, {3})", this.AInfo, this.BInfo, a + 1, this.BInfo);
+                            //Console.WriteLine("Picker went down");
+                            //Console.WriteLine("Picker is moved from: ({0}, {1}) to: ({2}, {3})", this.AInfo, this.BInfo, a + 1, this.BInfo);
                             travelledDistance = new LinkDistance(Math.Abs(a + 1 - this.AInfo), Problem.Codes.L);
                             distanceToIncrement = Math.Abs(a + 1 - this.AInfo) * room.L;
                             this.location = new Coordinate(this.BInfo, a + 1);
@@ -241,8 +241,8 @@ namespace ComparisonOfOrderPickingAlgorithms
                         for (int a = this.AInfo; a > aLoc; a = a - 1)
                         {
                             collectAisle(true, false, room);
-                            Console.WriteLine("Picker went up");
-                            Console.WriteLine("Picker is moved from: ({0}, {1}) to: ({2}, {3})", this.AInfo, this.BInfo, a - 1, this.BInfo);
+                            //Console.WriteLine("Picker went up");
+                            //Console.WriteLine("Picker is moved from: ({0}, {1}) to: ({2}, {3})", this.AInfo, this.BInfo, a - 1, this.BInfo);
                             travelledDistance = new LinkDistance(Math.Abs(a - 1 - this.AInfo), Problem.Codes.L);
                             distanceToIncrement = Math.Abs(a - 1 - this.AInfo) * room.L;
                             this.location = new Coordinate(this.BInfo, a - 1);
@@ -254,7 +254,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
                 else
                 {
-                    Console.WriteLine("Picker can not move diagonally. Picker is not moved any coordinate");
+                    //Console.WriteLine("Picker can not move diagonally. Picker is not moved any coordinate");
                     return;
                 }
 

@@ -47,7 +47,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return distances;
             }
-            protected set
+            set
             {
                 distances = value;
             }
@@ -61,7 +61,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return paths;
             }
-            protected set
+            set
             {
                 paths = value;
             }
@@ -89,7 +89,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 return distanceMatrixRunningTime;
             }
-            protected set
+            set
             {
                 distanceMatrixRunningTime = value;
             }
@@ -156,11 +156,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.problem = problem;
             this.picker = picker;
             this.parameters = parameters;
+            populateItemDictionary();
         }
 
         public void solve(Algorithm method)
         {
-            populateItemDictionary();
             stopWatch = Stopwatch.StartNew();
             switch (method)
             {
@@ -185,24 +185,24 @@ namespace ComparisonOfOrderPickingAlgorithms
             double elapsedTime = Math.Round((elapsed_Time).TotalSeconds, 3);
             if (method == Algorithm.SShape || method == Algorithm.LargestGap)
                 this.runningTime = elapsedTime;
-            switch (method)
-            {
-                case Algorithm.TabuSearch:
-                    Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", this.runningTime);
-                    break;
-                case Algorithm.SShape:
-                    Console.WriteLine("S-SHAPE RUNNING TIME: {0} Seconds", this.runningTime);
-                    break;
-                case Algorithm.LargestGap:
-                    Console.WriteLine("LARGEST GAP RUNNING TIME: {0} Seconds", this.runningTime);
-                    break;
-                case Algorithm.GeneticAlgorithm:
-                    Console.WriteLine("GENETIC ALGOTITHM RUNNING TIME: {0} Seconds", this.runningTime);
-                    break;
-                default:
-                    Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", this.runningTime);
-                    break;
-            }
+            //switch (method)
+            //{
+            //    case Algorithm.TabuSearch:
+            //        Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", this.runningTime);
+            //        break;
+            //    case Algorithm.SShape:
+            //        Console.WriteLine("S-SHAPE RUNNING TIME: {0} Seconds", this.runningTime);
+            //        break;
+            //    case Algorithm.LargestGap:
+            //        Console.WriteLine("LARGEST GAP RUNNING TIME: {0} Seconds", this.runningTime);
+            //        break;
+            //    case Algorithm.GeneticAlgorithm:
+            //        Console.WriteLine("GENETIC ALGOTITHM RUNNING TIME: {0} Seconds", this.runningTime);
+            //        break;
+            //    default:
+            //        Console.WriteLine("TABU SEARCH RUNNING TIME: {0} Seconds", this.runningTime);
+            //        break;
+            //}
         }
 
         private void populateItemDictionary()
@@ -216,8 +216,10 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        private void prepareDistanceMatrix(Item picker)
+        public void prepareDistanceMatrix(Item picker)
         {
+            stopWatch = Stopwatch.StartNew();
+            
             if (picker != null)
             {
                 this.distances = new double[this.problem.ItemList.Count + 1, this.problem.ItemList.Count + 1];
@@ -277,16 +279,22 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
             }
 
-            Console.WriteLine("Prepared Distance Matrix:");
-            for (int i = 0; i < this.distances.GetLength(0); i++)
-            {
-                for (int j = 0; j < this.distances.GetLength(1); j++)
-                {
-                    Console.Write(this.distances[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
+            //Console.WriteLine("Prepared Distance Matrix:");
+            //for (int i = 0; i < this.distances.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < this.distances.GetLength(1); j++)
+            //    {
+            //        Console.Write(this.distances[i, j] + "\t");
+            //    }
+            //    Console.WriteLine();
+            //}
+            //Console.WriteLine();
+
+            stopWatch.Stop();
+            TimeSpan dmElapsed_Time = stopWatch.Elapsed;
+            double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
+            //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
+            this.distanceMatrixRunningTime = dmElapsedTime;
         }
 
         public double Solve_Shortest_Path(Item sourceItem, Item destinationItem)
@@ -324,18 +332,18 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         private void extractShortestPath(Item sourceItem, Item destinationItem)
         {
-            Console.WriteLine("Going From Item Number {0}: {1},{2},{3},{4} To Item Number {5}: {6},{7},{8},{9}", 
-                sourceItem.Index,
-                sourceItem.AInfo,
-                sourceItem.BInfo,
-                sourceItem.CInfo,
-                sourceItem.DInfo,
-                destinationItem.Index,
-                destinationItem.AInfo,
-                destinationItem.BInfo,
-                destinationItem.CInfo,
-                destinationItem.DInfo
-                );
+            //Console.WriteLine("Going From Item Number {0}: {1},{2},{3},{4} To Item Number {5}: {6},{7},{8},{9}", 
+            //    sourceItem.Index,
+            //    sourceItem.AInfo,
+            //    sourceItem.BInfo,
+            //    sourceItem.CInfo,
+            //    sourceItem.DInfo,
+            //    destinationItem.Index,
+            //    destinationItem.AInfo,
+            //    destinationItem.BInfo,
+            //    destinationItem.CInfo,
+            //    destinationItem.DInfo
+            //    );
             List<Coordinate> path = new List<Coordinate>();
             Coordinate endNode = new Coordinate(0, 0);
 
@@ -345,7 +353,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     if ((int)cplex.GetValue(X[i, j, 100, 100]) != 0)
                     {
-                        Console.WriteLine("End Node: X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
+                        //Console.WriteLine("End Node: X[{0},{1},{2},{3}]={4}", i, j, 100, 100, (int)cplex.GetValue(X[i, j, 100, 100]));
                         endNode.Y = i;
                         endNode.X = j;
                     }
@@ -361,7 +369,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     if ((int)(cplex.GetValue(X[0, 0, i, j])) != 0)
                     {
-                        Console.WriteLine("Start Node: X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
+                        //Console.WriteLine("Start Node: X[{0},{1},{2},{3}]={4}", 0, 0, i, j, (int)cplex.GetValue(X[0, 0, i, j]));
                         currentNode.Y = i;
                         currentNode.X = j;
                         path.Add(new Coordinate(currentNode.X, currentNode.Y));
@@ -377,7 +385,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     {
                         if ((X[currentNode.Y, currentNode.X, i, j] != null) && (int)(cplex.GetValue(X[currentNode.Y, currentNode.X, i, j])) == 1)
                         {
-                            Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
+                            //Console.WriteLine("X[{0},{1},{2},{3}]={4}", currentNode.Y, currentNode.X, i, j, (int)cplex.GetValue(X[currentNode.Y, currentNode.X, i, j]));
                             currentNode.Y = i;
                             currentNode.X = j;
                             path.Add(new Coordinate(currentNode.X, currentNode.Y));
@@ -682,19 +690,19 @@ namespace ComparisonOfOrderPickingAlgorithms
             int item1 = -1;
             int item2 = -1;
 
-            Console.WriteLine("Current Initial Sequence :" + string.Join(", ", initialSolution) + " -> " + calculateTabuSearchObjectiveFunctionValue(initialSolution));
-            Console.WriteLine("Best Cost :" + bestCost);
+            //Console.WriteLine("Current Initial Sequence :" + string.Join(", ", initialSolution) + " -> " + calculateTabuSearchObjectiveFunctionValue(initialSolution));
+            //Console.WriteLine("Best Cost :" + bestCost);
 
             SortedDictionary<double, List<int[]>> allNeighbors = new SortedDictionary<double, List<int[]>>();
 
             for (int i = 0; i < initialSolution.Length - 1; i++)
             {
                 int[] nextSolutionIndices = Utils.GetUniqueInts(2, 0, initialSolution.Length);
-                Console.WriteLine("Swapping indexes:{0} and {1}", nextSolutionIndices[0], nextSolutionIndices[1]);
+                //Console.WriteLine("Swapping indexes:{0} and {1}", nextSolutionIndices[0], nextSolutionIndices[1]);
 
                 currentSolution = swapOperator(nextSolutionIndices[0], nextSolutionIndices[1], initialSolution); //Swapping 2 items to get a neighbor
                 currentCost = calculateTabuSearchObjectiveFunctionValue(currentSolution);
-                Console.WriteLine("Neighbor {0}: {1} -> {2}" , i + 1, string.Join(", ", currentSolution), currentCost);
+                //Console.WriteLine("Neighbor {0}: {1} -> {2}" , i + 1, string.Join(", ", currentSolution), currentCost);
 
                 if (allNeighbors.ContainsKey(currentCost))
                 {
@@ -727,12 +735,12 @@ namespace ComparisonOfOrderPickingAlgorithms
                         double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
                         if (costToCheck <= bestCost) //Tabu is overridden
                         {
-                            Console.WriteLine("Tabu is overridden");
+                            //Console.WriteLine("Tabu is overridden");
                             bestNeighborFound = true;
                             tabuOverridden = true;
                             item1 = initialSolution[bestNeighborsSwappedIndices[0]];
                             item2 = initialSolution[bestNeighborsSwappedIndices[1]];
-                            Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
+                            //Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
                         }
                         else
                         {
@@ -745,7 +753,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                         solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
                         item1 = initialSolution[bestNeighborsSwappedIndices[0]];
                         item2 = initialSolution[bestNeighborsSwappedIndices[1]];
-                        Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
+                        //Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
                     }
                 }
                 neighborIndexToCheck++;
@@ -753,7 +761,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             if (bestNeighborFound)
             {
-                Console.WriteLine("Taking Tabu List actions since any best neighbor is found");
+                //Console.WriteLine("Taking Tabu List actions since any best neighbor is found");
                 tabuList.decrementTabu();
                 if (!tabuOverridden)
                 {
@@ -762,7 +770,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 tabuList.printTabuList();
                 return solutionToCheck;
             }
-            Console.WriteLine("Taking no actions on Tabu List since no best neighbor is found, we are so unlucky to get any random index that is not in tabu list. Keeping Tabu List same.");
+            //Console.WriteLine("Taking no actions on Tabu List since no best neighbor is found, we are so unlucky to get any random index that is not in tabu list. Keeping Tabu List same.");
             tabuList.printTabuList();
             return initialSolution;
         }
@@ -1007,7 +1015,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
             this.runningTime = elapsedTime;
             this.totalTravelledDistance = this.picker.Distance;
-            this.picker.printAllGatheredData();
+            //this.picker.printAllGatheredData();
         }
 
         private void simulateDepotFirstBestSolution(int[] depotFirstBestSolution)
@@ -1126,12 +1134,12 @@ namespace ComparisonOfOrderPickingAlgorithms
                     if (Math.Abs(picker.BInfo - pickAisles.ElementAt(0)) //leftMostSubAisleB
                         < Math.Abs(picker.BInfo - pickAisles.ElementAt(pickAisles.Count - 1))) //rightMostSubAisleB
                     {
-                        Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
+                        //Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
                         picker.NextHorizontalMove = true;
                     }
                     else
                     {
-                        Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
+                        //Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
                         picker.NextHorizontalMove = false;
                     }
                     if (picker.NextHorizontalMove == false)
@@ -1163,7 +1171,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);
             this.totalTravelledDistance = picker.Distance;
-            picker.printAllGatheredData();
+            //picker.printAllGatheredData();
         }
 
         public Aisle getLargestGapLimits(List<Item> aisleItems)
@@ -1267,12 +1275,12 @@ namespace ComparisonOfOrderPickingAlgorithms
                     if (Math.Abs(picker.BInfo - pickAisles.ElementAt(0)) //leftMostSubAisleB
                         < Math.Abs(picker.BInfo - pickAisles.ElementAt(pickAisles.Count - 1))) //rightMostSubAisleB
                     {
-                        Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
+                        //Console.WriteLine("LEFT MOST SUB AISLE IS SELECTED");
                         picker.NextHorizontalMove = true;
                     }
                     else
                     {
-                        Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
+                        //Console.WriteLine("RIGHT MOST SUB AISLE IS SELECTED");
                         picker.NextHorizontalMove = false;
                     }
                     if (picker.NextHorizontalMove == false)
@@ -1313,7 +1321,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
             picker.goToLocation(picker.AInfo, this.problem.Depot.X, this.problem);
             this.totalTravelledDistance = picker.Distance;
-            picker.printAllGatheredData();
+            //picker.printAllGatheredData();
         }
 
         public PickListGA setupPickListGeneticAlgorithm(PickListGAParameters parameters, List<Item> initialItemList, int[] itemIndices)
@@ -1356,11 +1364,12 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             PickListGAFitness GAFitness = new PickListGAFitness(initialItemList, this);
             PickListGAPopulation GAPopulation = new PickListGAPopulation(parameters.PopulationSize, parameters.PopulationSize, new PickListGAChromosome(itemIndices));
-            GAPopulation.GenerationStrategy = new TrackingGenerationStrategy();
+            GAPopulation.GenerationStrategy = new PerformanceGenerationStrategy();
 
             PickListGA ga = new PickListGA(GAPopulation, GAFitness, GASelection, GACrossover, GAMutation);
             ga.Reinsertion = new PickListGAElitistReinsertion();
-            ga.Termination = new OrTermination(new PickListGATimeEvolvingTermination(TimeSpan.FromMinutes(1)), new PickListGAFitnessStagnationTermination(parameters.NumberOfStagnantGeneration));
+            //ga.Termination = new OrTermination(new PickListGATimeEvolvingTermination(TimeSpan.FromMinutes(1)), new PickListGAFitnessStagnationTermination(parameters.NumberOfStagnantGeneration));
+            ga.Termination = new PickListGAFitnessStagnationTermination(parameters.NumberOfStagnantGeneration);
             ga.CrossoverProbability = parameters.CrossoverProbability;
             ga.MutationProbability = parameters.MutationProbability;
 
@@ -1369,15 +1378,6 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public void solveUsingGeneticAlgorithm(PickListGAParameters parameters, Item depot)
         {
-            //preparing distance matrix
-            stopWatch = Stopwatch.StartNew();
-            prepareDistanceMatrix(depot);
-            stopWatch.Stop();
-            TimeSpan dmElapsed_Time = stopWatch.Elapsed;
-            double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
-            //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
-            this.distanceMatrixRunningTime = dmElapsedTime;
-
             stopWatch = Stopwatch.StartNew();
             //generating an initial solution list
             List<Item> initialSolutionList = generateInitialSolutionList(this.problem.ItemList, InitialSolutionType.Greedy, depot);
@@ -1399,29 +1399,29 @@ namespace ComparisonOfOrderPickingAlgorithms
             PickListGA ga = setupPickListGeneticAlgorithm(parameters, initialSolutionList, currentSolution);
 
             var terminationName = ga.Termination.ToString();
-            
-            ga.GenerationRan += delegate
-            {
-                if (ga.Population.GenerationsNumber == 1)
-                {
-                    DrawSampleName("Pick List Genetic Algorithm started with initial population");
-                }
-                else
-                {
-                    DrawSampleName("Pick List Genetic Algorithm evolved one generation");
-                }
-                
-                Console.WriteLine("Generation summary:");
-                Console.WriteLine("***************************************************************************************************************");
-                var bestChromosome = ga.Population.BestChromosome;
-                Console.WriteLine("Termination: {0}", terminationName);
-                Console.WriteLine("Generation Number: {0}", ga.Population.GenerationsNumber);
-                Console.WriteLine("Best Chromosome Fitness: {0}", bestChromosome.Fitness);
-                Console.WriteLine("Time: {0}", ga.TimeEvolving);
-                Draw(bestChromosome);
-                Console.WriteLine("***************************************************************************************************************");
-                Console.WriteLine("Trying to decide whether to terminate algorithm or continue to evolve...");
-            };
+
+            //ga.GenerationRan += delegate
+            //{
+            //    if (ga.Population.GenerationsNumber == 1)
+            //    {
+            //        DrawSampleName("Pick List Genetic Algorithm started with initial population");
+            //    }
+            //    else
+            //    {
+            //        DrawSampleName("Pick List Genetic Algorithm evolved one generation");
+            //    }
+
+            //    Console.WriteLine("Generation summary:");
+            //    Console.WriteLine("***************************************************************************************************************");
+            //    var bestChromosome = ga.Population.BestChromosome;
+            //    Console.WriteLine("Termination: {0}", terminationName);
+            //    Console.WriteLine("Generation Number: {0}", ga.Population.GenerationsNumber);
+            //    Console.WriteLine("Best Chromosome Fitness: {0}", bestChromosome.Fitness);
+            //    Console.WriteLine("Time: {0}", ga.TimeEvolving);
+            //    Draw(bestChromosome);
+            //    Console.WriteLine("***************************************************************************************************************");
+            //    Console.WriteLine("Trying to decide whether to terminate algorithm or continue to evolve...");
+            //};
 
             try
             {
@@ -1437,13 +1437,13 @@ namespace ComparisonOfOrderPickingAlgorithms
                 return;
             }
 
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine();
-            Console.WriteLine("Evolved.");
-            Console.ResetColor();
-            Console.WriteLine("Best Chromosome list over generations:");
-            ga.Population.Generations.ToList().Select((item, index) => new { Generation = item, Index = index+1 }).ToList().ForEach(g => Console.WriteLine("Generation: {0} ==> [{1}].Fitness = {2}", g.Index, string.Join(", ", Solution.extractChromosome(g.Generation.BestChromosome)), g.Generation.BestChromosome.Fitness.Value));
-            Console.WriteLine();
+            //Console.ForegroundColor = ConsoleColor.DarkGreen;
+            //Console.WriteLine();
+            //Console.WriteLine("Evolved.");
+            //Console.ResetColor();
+            //Console.WriteLine("Best Chromosome list over generations:");
+            //ga.Population.Generations.ToList().Select((item, index) => new { Generation = item, Index = index+1 }).ToList().ForEach(g => Console.WriteLine("Generation: {0} ==> [{1}].Fitness = {2}", g.Index, string.Join(", ", Solution.extractChromosome(g.Generation.BestChromosome)), g.Generation.BestChromosome.Fitness.Value));
+            //Console.WriteLine();
 
             int[] bestSolution = extractChromosome(ga.Population.BestChromosome);
 
@@ -1468,7 +1468,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //double elapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds) / 1000, 3);
             this.runningTime = elapsedTime;
             this.totalTravelledDistance = this.picker.Distance;
-            this.picker.printAllGatheredData();
+            //this.picker.printAllGatheredData();
         }
 
         private static void DrawSampleName(string selectedSampleName)

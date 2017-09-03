@@ -208,8 +208,8 @@ namespace ComparisonOfOrderPickingAlgorithms
                 itemList = value;
                 farthestBlock = locateFarthestBlockFromDepotThatContainsOnePickLocation();
                 leftPickAisle = locateLeftMostPickAisleThatContainsOnePickLocation();
-                Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisle);
-                Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlock);
+                //Console.WriteLine("LEFT PICK AISLE: {0}", leftPickAisle);
+                //Console.WriteLine("FARTHEST BLOCK: {0}", farthestBlock);
             }
         }
 
@@ -279,12 +279,12 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
             if (minItem != null)
             {
-                Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.AInfo, minItem.BInfo, minItem.CInfo, minItem.DInfo);
+                //Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.AInfo, minItem.BInfo, minItem.CInfo, minItem.DInfo);
             }
             else
             {
                 minItem = this.itemList.ElementAt(0);
-                Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.AInfo, minItem.BInfo, minItem.CInfo, minItem.DInfo);
+                //Console.WriteLine("Min Item Info: {0}, {1}, {2}, {3}", minItem.AInfo, minItem.BInfo, minItem.CInfo, minItem.DInfo);
             }
 
 

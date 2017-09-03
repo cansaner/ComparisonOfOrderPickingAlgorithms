@@ -68,8 +68,18 @@ namespace ComparisonOfOrderPickingAlgorithms
             wr.WriteLine("{0}" + delimiter + "{1}",
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
                 pickListsFilePath);
-            wr.WriteLine("NumberOfStagnantGeneration" + delimiter + "PopulationSize" + delimiter + "CrossoverProbability" + delimiter + "MutationProbability" + delimiter + "CrossoverOperator" + delimiter + "MutationOperator" + delimiter + "TravelledDistance" + delimiter + "RunningTime");
+            wr.WriteLine("instanceNumber" + delimiter + "DistanceMatrixRunningTime" + delimiter + "NumberOfStagnantGeneration" + delimiter + "PopulationSize" + delimiter + "CrossoverProbability" + delimiter + "MutationProbability" + delimiter + "CrossoverOperator" + delimiter + "MutationOperator" + delimiter + "TravelledDistance" + delimiter + "RunningTime");
             wr.Close();
+            bool distanceMatrixShouldBeCalculated = true;
+            double[,] calculatedDistanceMatrix = new double[1, 1]; ;
+            List<Coordinate>[,] calculatedPathMatrix = new List<Coordinate>[1, 1];
+            double calculatedDistanceMatrixRunningTime = 0;
+
+            //Add one additional Distance Matrix calculation at the beginning to initiate multi-core process and having less values for distance matrix calculation at report
+            room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
+            picker = new Picker(depot);
+            solution = new Solution(room, picker, parameters);
+            solution.prepareDistanceMatrix(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
 
             for (int k = 0; k < parameters.ItemListSet.Count; k++)
             {
@@ -92,14 +102,32 @@ namespace ComparisonOfOrderPickingAlgorithms
                                     for (int r = 0; r < parameters.MutationOperatorList.Length; r++)
                                     {
                                         parameters.MutationOperator = parameters.MutationOperatorList[r];
-
+                                        
                                         room.ItemList = Utils.Clone<Item>(itemList);
                                         picker = new Picker(depot);
-                                        Solution solution = new Solution(room, picker, parameters);
-                                        Console.WriteLine("Solving #{0} pick list of test file: {1}", k + 1, pickListsFilePath);
+                                        solution = new Solution(room, picker, parameters);
+                                        if (distanceMatrixShouldBeCalculated)
+                                        {
+                                            solution.prepareDistanceMatrix(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
+                                            calculatedDistanceMatrix = solution.DistanceMatrix;
+                                            calculatedPathMatrix = solution.PathMatrix;
+                                            calculatedDistanceMatrixRunningTime = solution.DistanceMatrixRunningTime;
+                                            distanceMatrixShouldBeCalculated = false;
+                                        }
+                                        else
+                                        {
+                                            //carrying already calculated distance matrix and path matrix to the solution
+                                            solution.DistanceMatrix = calculatedDistanceMatrix;
+                                            solution.PathMatrix = calculatedPathMatrix;
+                                            solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                                        }
+                                        
+                                        //Console.WriteLine("Solving #{0} pick list of test file: {1}", k + 1, pickListsFilePath);
                                         solution.solve(Solution.Algorithm.GeneticAlgorithm);
                                         Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                        Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}",
+                                        Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}" + delimiter + "{8}" + delimiter + "{9}",
+                                            k + 1,
+                                            solution.DistanceMatrixRunningTime,
                                             parameters.NumberOfStagnantGeneration,
                                             parameters.PopulationSize,
                                             parameters.CrossoverProbability,
@@ -108,10 +136,12 @@ namespace ComparisonOfOrderPickingAlgorithms
                                             parameters.MutationOperator.ToString(),
                                             solution.TravelledDistance,
                                             solution.RunningTime);
-                                        Console.WriteLine();
+                                        //Console.WriteLine();
                                         Console.ResetColor();
                                         wr = new StreamWriter(outputFilePath, true);
-                                        wr.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}",
+                                        wr.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}" + delimiter + "{8}" + delimiter + "{9}",
+                                            k + 1,
+                                            solution.DistanceMatrixRunningTime,
                                             parameters.NumberOfStagnantGeneration,
                                             parameters.PopulationSize,
                                             parameters.CrossoverProbability,
@@ -130,6 +160,10 @@ namespace ComparisonOfOrderPickingAlgorithms
                 wr = new StreamWriter(outputFilePath, true);
                 wr.WriteLine("");
                 wr.Close();
+                calculatedDistanceMatrix = null;
+                calculatedPathMatrix = null;
+                calculatedDistanceMatrixRunningTime = 0;
+                distanceMatrixShouldBeCalculated = true;
             }
         }
 
@@ -160,7 +194,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         }
 
         //Method to compare solution algorithms
-        public static void compareAlgorithms(String listFilePath, String reportFilePath)
+        public static void compareAlgorithmsWithTabu(String listFilePath, String reportFilePath)
         {
             String delimiter = "\t";
             StreamWriter wr = new StreamWriter(reportFilePath, true);
@@ -294,10 +328,14 @@ namespace ComparisonOfOrderPickingAlgorithms
                 Utils.generateTestLists(room, parameters.PickListSizesOfTestLists, parameters.NumberOfPickLists);
             }
 
-            parameters.NumberOfStagnantGenerationList = new int[] { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50};
-            parameters.PopulationSizeList = new int[] { 10, 20, 30, 40, 50 };
-            parameters.CrossoverProbabilityList = new float[] { 0.6f, 0.7f, 0.8f, 0.9f};
-            parameters.MutationProbabilityList = new float[] { 0.01f, 0.02f, 0.03f, 0.04f, 0.05f };
+            //parameters.NumberOfStagnantGenerationList = new int[] { 50, 60, 70, 80, 90, 100, 110, 120};
+            //parameters.PopulationSizeList = new int[] { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600 };
+            //parameters.CrossoverProbabilityList = new float[] { 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f };
+            //parameters.MutationProbabilityList = new float[] { 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f, 0.10f, 0.11f, 0.12f };
+            parameters.NumberOfStagnantGenerationList = new int[] { 100 };
+            parameters.PopulationSizeList = new int[] { 450 };
+            parameters.CrossoverProbabilityList = new float[] { 0.8f };
+            parameters.MutationProbabilityList = new float[] { 0.08f };
             parameters.CrossoverOperatorList = new PickListGAParameters.Crossover[] { PickListGAParameters.Crossover.Ordered };
             parameters.MutationOperatorList = new PickListGAParameters.Mutation[] { PickListGAParameters.Mutation.Inversion };
             

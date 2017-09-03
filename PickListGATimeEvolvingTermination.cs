@@ -47,17 +47,17 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <param name="geneticAlgorithm">The genetic algorithm.</param>
         protected override bool PerformHasReached(IGeneticAlgorithm geneticAlgorithm)
         {
-            Console.WriteLine("Genetic Algorithm Running Time: {0}", geneticAlgorithm.TimeEvolving);
-            Console.WriteLine("Genetic Algorithm Max Running Time: {0}", MaxTime);
+            //Console.WriteLine("Genetic Algorithm Running Time: {0}", geneticAlgorithm.TimeEvolving);
+            //Console.WriteLine("Genetic Algorithm Max Running Time: {0}", MaxTime);
 
-            if (geneticAlgorithm.TimeEvolving >= MaxTime)
-            {
-                Console.WriteLine("Genetic Algorithm Running Time reached Max Time to Run.");
-            }
-            else
-            {
-                Console.WriteLine("Genetic Algorithm has still some time to run.");
-            }
+            //if (geneticAlgorithm.TimeEvolving >= MaxTime)
+            //{
+            //    Console.WriteLine("Genetic Algorithm Running Time reached Max Time to Run.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Genetic Algorithm has still some time to run.");
+            //}
 
             return geneticAlgorithm.TimeEvolving >= MaxTime;
         }

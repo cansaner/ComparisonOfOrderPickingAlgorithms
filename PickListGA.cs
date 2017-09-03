@@ -339,9 +339,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                     TerminationReached(this, EventArgs.Empty);
                 }
 
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("Pick List Genetic Algorithm termination criteria are met.");
-                Console.ResetColor();
+                //Console.ForegroundColor = ConsoleColor.DarkGreen;
+                //Console.WriteLine("Pick List Genetic Algorithm termination criteria are met.");
+                //Console.ResetColor();
                 return true;
             }
 
@@ -351,10 +351,10 @@ namespace ComparisonOfOrderPickingAlgorithms
                 State = GeneticAlgorithmState.Stopped;
             }
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Pick List Genetic Algorithm will continue to evolve...");
-            Console.ResetColor();
-            Console.WriteLine();
+            //Console.ForegroundColor = ConsoleColor.Cyan;
+            //Console.WriteLine("Pick List Genetic Algorithm will continue to evolve...");
+            //Console.ResetColor();
+            //Console.WriteLine();
             return false;
         }
 
@@ -430,13 +430,13 @@ namespace ComparisonOfOrderPickingAlgorithms
         {
             var offspring = new List<IChromosome>();
 
-            Console.WriteLine("Crossover probability: {0}", CrossoverProbability);
+            //Console.WriteLine("Crossover probability: {0}", CrossoverProbability);
             for (int i = 0; i < Population.MinSize; i += Crossover.ParentsNumber)
             {
                 var selectedParents = parents.Skip(i).Take(Crossover.ParentsNumber).ToList();
 
                 double randomDouble = ThreadSafeRandom.ThisThreadsRandom.NextDouble();
-                Console.WriteLine("Random Number generated to Cross or Not: {0}", randomDouble);
+                //Console.WriteLine("Random Number generated to Cross or Not: {0}", randomDouble);
 
                 // If match the probability cross is made, otherwise the offspring is an exact copy of the parents.
                 // Checks if the number of selected parents is equal which the crossover expect, because the in the end of the list we can
@@ -445,10 +445,10 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     offspring.AddRange(Crossover.Cross(selectedParents));
                 }
-                else
-                {
-                    Console.WriteLine("No Crossover operation is done");
-                }
+                //else
+                //{
+                //    Console.WriteLine("No Crossover operation is done");
+                //}
             }
 
             return offspring;
@@ -460,7 +460,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <param name="chromosomes">The chromosomes.</param>
         private void Mutate(IList<IChromosome> chromosomes)
         {
-            Console.WriteLine("Mutation probability: {0}", MutationProbability);
+            //Console.WriteLine("Mutation probability: {0}", MutationProbability);
             foreach (var c in chromosomes)
             {
                 Mutation.Mutate(c, MutationProbability);

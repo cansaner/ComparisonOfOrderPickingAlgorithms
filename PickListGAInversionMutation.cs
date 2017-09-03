@@ -34,28 +34,28 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
 
             double randomDouble = ThreadSafeRandom.ThisThreadsRandom.NextDouble();
-            Console.WriteLine("Random Number generated to Mutate or Not: {0}", randomDouble);
+            //Console.WriteLine("Random Number generated to Mutate or Not: {0}", randomDouble);
 
             if (randomDouble <= probability)
             {
-                Console.WriteLine("...Inversion Mutation started...");
+                //Console.WriteLine("...Inversion Mutation started...");
                 var indexes = Utils.GetUniqueInts(2, 0, chromosome.Length).OrderBy(i => i).ToArray();
                 var firstIndex = indexes[0];
                 var secondIndex = indexes[1];
-                Console.WriteLine("Chromosome Before Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
-                Console.WriteLine("First Mutate Point Index: {0}", firstIndex);
-                Console.WriteLine("Second Mutate Point Index: {0}", secondIndex);
+                //Console.WriteLine("Chromosome Before Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
+                //Console.WriteLine("First Mutate Point Index: {0}", firstIndex);
+                //Console.WriteLine("Second Mutate Point Index: {0}", secondIndex);
 
                 var revertedSequence = chromosome.GetGenes().Skip(firstIndex).Take((secondIndex - firstIndex) + 1).Reverse().ToArray();
 
                 chromosome.ReplaceGenes(firstIndex, revertedSequence);
-                Console.WriteLine("Chromosome After Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
-                Console.WriteLine("...Inversion Mutation ended...");
+                //Console.WriteLine("Chromosome After Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
+                //Console.WriteLine("...Inversion Mutation ended...");
             }
-            else
-            {
-                Console.WriteLine("No Mutation operation is done");
-            }
+            //else
+            //{
+            //    Console.WriteLine("No Mutation operation is done");
+            //}
         }
         #endregion
     }
