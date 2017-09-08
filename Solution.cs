@@ -1107,7 +1107,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public void solveUsingSShape()
         {
-            picker.printLocation();
+            //picker.printLocation();
             picker.NextHorizontalMove = true;
             picker.NextVerticalMove = false;
             picker.goToLocation(picker.AInfo, this.problem.LeftPickAisle, this.problem);
@@ -1248,7 +1248,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
         public void solveUsingLargestGap()
         {
-            picker.printLocation();
+            //picker.printLocation();
             picker.NextHorizontalMove = true;
             picker.NextVerticalMove = false;
             picker.goToLocation(picker.AInfo, this.problem.LeftPickAisle, this.problem);
