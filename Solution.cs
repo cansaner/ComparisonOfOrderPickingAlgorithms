@@ -850,7 +850,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 neighborIndexToCheck++;
             }
 
-            if (bestNeighborFound)
+            if (bestNeighborFound && !tabuOverridden)
             {
                 //Console.WriteLine("Taking Tabu List actions since any best neighbor is found");
                 tabuList.decrementTabu();
