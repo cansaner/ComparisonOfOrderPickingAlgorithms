@@ -1,0 +1,14 @@
+instanceNumber	tabuSearchDistanceMatrixRunningTime	tabuSearchTravelledTotalDistance	tabuSearchRunningTime	SShapeTravelledTotalDistance	SShapeRunningTime	LargestGapTravelledTotalDistance	LargestGapRunningTime
+1	7,457	230,06	0,027	307,2	0,03	279,64	0,036
+2	9,012	318,22	0	368,82	0,034	397,98	0,028
+3	9,016	327,6	0,001	394	0,031	366,44	0,03
+4	8,917	313,02	0	394	0,033	366,44	0,029
+5	8,949	215,82	0	254,32	0,027	248,78	0,026
+
+instanceNumber	tabuSearchDistanceMatrixRunningTime	tabuSearchTravelledTotalDistance	tabuSearchRunningTime	SShapeTravelledTotalDistance	SShapeRunningTime	LargestGapTravelledTotalDistance	LargestGapRunningTime
+1	2,218	263,02	0,078	307,2	0,025	279,64	0,031
+2	2,427	351,18	0,088	368,82	0,026	397,98	0,026
+3	2,176	360,56	0,113	394	0,026	366,44	0,027
+4	3,416	345,98	0,102	394	0,029	366,44	0,028
+5	1,642	243,24	0,059	254,32	0,022	248,78	0,02
+

@@ -1,0 +1,2217 @@
+Prepared Distance Matrix:
+0       69,13   51,61   60,65   59,97   93,72
+69,13   0       39,68   13,68   35,16   24,59
+51,61   39,68   0       53,36   74,84   53,19
+60,65   13,68   53,36   0       27,02   33,07
+59,97   35,16   74,84   27,02   0       49,35
+93,72   24,59   53,19   33,07   49,35   0
+
+Pick List Genetic Algorithm started with initial population
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 1
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.0065174
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.0065174
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is changed
+Stagnant Generation Count: 1
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+[2, 5, 4, 0, 1, 3].Fitness = 3,34806481853489
+[2, 3, 5, 0, 1, 4].Fitness = 2,7833444667112
+Sum of Fitness values: 13,5761565316887
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,291647725902794
+Cumulative Percent: 0,291647725902794
+Percent of Fitness for [4, 0, 3, 2, 5, 1]: 0,256721558810852
+Cumulative Percent: 0,548369284713646
+Percent of Fitness for [2, 5, 4, 0, 1, 3]: 0,246613598680895
+Cumulative Percent: 0,79498288339454
+Percent of Fitness for [2, 3, 5, 0, 1, 4]: 0,20501711660546
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,186532136605369
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,981903369064398
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,467600964227505
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,540588050401112
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 5, 0, 1, 4].Fitness = 2,7833444667112
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,214939833253128
+...Order Crossover started...
+First Parent: [2, 3, 1, 5, 4, 0]
+Second Parent: [2, 3, 5, 0, 1, 4]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 1
+First Offspring: [2, 3, 5, 0, 1, 4]
+Second Offspring: [2, 3, 1, 5, 4, 0]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,590672193835802
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,394763129015809
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 3, 5, 0, 1, 4]
+First Mutate Point Index: 4
+Second Mutate Point Index: 5
+Chromosome After Mutation: [2, 3, 5, 0, 4, 1]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,93743632544644
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Reinserted Chromosome: [4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 2
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.0065174
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.0065174
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 2
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+[2, 3, 5, 0, 4, 1].Fitness = 3,1750063500127
+Sum of Fitness values: 14,5792087754227
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,271582308749301
+Cumulative Percent: 0,271582308749301
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,271582308749301
+Cumulative Percent: 0,543164617498603
+Percent of Fitness for [4, 0, 3, 2, 5, 1]: 0,239059068373496
+Cumulative Percent: 0,782223685872099
+Percent of Fitness for [2, 3, 5, 0, 4, 1]: 0,217776314127901
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,552929680586294
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,665583635990314
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,35414591122146
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,834347053353836
+Selected chromosome index for that random number: 3
+Selected Parent Chromosomes of current generation
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 5, 0, 4, 1].Fitness = 3,1750063500127
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,83504050962396
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,197060262876125
+...Order Crossover started...
+First Parent: [2, 3, 1, 5, 4, 0]
+Second Parent: [2, 3, 5, 0, 4, 1]
+Middle Section Beginning Index: 2
+Middle Section Ending Index: 5
+First Offspring: [2, 3, 1, 5, 4, 0]
+Second Offspring: [2, 3, 5, 0, 4, 1]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,937532236770509
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,323101177962078
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 3, 5, 0, 4, 1]
+First Mutate Point Index: 2
+Second Mutate Point Index: 1
+Chromosome After Mutation: [2, 5, 3, 0, 4, 1]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Reinserted Chromosome: [4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 3
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.0757005
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.0757005
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 3
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 5, 3, 0, 4, 1].Fitness = 3,54962373988357
+[4, 0, 3, 2, 5, 1].Fitness = 3,48529206747525
+Sum of Fitness values: 14,9538261652936
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,264778735234792
+Cumulative Percent: 0,264778735234792
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,264778735234792
+Cumulative Percent: 0,529557470469584
+Percent of Fitness for [2, 5, 3, 0, 4, 1]: 0,23737227520552
+Cumulative Percent: 0,766929745675104
+Percent of Fitness for [4, 0, 3, 2, 5, 1]: 0,233070254324896
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,0211427495913313
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,0764574190026416
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,149231948959284
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,192251687493292
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,624341642309139
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,0577339493007092
+...Order Crossover started...
+First Parent: [2, 3, 1, 5, 4, 0]
+Second Parent: [2, 3, 1, 5, 4, 0]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 4
+First Offspring: [2, 3, 1, 5, 4, 0]
+Second Offspring: [2, 3, 1, 5, 4, 0]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,193067890216162
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 3, 1, 5, 4, 0]
+First Mutate Point Index: 5
+Second Mutate Point Index: 3
+Chromosome After Mutation: [2, 3, 1, 0, 4, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,10886471304524
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 3, 1, 5, 4, 0]
+First Mutate Point Index: 1
+Second Mutate Point Index: 5
+Chromosome After Mutation: [2, 0, 1, 5, 4, 3]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 4
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.1168093
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.1168093
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 4
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 1, 5, 4, 3].Fitness = 3,63557042099906
+[2, 3, 1, 0, 4, 5].Fitness = 3,34806481853489
+Sum of Fitness values: 14,9025455974687
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,265689855003022
+Cumulative Percent: 0,265689855003022
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,265689855003022
+Cumulative Percent: 0,531379710006043
+Percent of Fitness for [2, 0, 1, 5, 4, 3]: 0,24395633599783
+Cumulative Percent: 0,775336046003873
+Percent of Fitness for [2, 3, 1, 0, 4, 5]: 0,224663953996127
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,379182921899102
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,549803587864062
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,545204628512824
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,898746780538348
+Selected chromosome index for that random number: 3
+Selected Parent Chromosomes of current generation
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 1, 5, 4, 3].Fitness = 3,63557042099906
+[2, 0, 1, 5, 4, 3].Fitness = 3,63557042099906
+[2, 3, 1, 0, 4, 5].Fitness = 3,34806481853489
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,999904088675931
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,229828502624216
+...Order Crossover started...
+First Parent: [2, 0, 1, 5, 4, 3]
+Second Parent: [2, 3, 1, 0, 4, 5]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 1
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 3, 0, 1, 5, 4]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,500197300454694
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,887942170672092
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Reinserted Chromosome: [2, 0, 1, 5, 4, 3].Fitness = 3,63557042099906
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 5
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.1579193
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.1579193
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 5
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 1, 5, 4, 3].Fitness = 3,63557042099906
+[2, 3, 0, 1, 5, 4].Fitness = 3,01277416244878
+Sum of Fitness values: 14,4008508927444
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,274945918713891
+Cumulative Percent: 0,274945918713891
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,263390764794342
+Cumulative Percent: 0,538336683508232
+Percent of Fitness for [2, 0, 1, 5, 4, 3]: 0,252455250601251
+Cumulative Percent: 0,790791934109484
+Percent of Fitness for [2, 3, 0, 1, 5, 4]: 0,209208065890516
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,87528641050462
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,0384873976178874
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,407148688289872
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,621568241446078
+Selected chromosome index for that random number: 2
+Selected Parent Chromosomes of current generation
+[2, 3, 0, 1, 5, 4].Fitness = 3,01277416244878
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 1, 5, 4, 3].Fitness = 3,63557042099906
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,488575386110961
+...Order Crossover started...
+First Parent: [2, 3, 0, 1, 5, 4]
+Second Parent: [2, 3, 1, 5, 4, 0]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 2
+First Offspring: [2, 3, 0, 1, 5, 4]
+Second Offspring: [2, 3, 1, 0, 5, 4]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,738914926414804
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,510342797502104
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,211090040025809
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 3, 1, 0, 5, 4]
+First Mutate Point Index: 1
+Second Mutate Point Index: 4
+Chromosome After Mutation: [2, 5, 1, 0, 3, 4]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 6
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.1970408
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.1970408
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 6
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 5, 1, 0, 3, 4].Fitness = 3,23185314459311
+[2, 3, 0, 1, 5, 4].Fitness = 3,01277416244878
+Sum of Fitness values: 13,9971336163385
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,282876143608831
+Cumulative Percent: 0,282876143608831
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,270987706075886
+Cumulative Percent: 0,553863849684717
+Percent of Fitness for [2, 5, 1, 0, 3, 4]: 0,23089392679803
+Cumulative Percent: 0,784757776482747
+Percent of Fitness for [2, 3, 0, 1, 5, 4]: 0,215242223517253
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,350968265138086
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,0742596504624279
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,345252112180578
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,53414450564149
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,613528443786096
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,762125830986596
+No Crossover operation is done
+Mutation probability: 0,5
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 4
+Reinserted Chromosome: [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 7
+Best Chromosome Fitness: 3,95945517896737
+Time: 00:00:00.2456522
+Distance: 252,56
+Item Pick List: 2, 3, 1, 5, 4, 0
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.2456522
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,95945517896737
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 7
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Sum of Fitness values: 15,3386085699551
+Percent of Fitness for [2, 3, 1, 5, 4, 0]: 0,258136529197509
+Cumulative Percent: 0,258136529197509
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,24728782360083
+Cumulative Percent: 0,505424352798339
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,24728782360083
+Cumulative Percent: 0,75271217639917
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,24728782360083
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,912453776184681
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,843491095976667
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,348101284051361
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,49124075122701
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,674517177359442
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,506717230894937
+No Crossover operation is done
+Mutation probability: 0,5
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 4
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 8
+Best Chromosome Fitness: 3,79305113032924
+Time: 00:00:00.2787397
+Distance: 263,64
+Item Pick List: 2, 0, 3, 1, 4, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.2787397
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,79305113032924
+Best Chromosome Fitness Value is changed
+Stagnant Generation Count: 1
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Sum of Fitness values: 15,1722045213169
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,25
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,5
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,75
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,491598092248476
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,378335847229853
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,741253116513255
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,841734951288316
+Selected chromosome index for that random number: 3
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,0962469755188781
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 3, 1, 4, 5]
+Middle Section Beginning Index: 2
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 3, 1, 4, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,664196370478811
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,851758226683251
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,681884626709802
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 9
+Best Chromosome Fitness: 3,79305113032924
+Time: 00:00:00.3163404
+Distance: 263,64
+Item Pick List: 2, 0, 3, 1, 4, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.3163404
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,79305113032924
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 2
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Sum of Fitness values: 15,1722045213169
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,25
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,5
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,75
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,270599976307992
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,414315735648533
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,00224366132274441
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,49827101710172
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,513662521966576
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,556227217221738
+No Crossover operation is done
+Mutation probability: 0,5
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 4
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 10
+Best Chromosome Fitness: 3,79305113032924
+Time: 00:00:00.3429108
+Distance: 263,64
+Item Pick List: 2, 0, 3, 1, 4, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.3429108
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,79305113032924
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 3
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Sum of Fitness values: 15,1722045213169
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,25
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,5
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 0,75
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,25
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,127913459729363
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,168650936879521
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,427941773751723
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,187310276174597
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,587925532175193
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,316360766215418
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 3, 1, 4, 5]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 3, 1, 4, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,296407841284018
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 1, 4, 5]
+First Mutate Point Index: 2
+Second Mutate Point Index: 5
+Chromosome After Mutation: [2, 0, 5, 1, 4, 3]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,586818910011472
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 11
+Best Chromosome Fitness: 3,79305113032924
+Time: 00:00:00.3683148
+Distance: 263,64
+Item Pick List: 2, 0, 3, 1, 4, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.3683148
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,79305113032924
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 4
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 5, 1, 4, 3].Fitness = 3,50311777481959
+Sum of Fitness values: 14,8822711658073
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,254870448741987
+Cumulative Percent: 0,254870448741987
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,254870448741987
+Cumulative Percent: 0,509740897483974
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,254870448741987
+Cumulative Percent: 0,76461134622596
+Percent of Fitness for [2, 0, 5, 1, 4, 3]: 0,23538865377404
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,113641378057022
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,0103208068806309
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,654959004211686
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,809713465538674
+Selected chromosome index for that random number: 3
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 5, 1, 4, 3].Fitness = 3,50311777481959
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,107735870921861
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 3, 1, 4, 5]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 5
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 3, 1, 4, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,458102565006401
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 5, 1, 4, 3]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 3
+First Offspring: [2, 0, 3, 1, 5, 4]
+Second Offspring: [2, 0, 5, 1, 3, 4]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,0736688981175744
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 1, 4, 5]
+First Mutate Point Index: 3
+Second Mutate Point Index: 4
+Chromosome After Mutation: [2, 0, 3, 4, 1, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,965177671501961
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,0441888319534198
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 1, 5, 4]
+First Mutate Point Index: 4
+Second Mutate Point Index: 3
+Chromosome After Mutation: [2, 0, 3, 5, 1, 4]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,0446919924787674
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 5, 1, 3, 4]
+First Mutate Point Index: 3
+Second Mutate Point Index: 5
+Chromosome After Mutation: [2, 0, 5, 4, 3, 1]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 0
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 12
+Best Chromosome Fitness: 3,96479264134486
+Time: 00:00:00.4044195
+Distance: 252,22
+Item Pick List: 2, 0, 3, 4, 1, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.4044195
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,96479264134486
+Best Chromosome Fitness Value is changed
+Stagnant Generation Count: 1
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 5, 4, 3, 1].Fitness = 3,63557042099905
+[2, 0, 3, 5, 1, 4].Fitness = 3,57244927122035
+Sum of Fitness values: 14,9658634638935
+Percent of Fitness for [2, 0, 3, 4, 1, 5]: 0,264922411654381
+Cumulative Percent: 0,264922411654381
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,253446861885405
+Cumulative Percent: 0,518369273539786
+Percent of Fitness for [2, 0, 5, 4, 3, 1]: 0,242924200783349
+Cumulative Percent: 0,761293474323135
+Percent of Fitness for [2, 0, 3, 5, 1, 4]: 0,238706525676865
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,299720474658404
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,347183406514667
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,401004694123289
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,0981396986628602
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,890853012395489
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,178814496928274
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 3, 4, 1, 5]
+Middle Section Beginning Index: 2
+Middle Section Ending Index: 5
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 3, 4, 1, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,624183449253525
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,225506865058796
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 4, 1, 5]
+First Mutate Point Index: 1
+Second Mutate Point Index: 5
+Chromosome After Mutation: [2, 5, 3, 4, 1, 0]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 13
+Best Chromosome Fitness: 3,96479264134486
+Time: 00:00:00.4555479
+Distance: 252,22
+Item Pick List: 2, 0, 3, 4, 1, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.4555479
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 3,96479264134486
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 2
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 5, 3, 4, 1, 0].Fitness = 3,71498625455086
+Sum of Fitness values: 15,2658811565542
+Percent of Fitness for [2, 0, 3, 4, 1, 5]: 0,259715937827973
+Cumulative Percent: 0,259715937827973
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,248465915031753
+Cumulative Percent: 0,508181852859727
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,248465915031753
+Cumulative Percent: 0,75664776789148
+Percent of Fitness for [2, 5, 3, 4, 1, 0]: 0,24335223210852
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,820735939694911
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,355632058510385
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,858082859245167
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,273865302220856
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 5, 3, 4, 1, 0].Fitness = 3,71498625455086
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 5, 3, 4, 1, 0].Fitness = 3,71498625455086
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,269604454873877
+...Order Crossover started...
+First Parent: [2, 5, 3, 4, 1, 0]
+Second Parent: [2, 0, 3, 1, 4, 5]
+Middle Section Beginning Index: 3
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 3, 4, 1, 5]
+Second Offspring: [2, 5, 3, 1, 4, 0]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,89275748231111
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,372918376872744
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 4, 1, 5]
+First Mutate Point Index: 3
+Second Mutate Point Index: 2
+Chromosome After Mutation: [2, 0, 4, 3, 1, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,678932891543458
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Reinserted Chromosome: [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 14
+Best Chromosome Fitness: 4,34669216726071
+Time: 00:00:00.4804599
+Distance: 230,06
+Item Pick List: 2, 0, 4, 3, 1, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.4804599
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,34669216726071
+Best Chromosome Fitness Value is changed
+Stagnant Generation Count: 1
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 5, 3, 1, 4, 0].Fitness = 4,05383492784174
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Sum of Fitness values: 15,9866293557609
+Percent of Fitness for [2, 0, 4, 3, 1, 5]: 0,271895474057159
+Cumulative Percent: 0,271895474057159
+Percent of Fitness for [2, 5, 3, 1, 4, 0]: 0,253576588136817
+Cumulative Percent: 0,525472062193976
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,237263968903012
+Cumulative Percent: 0,762736031096988
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,237263968903012
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,885450567065482
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,0450373445847246
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,784473188121092
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,0175618063740254
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,246687932986155
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 4, 3, 1, 5]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 2
+First Offspring: [2, 0, 3, 4, 1, 5]
+Second Offspring: [2, 0, 4, 3, 1, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,110505233570237
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 4, 3, 1, 5]
+Middle Section Beginning Index: 3
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 4, 3, 1, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,388414735155373
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 4, 1, 5]
+First Mutate Point Index: 1
+Second Mutate Point Index: 5
+Chromosome After Mutation: [2, 5, 3, 4, 1, 0]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,761641527415086
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,827234497679041
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,507595253879016
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 0
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 15
+Best Chromosome Fitness: 4,34669216726071
+Time: 00:00:00.5155546
+Distance: 230,06
+Item Pick List: 2, 0, 4, 3, 1, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.5155546
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,34669216726071
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 2
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 5, 3, 4, 1, 0].Fitness = 3,71498625455086
+Sum of Fitness values: 16,2014217194015
+Percent of Fitness for [2, 0, 4, 3, 1, 5]: 0,268290785990433
+Cumulative Percent: 0,268290785990433
+Percent of Fitness for [2, 0, 4, 3, 1, 5]: 0,268290785990433
+Cumulative Percent: 0,536581571980867
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,234118412323468
+Cumulative Percent: 0,770699984304335
+Percent of Fitness for [2, 5, 3, 4, 1, 0]: 0,229300015695665
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,743805477276354
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,2985560494934
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,338681480073687
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,226463030197873
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,0462277415423783
+...Order Crossover started...
+First Parent: [2, 0, 3, 1, 4, 5]
+Second Parent: [2, 0, 4, 3, 1, 5]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 4, 3, 1, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,0698412754898152
+...Order Crossover started...
+First Parent: [2, 0, 4, 3, 1, 5]
+Second Parent: [2, 0, 4, 3, 1, 5]
+Middle Section Beginning Index: 4
+Middle Section Ending Index: 5
+First Offspring: [2, 0, 4, 3, 1, 5]
+Second Offspring: [2, 0, 4, 3, 1, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,366699756293883
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 1, 4, 5]
+First Mutate Point Index: 1
+Second Mutate Point Index: 2
+Chromosome After Mutation: [2, 3, 0, 1, 4, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,0651087677409448
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 3, 1, 5]
+First Mutate Point Index: 3
+Second Mutate Point Index: 4
+Chromosome After Mutation: [2, 0, 4, 1, 3, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,876420893183174
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,237935024890087
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 3, 1, 5]
+First Mutate Point Index: 4
+Second Mutate Point Index: 1
+Chromosome After Mutation: [2, 1, 4, 3, 0, 5]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 0
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 16
+Best Chromosome Fitness: 4,34669216726071
+Time: 00:00:00.5626787
+Distance: 230,06
+Item Pick List: 2, 0, 4, 3, 1, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.5626787
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,34669216726071
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 3
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 1, 4, 3, 0, 5].Fitness = 3,23185314459311
+[2, 3, 0, 1, 4, 5].Fitness = 3,11681835182645
+Sum of Fitness values: 14,749198591522
+Percent of Fitness for [2, 0, 4, 3, 1, 5]: 0,294707006640973
+Cumulative Percent: 0,294707006640973
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,274851199723619
+Cumulative Percent: 0,569558206364592
+Percent of Fitness for [2, 1, 4, 3, 0, 5]: 0,219120593199607
+Cumulative Percent: 0,788678799564199
+Percent of Fitness for [2, 3, 0, 1, 4, 5]: 0,211321200435801
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,1472390783705
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,56833333734811
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,453221266368973
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,544896709520787
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,109916287525518
+...Order Crossover started...
+First Parent: [2, 0, 4, 3, 1, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 3
+First Offspring: [2, 0, 4, 3, 1, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,0757517326044625
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 5
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,486577946453624
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 3, 1, 5]
+First Mutate Point Index: 2
+Second Mutate Point Index: 3
+Chromosome After Mutation: [2, 0, 3, 4, 1, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,095312477133848
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 0
+Second Mutate Point Index: 3
+Chromosome After Mutation: [1, 0, 4, 2, 3, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,0173414256504464
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 3
+Second Mutate Point Index: 4
+Chromosome After Mutation: [2, 0, 4, 3, 1, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,809654336334045
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 0
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 17
+Best Chromosome Fitness: 4,34669216726071
+Time: 00:00:00.6048017
+Distance: 230,06
+Item Pick List: 2, 0, 4, 3, 1, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.6048017
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,34669216726071
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 4
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+[1, 0, 4, 2, 3, 5].Fitness = 3,1750063500127
+Sum of Fitness values: 15,54032608646
+Percent of Fitness for [2, 0, 4, 3, 1, 5]: 0,279704051451527
+Cumulative Percent: 0,279704051451527
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,260859064686794
+Cumulative Percent: 0,54056311613832
+Percent of Fitness for [2, 0, 3, 4, 1, 5]: 0,255129308052249
+Cumulative Percent: 0,795692424190569
+Percent of Fitness for [1, 0, 4, 2, 3, 5]: 0,204307575809431
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,332819905287037
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,538589374413057
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,463466222613801
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,653378214525701
+Selected chromosome index for that random number: 2
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,772792738756534
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,459044451107757
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 3, 4, 1, 5]
+Middle Section Beginning Index: 3
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 3, 4, 1, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,563972839882585
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,367669840980167
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 4, 1, 5]
+First Mutate Point Index: 4
+Second Mutate Point Index: 3
+Chromosome After Mutation: [2, 0, 3, 1, 4, 5]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 18
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.6484244
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.6484244
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is changed
+Stagnant Generation Count: 1
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Sum of Fitness values: 15,9545559138545
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,254086353122591
+Cumulative Percent: 0,254086353122591
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,254086353122591
+Cumulative Percent: 0,508172706245181
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,254086353122591
+Cumulative Percent: 0,762259059367772
+Percent of Fitness for [2, 0, 3, 1, 4, 5]: 0,237740940632228
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,218286508795939
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,926502365119058
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,559518501888736
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,016558235053233
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,127178711875891
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 3, 1, 4, 5]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 1
+First Offspring: [2, 0, 3, 1, 4, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,425879016251247
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 3
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,435091705729762
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 3, 1, 4, 5]
+First Mutate Point Index: 5
+Second Mutate Point Index: 4
+Chromosome After Mutation: [2, 0, 3, 1, 5, 4]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,493527726034414
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 3
+Second Mutate Point Index: 0
+Chromosome After Mutation: [1, 0, 4, 2, 3, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,648621866315893
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,145209495045808
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 0
+Second Mutate Point Index: 3
+Chromosome After Mutation: [1, 0, 4, 2, 3, 5]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 0
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 19
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.6799906
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.6799906
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 2
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 3, 1, 5, 4].Fitness = 3,64006988934187
+[1, 0, 4, 2, 3, 5].Fitness = 3,1750063500127
+[1, 0, 4, 2, 3, 5].Fitness = 3,1750063500127
+Sum of Fitness values: 14,043917517209
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,288654139621248
+Cumulative Percent: 0,288654139621248
+Percent of Fitness for [2, 0, 3, 1, 5, 4]: 0,259191915993628
+Cumulative Percent: 0,547846055614875
+Percent of Fitness for [1, 0, 4, 2, 3, 5]: 0,226076972192562
+Cumulative Percent: 0,773923027807438
+Percent of Fitness for [1, 0, 4, 2, 3, 5]: 0,226076972192562
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,380576573023841
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,11665548110225
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,0572014735346667
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,192699037582008
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 3, 1, 5, 4].Fitness = 3,64006988934187
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,867180744589856
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,868734570624649
+No Crossover operation is done
+Mutation probability: 0,5
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 4
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 3, 1, 5, 4].Fitness = 3,64006988934187
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 20
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.7156014
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.7156014
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 3
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 3, 1, 5, 4].Fitness = 3,64006988934187
+Sum of Fitness values: 15,8015746728671
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,256546262747002
+Cumulative Percent: 0,256546262747002
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,256546262747002
+Cumulative Percent: 0,513092525494005
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,256546262747002
+Cumulative Percent: 0,769638788241007
+Percent of Fitness for [2, 0, 3, 1, 5, 4]: 0,230361211758993
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,585065132279445
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,0881292564273482
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,386050221224339
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,269320176108424
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,0568581847738746
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 2
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,0692736665109516
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 1
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,0683214259652055
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 0
+Second Mutate Point Index: 3
+Chromosome After Mutation: [1, 0, 4, 2, 3, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,574070005944963
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,66914463679732
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,951158852759357
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 0
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 21
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.7351383
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.7351383
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 4
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[1, 0, 4, 2, 3, 5].Fitness = 3,1750063500127
+Sum of Fitness values: 15,3365111335379
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,264325757830071
+Cumulative Percent: 0,264325757830071
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,264325757830071
+Cumulative Percent: 0,528651515660143
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,264325757830071
+Cumulative Percent: 0,792977273490214
+Percent of Fitness for [1, 0, 4, 2, 3, 5]: 0,207022726509785
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,128857097182822
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,106262466919731
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,0108005600100386
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,14305898833231
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,0578011144221766
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 2
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,521462463550951
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,856722990449855
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,0631743371780842
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 2
+Second Mutate Point Index: 0
+Chromosome After Mutation: [4, 0, 2, 1, 3, 5]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 22
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.7647331
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.7647331
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 5
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[4, 0, 2, 1, 3, 5].Fitness = 4,04269081500647
+Sum of Fitness values: 16,2041955985317
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,250171932521542
+Cumulative Percent: 0,250171932521542
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,250171932521542
+Cumulative Percent: 0,500343865043084
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,250171932521542
+Cumulative Percent: 0,750515797564627
+Percent of Fitness for [4, 0, 2, 1, 3, 5]: 0,249484202435374
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,824700958945184
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,205318617264423
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,456397769719547
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,0544599248349946
+Selected chromosome index for that random number: 0
+Selected Parent Chromosomes of current generation
+[4, 0, 2, 1, 3, 5].Fitness = 4,04269081500647
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,923372513113251
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,198700689337543
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,901955851773711
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,134058140280684
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 2
+Second Mutate Point Index: 3
+Chromosome After Mutation: [2, 0, 1, 4, 3, 5]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 23
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.7922897
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.7922897
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 6
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+Sum of Fitness values: 15,8764910380761
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,255335698431068
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,510671396862135
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,766007095293203
+Percent of Fitness for [2, 0, 1, 4, 3, 5]: 0,233992904706797
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,120928762071267
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,501211167546553
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,954868480076487
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,975470114022247
+Selected chromosome index for that random number: 3
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,082006979771893
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 4, 1, 3, 5]
+Middle Section Beginning Index: 0
+Middle Section Ending Index: 1
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 4, 1, 3, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,660230235969755
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,857490508750775
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,356874703595822
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 3
+Second Mutate Point Index: 2
+Chromosome After Mutation: [2, 0, 1, 4, 3, 5]
+...Swap Mutation ended...
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 24
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.8268822
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.8268822
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 7
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+Sum of Fitness values: 15,8764910380761
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,255335698431068
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,510671396862135
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,766007095293203
+Percent of Fitness for [2, 0, 1, 4, 3, 5]: 0,233992904706797
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,879010351318405
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,539614076511755
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,396214146817203
+Selected chromosome index for that random number: 1
+Random Number generated to select from Roulette Wheel: 0,344962982155831
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,607472617927693
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,997720832469743
+No Crossover operation is done
+Mutation probability: 0,5
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 4
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 25
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.8464489
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.8464489
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 8
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+Sum of Fitness values: 15,8764910380761
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,255335698431068
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,510671396862135
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,255335698431068
+Cumulative Percent: 0,766007095293203
+Percent of Fitness for [2, 0, 1, 4, 3, 5]: 0,233992904706797
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,163595726324057
+Selected chromosome index for that random number: 0
+Random Number generated to select from Roulette Wheel: 0,6906428186645
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,720124431755452
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,886888951476146
+Selected chromosome index for that random number: 3
+Selected Parent Chromosomes of current generation
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,933531162763727
+No Crossover operation is done
+Random Number generated to Cross or Not: 0,422161345566698
+...Order Crossover started...
+First Parent: [2, 0, 4, 1, 3, 5]
+Second Parent: [2, 0, 1, 4, 3, 5]
+Middle Section Beginning Index: 1
+Middle Section Ending Index: 5
+First Offspring: [2, 0, 4, 1, 3, 5]
+Second Offspring: [2, 0, 1, 4, 3, 5]
+...Order Crossover ended...
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,259712446601927
+...Swap Mutation started...
+Chromosome Before Mutation: [2, 0, 4, 1, 3, 5]
+First Mutate Point Index: 2
+Second Mutate Point Index: 3
+Chromosome After Mutation: [2, 0, 1, 4, 3, 5]
+...Swap Mutation ended...
+Random Number generated to Mutate or Not: 0,824963949539216
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 26
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.8685110
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.8685110
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 9
+Expected stagnant generation number(10) is not reached yet.
+Pick List Genetic Algorithm will continue to evolve...
+
+...Roulette Wheel Selection started...
+Chromosomes of current generation:
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+Sum of Fitness values: 15,5376423647852
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,260904121273214
+Cumulative Percent: 0,260904121273214
+Percent of Fitness for [2, 0, 4, 1, 3, 5]: 0,260904121273214
+Cumulative Percent: 0,521808242546427
+Percent of Fitness for [2, 0, 1, 4, 3, 5]: 0,239095878726786
+Cumulative Percent: 0,760904121273214
+Percent of Fitness for [2, 0, 1, 4, 3, 5]: 0,239095878726786
+Cumulative Percent: 1
+Random Number generated to select from Roulette Wheel: 0,712018309492626
+Selected chromosome index for that random number: 2
+Random Number generated to select from Roulette Wheel: 0,764054058475445
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,941255222978655
+Selected chromosome index for that random number: 3
+Random Number generated to select from Roulette Wheel: 0,494571228276273
+Selected chromosome index for that random number: 1
+Selected Parent Chromosomes of current generation
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+[2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+[2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+...Roulette Wheel Selection ended...
+Crossover probability: 0,5
+Random Number generated to Cross or Not: 0,0964597627038414
+...Order Crossover started...
+First Parent: [2, 0, 1, 4, 3, 5]
+Second Parent: [2, 0, 1, 4, 3, 5]
+Middle Section Beginning Index: 3
+Middle Section Ending Index: 4
+First Offspring: [2, 0, 1, 4, 3, 5]
+Second Offspring: [2, 0, 1, 4, 3, 5]
+...Order Crossover ended...
+Random Number generated to Cross or Not: 0,837308498023687
+No Crossover operation is done
+Mutation probability: 0,5
+Random Number generated to Mutate or Not: 0,96401112385281
+No Mutation operation is done
+Random Number generated to Mutate or Not: 0,982756699427383
+No Mutation operation is done
+...Elitist Reinsertion started...
+Number of Chromosomes to be reinserted: 2
+Reinserted Chromosome: [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Reinserted Chromosome: [2, 0, 1, 4, 3, 5].Fitness = 3,71498625455086
+...Elitist Reinsertion ended...
+Pick List Genetic Algorithm evolved one generation
+Generation summary:
+***************************************************************************************************************
+Termination: OrTermination (PickListGATimeEvolvingTermination with 00:01:00 max time to run, PickListGAFitnessStagnationTermination with 10 expected stagnant generation number)
+Generation Number: 27
+Best Chromosome Fitness: 4,05383492784174
+Time: 00:00:00.8945622
+Distance: 246,68
+Item Pick List: 2, 0, 4, 1, 3, 5
+***************************************************************************************************************
+Trying to decide whether to terminate algorithm or continue to evolve...
+Genetic Algorithm Running Time: 00:00:00.8945622
+Genetic Algorithm Max Running Time: 00:01:00
+Genetic Algorithm has still some time to run.
+Best Chromosome Fitness: 4,05383492784174
+Best Chromosome Fitness Value is still same
+Stagnant Generation Count: 10
+Stagnant Generation Count(10) reached expected stagnant generation number(10)
+Pick List Genetic Algorithm termination criteria are met.
+
+Evolved.
+Best Chromosome list over generations:
+Generation: 1 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 2 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 3 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 4 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 5 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 6 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 7 ==> [2, 3, 1, 5, 4, 0].Fitness = 3,95945517896737
+Generation: 8 ==> [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Generation: 9 ==> [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Generation: 10 ==> [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Generation: 11 ==> [2, 0, 3, 1, 4, 5].Fitness = 3,79305113032924
+Generation: 12 ==> [2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+Generation: 13 ==> [2, 0, 3, 4, 1, 5].Fitness = 3,96479264134486
+Generation: 14 ==> [2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+Generation: 15 ==> [2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+Generation: 16 ==> [2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+Generation: 17 ==> [2, 0, 4, 3, 1, 5].Fitness = 4,34669216726071
+Generation: 18 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 19 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 20 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 21 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 22 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 23 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 24 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 25 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 26 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+Generation: 27 ==> [2, 0, 4, 1, 3, 5].Fitness = 4,05383492784174
+
+Picker went right
+Picker is moved from: (4, 1) to: (4, 2)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 2) to: (4, 3)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 3) to: (4, 4)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 4) to: (4, 5)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 5) to: (4, 6)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 6) to: (4, 7)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 7) to: (4, 8)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 8) to: (4, 9)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 9) to: (4, 10)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 10) to: (4, 11)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 11) to: (4, 12)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 12) to: (4, 13)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 13) to: (4, 14)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 14) to: (4, 15)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 15) to: (4, 16)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 16) to: (4, 17)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 17) to: (4, 18)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 18) to: (4, 19)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 19) to: (4, 20)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 20) to: (4, 21)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 21) to: (4, 22)
+Picker is travelled 1W
+Picker went right
+Picker is moved from: (4, 22) to: (4, 23)
+Picker is travelled 1W
+Picker went up
+Picker is moved from: (4, 23) to: (3, 23)
+Picker is travelled 1L
+Picker went left
+Picker is moved from: (3, 23) to: (3, 22)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 22) to: (3, 21)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 21) to: (3, 20)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 20) to: (3, 19)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 19) to: (3, 18)
+Picker is travelled 1W
+Picker is travelled 1K
+Picker is travelled 1K
+Picker went right
+Picker is moved from: (3, 18) to: (3, 19)
+Picker is travelled 1W
+Picker is travelled 5K
+Picker is travelled 5K
+Picker went right
+Picker is moved from: (3, 19) to: (3, 20)
+Picker is travelled 1W
+Picker went up
+Picker is moved from: (3, 20) to: (2, 20)
+Picker is travelled 1L
+Picker went left
+Picker is moved from: (2, 20) to: (2, 19)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 19) to: (2, 18)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 18) to: (2, 17)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 17) to: (2, 16)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 16) to: (2, 15)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 15) to: (2, 14)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 14) to: (2, 13)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 13) to: (2, 12)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 12) to: (2, 11)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 11) to: (2, 10)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 10) to: (2, 9)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 9) to: (2, 8)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (2, 8) to: (2, 7)
+Picker is travelled 1W
+Picker went down
+Picker is moved from: (2, 7) to: (3, 7)
+Picker is travelled 1L
+Picker went left
+Picker is moved from: (3, 7) to: (3, 6)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 6) to: (3, 5)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 5) to: (3, 4)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 4) to: (3, 3)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 3) to: (3, 2)
+Picker is travelled 1W
+Picker went left
+Picker is moved from: (3, 2) to: (3, 1)
+Picker is travelled 1W
+Picker went down
+Picker is moved from: (3, 1) to: (4, 1)
+Picker is travelled 1L
+PICKER IS FINISHED ITS JOB
+Travelled path: (4,1) -> (4,2) -> (4,3) -> (4,4) -> (4,5) -> (4,6) -> (4,7) -> (4,8) -> (4,9) -> (4,10) -> (4,11) -> (4,12) -> (4,13) -> (4,14) -> (4,15) -> (4,16) -> (4,17) -> (4,18) -> (4,19) -> (4,20) -> (4,21) -> (4,22) -> (4,23) -> (3,23) -> (3,22) -> (3,21) -> (3,20) -> (3,19) -> (3,18) -> (3,19) -> (3,20) -> (2,20) -> (2,19) -> (2,18) -> (2,17) -> (2,16) -> (2,15) -> (2,14) -> (2,13) -> (2,12) -> (2,11) -> (2,10) -> (2,9) -> (2,8) -> (2,7) -> (3,7) -> (3,6) -> (3,5) -> (3,4) -> (3,3) -> (3,2) -> (3,1) -> (4,1)
+
+Travelled distances: 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1L + 1W + 1W + 1W + 1W + 1W + 1K + 1K + 1W + 5K + 5K + 1W + 1L + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1W + 1L + 1W + 1W + 1W + 1W + 1W + 1W + 1L
+
+Item Picking Sequence: 4 -> 1 -> 3 -> 5 -> 2
+
+Picker travelled 279,64M totally
+

@@ -271,7 +271,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             wr.WriteLine("{0}" + delimiter + "{1}",
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
                 listFilePath);
-            wr.WriteLine("InstanceNumber" + delimiter + "DistanceMatrixRunningTime" 
+            wr.WriteLine("InstanceNumber" + delimiter + "DistanceMatrixRunningTime"
                 + delimiter + "GACycleSwapTotalDistance" + delimiter + "GACycleSwapRunningTime" + delimiter + "GACycleInversionTotalDistance" + delimiter + "GACycleInversionRunningTime"
                 + delimiter + "GAOrderedSwapTotalDistance" + delimiter + "GAOrderedSwapRunningTime" + delimiter + "GAOrderedInversionTotalDistance" + delimiter + "GAOrderedInversionRunningTime"
                 + delimiter + "GAPMXSwapTotalDistance" + delimiter + "GAPMXSwapRunningTime" + delimiter + "GAPMXInversionTotalDistance" + delimiter + "GAPMXInversionRunningTime"
@@ -518,7 +518,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 Utils.generateTestLists(room, parameters.PickListSizesOfTestLists, parameters.NumberOfPickLists);
             }
 
-            parameters.NumberOfStagnantGenerationList = new int[] { 50, 60, 70, 80, 90, 100, 110, 120 };
+            parameters.NumberOfStagnantGenerationList = new int[] { 130, 140 };
             parameters.PopulationSizeList = new int[] { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600 };
             parameters.CrossoverProbabilityList = new float[] { 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f };
             parameters.MutationProbabilityList = new float[] { 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f, 0.10f, 0.11f, 0.12f };
@@ -568,13 +568,12 @@ namespace ComparisonOfOrderPickingAlgorithms
             
             String[] itemListFilePaths = new String[]
             {
-                "../../../files/testListWithPickListSize100_part05.txt",
-                "../../../files/testListWithPickListSize100_part04.txt",
-                "../../../files/testListWithPickListSize100_part03.txt",
-                "../../../files/testListWithPickListSize100_part02.txt",
-                "../../../files/testListWithPickListSize100_part01.txt"
+                "../../../files/testListWithPickListSize100_part02_02.txt",
+                "../../../files/testListWithPickListSize100_part01_02.txt",
+                "../../../files/testListWithPickListSize100_part01_01.txt",
+                "../../../files/testListWithPickListSize100_part02_01.txt"
             };
-            String comparisonReportFilePath = "../../../files/GeneticAlgorithmComparisonReport_100_parts.txt";
+            String comparisonReportFilePath = "../../../files/GeneticAlgorithmComparisonReport_50_parts.txt";
 
             foreach (string path in itemListFilePaths)
             {
@@ -583,6 +582,154 @@ namespace ComparisonOfOrderPickingAlgorithms
                     compareAlgorithmsWithGeneticAlgorithm(path, comparisonReportFilePath);
                 }
             }
+        }
+
+        //Method to setup testing of Shortest Path
+        public static void setupShortestPathTest(bool generateNewTestLists)
+        {
+            String testListPath = "../../../files/testListForShortestPathTestSmall.txt";
+            String shortestPathReportFilePath = "../../../files/reportForShortestPathTestSmall.txt";
+            int S = 10;
+            double W = 7;
+            double L = 30;
+            double K = 3;
+            int no_of_horizontal_aisles = 3;
+            int no_of_vertical_aisles = 4;
+
+            depot = new Coordinate(1, no_of_horizontal_aisles);
+            room = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+            parameters = new Parameters();
+
+            if (generateNewTestLists)
+            {
+                Utils.writeShortestPathItemList(room, testListPath);
+            }
+
+            compareShortestPathAlgorithms(testListPath, shortestPathReportFilePath);
+        }
+
+        //Method to compare solution algorithms
+        public static void compareShortestPathAlgorithms(String testListPath, String reportFilePath)
+        {
+            String delimiter = "\t";
+            StreamWriter wr = new StreamWriter(reportFilePath, true);
+            wr.WriteLine("{0}" + delimiter + "{1}",
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
+                testListPath);
+            wr.Close();
+            
+            parameters.ItemListSet = Utils.readTestList(testListPath);
+
+            //Add one additional Distance Matrix calculation at the beginning to initiate multi-core process and having less values for distance matrix calculation at report
+            room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
+            picker = new Picker(depot);
+            solution = new Solution(room, picker, parameters);
+            solution.prepareDistanceMatrix(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
+            
+            //Old algorithm
+            room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
+            picker = new Picker(depot);
+            solution = new Solution(room, picker, parameters);
+            solution.prepareDistanceMatrix(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
+
+            double[,]  calculatedDistanceMatrix1 = solution.DistanceMatrix;
+            List<Coordinate>[,] calculatedPathMatrix1 = solution.PathMatrix;
+
+            wr = new StreamWriter(reportFilePath, true);
+            Console.WriteLine("Writing Distance Matrix using Cplex Algorithm...");
+            wr.WriteLine("Prepared Distance Matrix using Cplex Algorithm:");
+            for (int i = 0; i < calculatedDistanceMatrix1.GetLength(1); i++)
+            {
+                wr.Write("i" + i + delimiter);
+            }
+            wr.WriteLine();
+            
+            for (int i = 0; i < calculatedDistanceMatrix1.GetLength(0); i++)
+            {
+                wr.Write("i" + i + delimiter);
+                for (int j = 0; j < calculatedDistanceMatrix1.GetLength(1); j++)
+                {
+                    wr.Write(calculatedDistanceMatrix1[i, j] + "\t");
+                }
+                wr.WriteLine();
+            }
+            wr.WriteLine();
+            wr.Close();
+
+            wr = new StreamWriter(reportFilePath, true);
+            Console.WriteLine("Writing Path Matrix using Cplex Algorithm...");
+            wr.WriteLine("Prepared Path Matrix using Cplex Algorithm:");
+            for (int i = 0; i < calculatedPathMatrix1.GetLength(0); i++)
+            {
+                for (int j = 0; j < calculatedPathMatrix1.GetLength(1); j++)
+                {
+                    wr.WriteLine("Path from (item{0}) to (item{1}):", i, j);
+                    wr.WriteLine(ShortestPathSolution.stringOfPath(calculatedPathMatrix1[i, j]));
+                }
+            }
+            wr.WriteLine();
+            wr.Close();
+
+            double calculatedDistanceMatrixRunningTime1 = solution.DistanceMatrixRunningTime;
+
+            //Dijkstra algorithm
+            room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
+            picker = new Picker(depot);
+            solution = new Solution(room, picker, parameters);
+            solution.prepareDistanceMatrix_With_Dijkstra(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
+
+            double[,] calculatedDistanceMatrix2 = solution.DistanceMatrix;
+            List<Coordinate>[,] calculatedPathMatrix2 = solution.PathMatrix;
+
+            wr = new StreamWriter(reportFilePath, true);
+            Console.WriteLine("Writing Distance Matrix using Dijkstra Algorithm...");
+            wr.WriteLine("Prepared Distance Matrix using Dijkstra Algorithm:");
+            for (int i = 0; i < calculatedDistanceMatrix2.GetLength(1); i++)
+            {
+                wr.Write("i" + i + delimiter);
+            }
+            wr.WriteLine();
+
+            for (int i = 0; i < calculatedDistanceMatrix2.GetLength(0); i++)
+            {
+                wr.Write("i" + i + delimiter);
+                for (int j = 0; j < calculatedDistanceMatrix2.GetLength(1); j++)
+                {
+                    wr.Write(calculatedDistanceMatrix2[i, j] + "\t");
+                }
+                wr.WriteLine();
+            }
+            wr.WriteLine();
+            wr.Close();
+
+            wr = new StreamWriter(reportFilePath, true);
+            Console.WriteLine("Writing Path Matrix using Dijkstra Algorithm...");
+            wr.WriteLine("Prepared Path Matrix using Dijkstra Algorithm:");
+            for (int i = 0; i < calculatedPathMatrix2.GetLength(0); i++)
+            {
+                for (int j = 0; j < calculatedPathMatrix2.GetLength(1); j++)
+                {
+                    wr.WriteLine("Path from (item{0}) to (item{1}):", i, j);
+                    wr.WriteLine(ShortestPathSolution.stringOfPath(calculatedPathMatrix2[i, j]));
+                }
+            }
+            wr.WriteLine();
+            wr.Close();
+
+            double calculatedDistanceMatrixRunningTime2 = solution.DistanceMatrixRunningTime;
+
+            wr = new StreamWriter(reportFilePath, true);
+            wr.WriteLine("Running Time for Shortest Path Algorithms:");
+            wr.WriteLine("Cplex" + delimiter + "Dijkstra");
+            wr.WriteLine("{0}" + delimiter + "{1}",
+                    calculatedDistanceMatrixRunningTime1,
+                    calculatedDistanceMatrixRunningTime2);
+            wr.Close();
+            Console.WriteLine("Running Time for Shortest Path Algorithms:");
+            Console.WriteLine("Cplex" + delimiter + "Dijkstra");
+            Console.WriteLine("{0}" + delimiter + "{1}",
+                    calculatedDistanceMatrixRunningTime1,
+                    calculatedDistanceMatrixRunningTime2);
         }
 
         public static void Main(string[] args)
@@ -594,8 +741,9 @@ namespace ComparisonOfOrderPickingAlgorithms
             //String listFilePath = "../../../files/testListWithPickListSize005.txt";
             //String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             //compareAlgorithms(listFilePath, reportFilePath);
-            //setupGeneticAlgorithmParameterTuning(true);
-            setupGeneticAlgorithmComparison(false);
+            //setupGeneticAlgorithmParameterTuning(false);
+            //setupGeneticAlgorithmComparison(false);
+            setupShortestPathTest(false);
             Console.ReadLine();
         }
     }

@@ -25,6 +25,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         private ILinearNumExpr objective;
         private Stopwatch stopWatch;
 
+        private ShortestPathSolution sps;
         private IDictionary<int, Item> indexedItemDictionary = new Dictionary<int, Item>();
 
         public IDictionary<int, Item> IndexedItemDictionary
@@ -297,6 +298,87 @@ namespace ComparisonOfOrderPickingAlgorithms
             this.distanceMatrixRunningTime = dmElapsedTime;
         }
 
+        public void prepareDistanceMatrix_With_Dijkstra(Item picker)
+        {
+            stopWatch = Stopwatch.StartNew();
+
+            if (picker != null)
+            {
+                this.distances = new double[this.problem.ItemList.Count + 1, this.problem.ItemList.Count + 1];
+                this.paths = new List<Coordinate>[this.problem.ItemList.Count + 1, this.problem.ItemList.Count + 1];
+            }
+            else
+            {
+                this.distances = new double[this.problem.ItemList.Count, this.problem.ItemList.Count];
+                this.paths = new List<Coordinate>[this.problem.ItemList.Count, this.problem.ItemList.Count];
+            }
+            for (int i = 0; i < this.distances.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.distances.GetLength(1); j++)
+                {
+                    if (i == j)
+                    {
+                        this.distances[i, j] = 0;
+                    }
+                    else
+                    {
+                        if (picker != null)
+                        {
+                            if (j > i)
+                            {
+                                if (i == 0)
+                                {
+                                    this.distances[i, j] = Solve_Shortest_Path_With_Dijkstra(picker, this.indexedItemDictionary[j]);
+                                }
+                                else
+                                {
+                                    this.distances[i, j] = Solve_Shortest_Path_With_Dijkstra(this.indexedItemDictionary[i], this.indexedItemDictionary[j]);
+                                }
+                            }
+                            else
+                            {
+                                this.distances[i, j] = this.distances[j, i];
+                                List<Coordinate> reversedPath = Utils.Clone<Coordinate>(this.paths[j, i]);
+                                reversedPath.Reverse();
+                                this.paths[i, j] = reversedPath;
+                            }
+                        }
+                        else
+                        {
+                            if (j > i)
+                            {
+                                this.distances[i, j] = Solve_Shortest_Path_With_Dijkstra(this.indexedItemDictionary[i + 1], this.indexedItemDictionary[j + 1]);
+                            }
+                            else
+                            {
+                                this.distances[i, j] = this.distances[j, i];
+                                List<Coordinate> reversedPath = Utils.Clone<Coordinate>(this.paths[j, i]);
+                                reversedPath.Reverse();
+                                this.paths[i, j] = reversedPath;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Console.WriteLine("Prepared Distance Matrix:");
+            //for (int i = 0; i < this.distances.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < this.distances.GetLength(1); j++)
+            //    {
+            //        Console.Write(this.distances[i, j] + "\t");
+            //    }
+            //    Console.WriteLine();
+            //}
+            //Console.WriteLine();
+
+            stopWatch.Stop();
+            TimeSpan dmElapsed_Time = stopWatch.Elapsed;
+            double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
+            //double dmElapsedTime = Math.Round(((double)stopwatch.ElapsedMilliseconds)/1000, 3);
+            this.distanceMatrixRunningTime = dmElapsedTime;
+        }
+
         public double Solve_Shortest_Path(Item sourceItem, Item destinationItem)
         {
             cplex = new Cplex();
@@ -330,9 +412,17 @@ namespace ComparisonOfOrderPickingAlgorithms
             return travelled_distance;
         }
 
+        public double Solve_Shortest_Path_With_Dijkstra(Item sourceItem, Item destinationItem)
+        {
+            sps = new ShortestPathSolution(this.problem);
+            sps.Solve(sourceItem, destinationItem);
+            this.paths[sourceItem.Index, destinationItem.Index] = sps.ShortestPath;
+            return sps.ShortestDistance;
+        }
+
         private void extractShortestPath(Item sourceItem, Item destinationItem)
         {
-            //Console.WriteLine("Going From Item Number {0}: {1},{2},{3},{4} To Item Number {5}: {6},{7},{8},{9}", 
+            //Console.WriteLine("Going From Item Number {0}: {1},{2},{3},{4} To Item Number {5}: {6},{7},{8},{9}",
             //    sourceItem.Index,
             //    sourceItem.AInfo,
             //    sourceItem.BInfo,
@@ -419,7 +509,6 @@ namespace ComparisonOfOrderPickingAlgorithms
                     }
                 }
             }
-
 
             for (int iprime = 1; iprime <= this.problem.NumberOfCrossAisles; iprime++)
             {
@@ -608,6 +697,8 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
             }
 
+            //TODO K Value is set wrongly. Here Cross Aisle idth should be considered in calculation and 
+            // distance in rack system should be calculated as {this.problem.K * (D - 0.5) + CrossAisleWidth/2} and {this.problem.K * (this.problem.S - D + 0.5) + CrossAisleWidth/2}
             objective.AddTerm(this.problem.K * (this.problem.S - D), X[0, 0, A + 1, B + C]);
 
             objective.AddTerm(this.problem.K * (D - 1), X[0, 0, A, B + C]);

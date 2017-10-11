@@ -32,3 +32,19 @@ tabuLength	numberOfIterations	travelledDistance	runningTime
 5	20	817,780000000002	0,071
 6	20	1058,98	0,071
 
+2017-08-11 08:55:53:6548	../../../files/testListWithPickListSize004.txt
+tabuLength	numberOfIterations	travelledDistance	runningTime
+5	10	284,16	0,217
+
+2017-08-11 08:59:13:2932	../../../files/testListWithPickListSize004.txt
+tabuLength	numberOfIterations	travelledDistance	runningTime
+5	10	284,16	0,179
+
+2017-08-11 08:59:40:9310	../../../files/testListWithPickListSize004.txt
+tabuLength	numberOfIterations	travelledDistance	runningTime
+5	10	284,16	0,207
+
+2017-08-11 09:00:15:0789	../../../files/testListWithPickListSize004.txt
+tabuLength	numberOfIterations	travelledDistance	runningTime
+5	10	284,16	0,199
+

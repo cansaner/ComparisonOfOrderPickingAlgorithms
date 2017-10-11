@@ -116,6 +116,7 @@
     <Compile Include="PickListGATimeEvolvingTermination.cs" />
     <Compile Include="PickListGAParameters.cs" />
     <Compile Include="Problem.cs" />
+    <Compile Include="ShortestPathSolution.cs" />
     <Compile Include="Solution.cs" />
     <Compile Include="StorageUnit.cs" />
     <Compile Include="TabuList.cs" />

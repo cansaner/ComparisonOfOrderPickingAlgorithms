@@ -60,6 +60,58 @@ namespace ComparisonOfOrderPickingAlgorithms
             return ints;
         }
 
+        //Method to write pick list to test shortest path
+        public static void writeShortestPathItemList(Problem warehouse, String filepath)
+        {
+            List<Item> itemList = new List<Item>();
+            StreamWriter wr = new StreamWriter(filepath, true);
+
+            int index = 0;
+            for (int i = 0; i < warehouse.NumberOfCrossAisles - 1; i++)
+            {
+                for (int j = 0; j < warehouse.NumberOfAisles - 1; j++)
+                {
+                    Item item1 = new Item();
+                    item1.Index = ++index;
+                    item1.AInfo = i + 1;
+                    item1.BInfo = j + 1;
+                    item1.CInfo = 0;
+                    item1.DInfo = 2;
+                    itemList.Add(item1);
+                    wr.WriteLine("{0},{1},{2},{3},{4}", item1.Index, item1.AInfo, item1.BInfo, item1.CInfo, item1.DInfo);
+
+                    Item item2 = new Item();
+                    item2.Index = ++index;
+                    item2.AInfo = i + 1;
+                    item2.BInfo = j + 1;
+                    item2.CInfo = 0;
+                    item2.DInfo = 9;
+                    itemList.Add(item2);
+                    wr.WriteLine("{0},{1},{2},{3},{4}", item2.Index, item2.AInfo, item2.BInfo, item2.CInfo, item2.DInfo);
+                }
+                Item itemLast1 = new Item();
+                itemLast1.Index = ++index;
+                itemLast1.AInfo = i + 1;
+                itemLast1.BInfo = warehouse.NumberOfAisles - 1;
+                itemLast1.CInfo = 1;
+                itemLast1.DInfo = 2;
+                itemList.Add(itemLast1);
+                wr.WriteLine("{0},{1},{2},{3},{4}", itemLast1.Index, itemLast1.AInfo, itemLast1.BInfo, itemLast1.CInfo, itemLast1.DInfo);
+
+                Item itemLast2 = new Item();
+                itemLast2.Index = ++index;
+                itemLast2.AInfo = i + 1;
+                itemLast2.BInfo = warehouse.NumberOfAisles - 1;
+                itemLast2.CInfo = 1;
+                itemLast2.DInfo = 9;
+                itemList.Add(itemLast2);
+                wr.WriteLine("{0},{1},{2},{3},{4}", itemLast2.Index, itemLast2.AInfo, itemLast2.BInfo, itemLast2.CInfo, itemLast2.DInfo);
+            }
+
+            wr.WriteLine("");
+            wr.Close();
+        }
+
         //Method to write a random item pick list for specified warehouse
         public static void writeRandomItemList(Problem warehouse, int sizeOfList, String filepath)
         {
