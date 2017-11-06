@@ -1433,6 +1433,12 @@ namespace ComparisonOfOrderPickingAlgorithms
                 case PickListGAParameters.Crossover.Ordered:
                     GACrossover = new PickListGAOrderCrossover();
                     break;
+                case PickListGAParameters.Crossover.OX2:
+                    GACrossover = new PickListGAOrderBasedCrossover();
+                    break;
+                case PickListGAParameters.Crossover.PositionBased:
+                    GACrossover = new PickListGAPositionBasedCrossover();
+                    break;
                 default:
                     GACrossover = new PickListGAOrderCrossover();
                     break;
@@ -1448,6 +1454,15 @@ namespace ComparisonOfOrderPickingAlgorithms
                 case PickListGAParameters.Mutation.Inversion:
                     GAMutation = new PickListGAInversionMutation();
                     break;
+                case PickListGAParameters.Mutation.Shuffle:
+                    GAMutation = new PickListGAPartialShuffleMutation();
+                    break;
+                case PickListGAParameters.Mutation.Displacement:
+                    GAMutation = new PickListGADisplacementMutation();
+                    break;
+                case PickListGAParameters.Mutation.Insertion:
+                    GAMutation = new PickListGAInsertionMutation();
+                    break;
                 default:
                     GAMutation = new PickListGAInversionMutation();
                     break;
@@ -1455,8 +1470,8 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             PickListGAFitness GAFitness = new PickListGAFitness(initialItemList, this);
             PickListGAPopulation GAPopulation = new PickListGAPopulation(parameters.PopulationSize, parameters.PopulationSize, new PickListGAChromosome(itemIndices));
-            GAPopulation.GenerationStrategy = new PerformanceGenerationStrategy();
-
+            GAPopulation.GenerationStrategy = new TrackingGenerationStrategy();
+            
             PickListGA ga = new PickListGA(GAPopulation, GAFitness, GASelection, GACrossover, GAMutation);
             ga.Reinsertion = new PickListGAElitistReinsertion();
             //ga.Termination = new OrTermination(new PickListGATimeEvolvingTermination(TimeSpan.FromMinutes(1)), new PickListGAFitnessStagnationTermination(parameters.NumberOfStagnantGeneration));
@@ -1479,13 +1494,6 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 currentSolution[i] = initialSolutionList[i].Index;
             }
-
-            //parameters.PopulationSize = 10;
-            //parameters.NumberOfStagnantGeneration = 10;
-            //parameters.CrossoverProbability = 0.5f;
-            //parameters.MutationProbability = 0.5f;
-            //parameters.CrossoverOperator = PickListGAParameters.Crossover.Ordered;
-            //parameters.MutationOperator = PickListGAParameters.Mutation.Inversion;
 
             PickListGA ga = setupPickListGeneticAlgorithm(parameters, initialSolutionList, currentSolution);
 

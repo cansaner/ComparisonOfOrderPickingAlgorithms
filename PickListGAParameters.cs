@@ -7,8 +7,8 @@ namespace ComparisonOfOrderPickingAlgorithms
 {
     public class PickListGAParameters
     {
-        public enum Crossover { Cycle, PMX, Ordered };
-        public enum Mutation { Swap, Inversion };
+        public enum Crossover { Cycle, PMX, Ordered, OX2, PositionBased };
+        public enum Mutation { Swap, Inversion, Shuffle, Insertion, Displacement };
 
         private int numberOfStagnantGeneration;
         private int populationSize;
