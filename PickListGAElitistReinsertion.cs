@@ -29,9 +29,9 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <param name="parents">The parents.</param>
         protected override IList<IChromosome> PerformSelectChromosomes(IPopulation population, IList<IChromosome> offspring, IList<IChromosome> parents)
         {
-            //Console.WriteLine("...Elitist Reinsertion started...");
+            Console.WriteLine("...Elitist Reinsertion started...");
             var diff = population.MinSize - offspring.Count;
-            //Console.WriteLine("Number of Chromosomes to be reinserted: {0}", diff);
+            Console.WriteLine("Number of Chromosomes to be reinserted: {0}", diff);
 
             if (diff > 0)
             {
@@ -40,11 +40,11 @@ namespace ComparisonOfOrderPickingAlgorithms
                 foreach (var p in bestParents)
                 {
                     offspring.Add(p);
-                    //Console.WriteLine("Reinserted Chromosome: [{0}].Fitness = {1}", string.Join(", ", Solution.extractChromosome(p)), p.Fitness.Value);
+                    Console.WriteLine("Reinserted Chromosome: [{0}].Fitness = {1}", string.Join(", ", Solution.extractChromosome(p)), p.Fitness.Value);
                 }
             }
 
-            //Console.WriteLine("...Elitist Reinsertion ended...");
+            Console.WriteLine("...Elitist Reinsertion ended...");
             return offspring;
         }
         #endregion

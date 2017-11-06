@@ -1499,28 +1499,28 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             var terminationName = ga.Termination.ToString();
 
-            //ga.GenerationRan += delegate
-            //{
-            //    if (ga.Population.GenerationsNumber == 1)
-            //    {
-            //        DrawSampleName("Pick List Genetic Algorithm started with initial population");
-            //    }
-            //    else
-            //    {
-            //        DrawSampleName("Pick List Genetic Algorithm evolved one generation");
-            //    }
+            ga.GenerationRan += delegate
+            {
+                if (ga.Population.GenerationsNumber == 1)
+                {
+                    DrawSampleName("Pick List Genetic Algorithm started with initial population");
+                }
+                else
+                {
+                    DrawSampleName("Pick List Genetic Algorithm evolved one generation");
+                }
 
-            //    Console.WriteLine("Generation summary:");
-            //    Console.WriteLine("***************************************************************************************************************");
-            //    var bestChromosome = ga.Population.BestChromosome;
-            //    Console.WriteLine("Termination: {0}", terminationName);
-            //    Console.WriteLine("Generation Number: {0}", ga.Population.GenerationsNumber);
-            //    Console.WriteLine("Best Chromosome Fitness: {0}", bestChromosome.Fitness);
-            //    Console.WriteLine("Time: {0}", ga.TimeEvolving);
-            //    Draw(bestChromosome);
-            //    Console.WriteLine("***************************************************************************************************************");
-            //    Console.WriteLine("Trying to decide whether to terminate algorithm or continue to evolve...");
-            //};
+                Console.WriteLine("Generation summary:");
+                Console.WriteLine("***************************************************************************************************************");
+                var bestChromosome = ga.Population.BestChromosome;
+                Console.WriteLine("Termination: {0}", terminationName);
+                Console.WriteLine("Generation Number: {0}", ga.Population.GenerationsNumber);
+                Console.WriteLine("Best Chromosome Fitness: {0}", bestChromosome.Fitness);
+                Console.WriteLine("Time: {0}", ga.TimeEvolving);
+                Draw(bestChromosome);
+                Console.WriteLine("***************************************************************************************************************");
+                Console.WriteLine("Trying to decide whether to terminate algorithm or continue to evolve...");
+            };
 
             try
             {
@@ -1536,13 +1536,13 @@ namespace ComparisonOfOrderPickingAlgorithms
                 return;
             }
 
-            //Console.ForegroundColor = ConsoleColor.DarkGreen;
-            //Console.WriteLine();
-            //Console.WriteLine("Evolved.");
-            //Console.ResetColor();
-            //Console.WriteLine("Best Chromosome list over generations:");
-            //ga.Population.Generations.ToList().Select((item, index) => new { Generation = item, Index = index+1 }).ToList().ForEach(g => Console.WriteLine("Generation: {0} ==> [{1}].Fitness = {2}", g.Index, string.Join(", ", Solution.extractChromosome(g.Generation.BestChromosome)), g.Generation.BestChromosome.Fitness.Value));
-            //Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine();
+            Console.WriteLine("Evolved.");
+            Console.ResetColor();
+            Console.WriteLine("Best Chromosome list over generations:");
+            ga.Population.Generations.ToList().Select((item, index) => new { Generation = item, Index = index + 1 }).ToList().ForEach(g => Console.WriteLine("Generation: {0} ==> [{1}].Fitness = {2}", g.Index, string.Join(", ", Solution.extractChromosome(g.Generation.BestChromosome)), g.Generation.BestChromosome.Fitness.Value));
+            Console.WriteLine();
 
             int[] bestSolution = extractChromosome(ga.Population.BestChromosome);
 

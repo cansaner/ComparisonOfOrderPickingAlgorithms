@@ -1,5 +1,6 @@
 ﻿using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Mutations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GeneticSharp.Infrastructure.Framework.Texts;
@@ -22,29 +23,29 @@ namespace ComparisonOfOrderPickingAlgorithms
             ValidateLength(chromosome);
 
             double randomDouble = ThreadSafeRandom.ThisThreadsRandom.NextDouble();
-            //Console.WriteLine("Random Number generated to Mutate or Not: {0}", randomDouble);
+            Console.WriteLine("Random Number generated to Mutate or Not: {0}", randomDouble);
 
             if (randomDouble <= probability)
             {
-                //Console.WriteLine("...Sequence Mutation started...");
+                Console.WriteLine("...Sequence Mutation started...");
                 var indexes = Utils.GetUniqueInts(2, 0, chromosome.Length).OrderBy(i => i).ToArray();
                 var firstIndex = indexes[0];
                 var secondIndex = indexes[1];
                 var sequenceLength = (secondIndex - firstIndex) + 1;
-                //Console.WriteLine("Chromosome Before Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
-                //Console.WriteLine("First Mutate Point Index: {0}", firstIndex);
-                //Console.WriteLine("Second Mutate Point Index: {0}", secondIndex);
+                Console.WriteLine("Chromosome Before Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
+                Console.WriteLine("First Mutate Point Index: {0}", firstIndex);
+                Console.WriteLine("Second Mutate Point Index: {0}", secondIndex);
 
                 var mutatedSequence = MutateOnSequence(chromosome.GetGenes().Skip(firstIndex).Take(sequenceLength)).ToArray();
 
                 chromosome.ReplaceGenes(firstIndex, mutatedSequence);
-                //Console.WriteLine("Chromosome After Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
-                //Console.WriteLine("...Sequence Mutation ended...");
+                Console.WriteLine("Chromosome After Mutation: [{0}]", string.Join(", ", Solution.extractChromosome(chromosome)));
+                Console.WriteLine("...Sequence Mutation ended...");
             }
-            //else
-            //{
-            //    Console.WriteLine("No Mutation operation is done");
-            //}
+            else
+            {
+                Console.WriteLine("No Mutation operation is done");
+            }
         }
 
         /// <summary>
