@@ -35,18 +35,18 @@ namespace ComparisonOfOrderPickingAlgorithms
             for (int i = 0; i < number; i++)
             {
                 var pointer = getPointer();
-                Console.WriteLine("Random Number generated to select from Roulette Wheel: {0}", pointer);
+                //Console.WriteLine("Random Number generated to select from Roulette Wheel: {0}", pointer);
 
                 var chromosomeIndex = rouletteWheel.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(r => r.Value >= pointer).Index;
-                Console.WriteLine("Selected chromosome index for that random number: {0}", chromosomeIndex);
+                //Console.WriteLine("Selected chromosome index for that random number: {0}", chromosomeIndex);
 
                 selected.Add(chromosomes[chromosomeIndex]);
             }
 
-            Console.WriteLine("Selected Parent Chromosomes of current generation");
-            selected.ToList().ForEach(c => Console.WriteLine("[{0}].Fitness = {1}", string.Join(", ", Solution.extractChromosome(c)), c.Fitness.Value));
+            //Console.WriteLine("Selected Parent Chromosomes of current generation");
+            //selected.ToList().ForEach(c => Console.WriteLine("[{0}].Fitness = {1}", string.Join(", ", Solution.extractChromosome(c)), c.Fitness.Value));
 
-            Console.WriteLine("...Roulette Wheel Selection ended...");
+            //Console.WriteLine("...Roulette Wheel Selection ended...");
 
             return selected;
         }
@@ -58,18 +58,18 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <param name="rouletteWheel">The roulette wheel.</param>
         protected static void CalculateCumulativePercentFitness(IList<IChromosome> chromosomes, IList<double> rouletteWheel)
         {
-            Console.WriteLine("Chromosomes of current generation:");
-            chromosomes.ToList().ForEach(c => Console.WriteLine("[{0}].Fitness = {1}", string.Join(", ", Solution.extractChromosome(c)), c.Fitness.Value));
+            //Console.WriteLine("Chromosomes of current generation:");
+            //chromosomes.ToList().ForEach(c => Console.WriteLine("[{0}].Fitness = {1}", string.Join(", ", Solution.extractChromosome(c)), c.Fitness.Value));
             var sumFitness = chromosomes.Sum(c => c.Fitness.Value);
-            Console.WriteLine("Sum of Fitness values: {0}", sumFitness);
+            //Console.WriteLine("Sum of Fitness values: {0}", sumFitness);
 
             var cumulativePercent = 0.0;
 
             foreach (var c in chromosomes)
             {
-                Console.WriteLine("Percent of Fitness for [{0}]: {1}", string.Join(", ", Solution.extractChromosome(c)), c.Fitness.Value / sumFitness);
+                //Console.WriteLine("Percent of Fitness for [{0}]: {1}", string.Join(", ", Solution.extractChromosome(c)), c.Fitness.Value / sumFitness);
                 cumulativePercent += c.Fitness.Value / sumFitness;
-                Console.WriteLine("Cumulative Percent: {0}", cumulativePercent);
+                //Console.WriteLine("Cumulative Percent: {0}", cumulativePercent);
                 rouletteWheel.Add(cumulativePercent);
             }
         }

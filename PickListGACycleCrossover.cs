@@ -28,11 +28,11 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <returns>The offspring (children) of the parents.</returns>
         protected override IList<IChromosome> PerformCross(IList<IChromosome> parents)
         {
-            Console.WriteLine("...Cycle Crossover started...");
+            //Console.WriteLine("...Cycle Crossover started...");
             var parent1 = parents[0];
             var parent2 = parents[1];
-            Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent1)));
-            Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent2)));
+            //Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent1)));
+            //Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent2)));
 
             if (parents.AnyHasRepeatedGene())
             {
@@ -57,13 +57,13 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
             }
             int j = 0;
-            foreach (var cycle in cycles)
-            {
-                Console.Write("Cycle {0}: ", j + 1);
-                cycle.ForEach(g => Console.Write("{0} -> ", parent1Genes[g]));
-                Console.WriteLine("");
-                j++;
-            }
+            //foreach (var cycle in cycles)
+            //{
+            //    Console.Write("Cycle {0}: ", j + 1);
+            //    cycle.ForEach(g => Console.Write("{0} -> ", parent1Genes[g]));
+            //    Console.WriteLine("");
+            //    j++;
+            //}
 
             // Copy the cycles to the offpring.
             for (int i = 0; i < cycles.Count; i++)
@@ -82,9 +82,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                 }
             }
 
-            Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring1)));
-            Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring2)));
-            Console.WriteLine("...Cycle Crossover ended...");
+            //Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring1)));
+            //Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring2)));
+            //Console.WriteLine("...Cycle Crossover ended...");
 
             return new List<IChromosome>() { offspring1, offspring2 };
         }

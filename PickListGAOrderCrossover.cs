@@ -28,11 +28,11 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// <returns>The offspring (children) of the parents.</returns>
         protected override IList<IChromosome> PerformCross(IList<IChromosome> parents)
         {
-            Console.WriteLine("...Order Crossover started...");
+            //Console.WriteLine("...Order Crossover started...");
             var firstParent = parents[0];
             var secondParent = parents[1];
-            Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(firstParent)));
-            Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(secondParent)));
+            //Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(firstParent)));
+            //Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(secondParent)));
 
             if (parents.AnyHasRepeatedGene())
             {
@@ -43,15 +43,15 @@ namespace ComparisonOfOrderPickingAlgorithms
             Array.Sort(middleSectionIndexes);
             var middleSectionBeginIndex = middleSectionIndexes[0];
             var middleSectionEndIndex = middleSectionIndexes[1];
-            Console.WriteLine("Middle Section Beginning Index: {0}", middleSectionBeginIndex);
-            Console.WriteLine("Middle Section Ending Index: {0}", middleSectionEndIndex);
+            //Console.WriteLine("Middle Section Beginning Index: {0}", middleSectionBeginIndex);
+            //Console.WriteLine("Middle Section Ending Index: {0}", middleSectionEndIndex);
 
             var firstChild = CreateChild(firstParent, secondParent, middleSectionBeginIndex, middleSectionEndIndex);
             var secondChild = CreateChild(secondParent, firstParent, middleSectionBeginIndex, middleSectionEndIndex);
 
-            Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(firstChild)));
-            Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(secondChild)));
-            Console.WriteLine("...Order Crossover ended...");
+            //Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(firstChild)));
+            //Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(secondChild)));
+            //Console.WriteLine("...Order Crossover ended...");
             return new List<IChromosome>() { firstChild, secondChild };
         }
 

@@ -50,18 +50,18 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             var firstParent = parents[0];
             var secondParent = parents[1];
-            Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(firstParent)));
-            Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(secondParent)));
+            //Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(firstParent)));
+            //Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(secondParent)));
 
             var swapIndexesLength = ThreadSafeRandom.ThisThreadsRandom.Next(1, firstParent.Length - 1);
-            Console.WriteLine("Swap Index Count: {0}", swapIndexesLength);
+            //Console.WriteLine("Swap Index Count: {0}", swapIndexesLength);
             var swapIndexes = Utils.GetUniqueInts(swapIndexesLength, 0, firstParent.Length);
-            Console.WriteLine("Swap Indexes: [{0}]", string.Join(", ", swapIndexes));
+            //Console.WriteLine("Swap Indexes: [{0}]", string.Join(", ", swapIndexes));
             var firstChild = CreateChild(firstParent, secondParent, swapIndexes);
             var secondChild = CreateChild(secondParent, firstParent, swapIndexes);
-            Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(firstChild)));
-            Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(secondChild)));
-            Console.WriteLine("...OX2 Crossover or Position Based Crossover ended...");
+            //Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(firstChild)));
+            //Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(secondChild)));
+            //Console.WriteLine("...OX2 Crossover or Position Based Crossover ended...");
 
             return new List<IChromosome>() { firstChild, secondChild };
         }

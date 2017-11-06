@@ -52,30 +52,30 @@ namespace ComparisonOfOrderPickingAlgorithms
         protected override bool PerformHasReached(IGeneticAlgorithm geneticAlgorithm)
         {
             var bestFitness = geneticAlgorithm.BestChromosome.Fitness.Value;
-            Console.WriteLine("Best Chromosome Fitness: {0}", bestFitness);
+            //Console.WriteLine("Best Chromosome Fitness: {0}", bestFitness);
 
             if (m_lastFitness == bestFitness)
             {
-                Console.WriteLine("Best Chromosome Fitness Value is still same");
+                //Console.WriteLine("Best Chromosome Fitness Value is still same");
                 m_stagnantGenerationsCount++;
             }
             else
             {
-                Console.WriteLine("Best Chromosome Fitness Value is changed");
+                //Console.WriteLine("Best Chromosome Fitness Value is changed");
                 m_stagnantGenerationsCount = 1;
             }
-            Console.WriteLine("Stagnant Generation Count: {0}", m_stagnantGenerationsCount);
+            //Console.WriteLine("Stagnant Generation Count: {0}", m_stagnantGenerationsCount);
 
             m_lastFitness = bestFitness;
 
-            if (m_stagnantGenerationsCount >= ExpectedStagnantGenerationsNumber)
-            {
-                Console.WriteLine("Stagnant Generation Count({0}) reached expected stagnant generation number({1})", m_stagnantGenerationsCount, ExpectedStagnantGenerationsNumber);
-            }
-            else
-            {
-                Console.WriteLine("Expected stagnant generation number({0}) is not reached yet.", ExpectedStagnantGenerationsNumber);
-            }
+            //if (m_stagnantGenerationsCount >= ExpectedStagnantGenerationsNumber)
+            //{
+            //    Console.WriteLine("Stagnant Generation Count({0}) reached expected stagnant generation number({1})", m_stagnantGenerationsCount, ExpectedStagnantGenerationsNumber);
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Expected stagnant generation number({0}) is not reached yet.", ExpectedStagnantGenerationsNumber);
+            //}
 
             return m_stagnantGenerationsCount >= ExpectedStagnantGenerationsNumber;
         }

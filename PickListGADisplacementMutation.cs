@@ -34,10 +34,10 @@ namespace ComparisonOfOrderPickingAlgorithms
         protected override IEnumerable<T> MutateOnSequence<T>(IEnumerable<T> sequence)
         {
             var geneToShift = DetermineGeneToShift(sequence.Count() - 1);
-            Console.WriteLine("Random Number generated to determine gene number to shift: {0}", geneToShift);
+            //Console.WriteLine("Random Number generated to determine gene number to shift: {0}", geneToShift);
 
             double randomDoubleToChooseDirection = ThreadSafeRandom.ThisThreadsRandom.NextDouble();
-            Console.WriteLine("Random Number generated to Shift Left or Right: {0}", randomDoubleToChooseDirection);
+            //Console.WriteLine("Random Number generated to Shift Left or Right: {0}", randomDoubleToChooseDirection);
 
             if (randomDoubleToChooseDirection <= 0.5)
             {

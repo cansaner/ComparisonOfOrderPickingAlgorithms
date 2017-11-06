@@ -29,7 +29,7 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// </returns>
         protected override IList<IChromosome> PerformCross(IList<IChromosome> parents)
         {
-            Console.WriteLine("...Partially Mapped Crossover started...");
+            //Console.WriteLine("...Partially Mapped Crossover started...");
             if (parents.AnyHasRepeatedGene())
             {
                 throw new CrossoverException(this, "The Partially Mapped Crossover (PMX) can be only used with ordered chromosomes. The specified chromosome has repeated genes.");
@@ -37,15 +37,15 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             var parent1 = parents[0];
             var parent2 = parents[1];
-            Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent1)));
-            Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent2)));
+            //Console.WriteLine("First Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent1)));
+            //Console.WriteLine("Second Parent: [{0}]", string.Join(", ", Solution.extractChromosome(parent2)));
 
             var cutPointsIndexes = Utils.GetUniqueInts(2, 0, parent1.Length);
             Array.Sort(cutPointsIndexes);  //BURASI GENETIC SHARP IN BUG I
             var firstCutPointIndex = cutPointsIndexes[0];
             var secondCutPointIdnex = cutPointsIndexes[1];
-            Console.WriteLine("First Cut Point Index: {0}", firstCutPointIndex);
-            Console.WriteLine("Second Cut Point Index: {0}", secondCutPointIdnex);
+            //Console.WriteLine("First Cut Point Index: {0}", firstCutPointIndex);
+            //Console.WriteLine("Second Cut Point Index: {0}", secondCutPointIdnex);
 
             var parent1Genes = parent1.GetGenes();
             var parent1MappingSection = parent1Genes.Skip(firstCutPointIndex).Take((secondCutPointIdnex - firstCutPointIndex) + 1).ToArray();
@@ -75,9 +75,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                 offspring2.ReplaceGene(i, geneForoffspring2);
             }
 
-            Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring1)));
-            Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring2)));
-            Console.WriteLine("...Partially Mapped Crossover ended...");
+            //Console.WriteLine("First Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring1)));
+            //Console.WriteLine("Second Offspring: [{0}]", string.Join(", ", Solution.extractChromosome(offspring2)));
+            //Console.WriteLine("...Partially Mapped Crossover ended...");
 
             return new List<IChromosome>() { offspring1, offspring2 };
         }
