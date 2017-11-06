@@ -295,10 +295,10 @@ namespace ComparisonOfOrderPickingAlgorithms
                 + delimiter + "SShapeTravelledTotalDistance" + delimiter + "SShapeRunningTime" + delimiter + "LargestGapTravelledTotalDistance" + delimiter + "LargestGapRunningTime");
             wr.Close();
 
-            parameters.NumberOfStagnantGeneration = 10;
-            parameters.PopulationSize = 10;
-            parameters.CrossoverProbability = 0.7f;
-            parameters.MutationProbability = 0.7f;
+            parameters.NumberOfStagnantGeneration = 100;
+            parameters.PopulationSize = 450;
+            parameters.CrossoverProbability = 0.8f;
+            parameters.MutationProbability = 0.08f;
             parameters.CrossoverOperator = PickListGAParameters.Crossover.OX2;
             parameters.MutationOperator = PickListGAParameters.Mutation.Shuffle;
             parameters.ItemListSet = Utils.readTestList(listFilePath);
@@ -773,12 +773,12 @@ namespace ComparisonOfOrderPickingAlgorithms
             
             String[] itemListFilePaths = new String[]
             {
-                //"../../../files/testListWithPickListSize100_part01.txt",
-                //"../../../files/testListWithPickListSize100_part02.txt",
-                //"../../../files/testListWithPickListSize100_part03.txt",
-                //"../../../files/testListWithPickListSize100_part04.txt",
-                //"../../../files/testListWithPickListSize100_part05.txt"
-                "../../../files/testListWithPickListSize005.txt"
+                "../../../files/testListWithPickListSize100_part01.txt",
+                "../../../files/testListWithPickListSize100_part02.txt",
+                "../../../files/testListWithPickListSize100_part03.txt",
+                "../../../files/testListWithPickListSize100_part04.txt",
+                "../../../files/testListWithPickListSize100_part05.txt"
+                //"../../../files/testListWithPickListSize005.txt"
             };
 
             String comparisonReportFilePath = "../../../files/GeneticAlgorithmComparisonReport_NewOperators.txt";
