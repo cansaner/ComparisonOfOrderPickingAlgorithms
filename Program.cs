@@ -217,21 +217,15 @@ namespace ComparisonOfOrderPickingAlgorithms
         {
             String delimiter = "\t";
             StreamWriter wr = new StreamWriter(reportFilePath, true);
+            wr.WriteLine("{0}" + delimiter + "{1}",
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
+                    listFilePath);
             wr.WriteLine("instanceNumber" + delimiter + "tabuSearchDistanceMatrixRunningTime" + delimiter + "tabuSearchTravelledTotalDistance" + delimiter + "tabuSearchRunningTime" + delimiter + "SShapeTravelledTotalDistance" + delimiter + "SShapeRunningTime" + delimiter + "LargestGapTravelledTotalDistance" + delimiter + "LargestGapRunningTime");
-           
-            int S = 10;
-            double W = 2.6;
-            double L = 30.4;
-            double K = 2.77;
-            int no_of_horizontal_aisles = 4;
-            int no_of_vertical_aisles = 31;
+            wr.Close();
 
-            depot = new Coordinate(1, no_of_horizontal_aisles);
-            room = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
-            parameters = new Parameters();
             parameters.TabuLength = 5;
             parameters.ItemListSet = Utils.readTestList(listFilePath);
-
+          
             //Add one additional Tabu search solution at the beginning to initiate multi-core process and having less values for distance matrix calculation at report
             room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
             picker = new Picker(depot);
@@ -265,6 +259,19 @@ namespace ComparisonOfOrderPickingAlgorithms
                 double travelledTotalDistance03 = solution.TravelledDistance;
                 double runningTime03 = solution.RunningTime;
 
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}",
+                    i + 1,
+                    distanceMatrixRunningTime,
+                    travelledTotalDistance01,
+                    runningTime01,
+                    travelledTotalDistance02,
+                    runningTime02,
+                    travelledTotalDistance03,
+                    runningTime03);
+                Console.ResetColor();
+
+                wr = new StreamWriter(reportFilePath, true);
                 wr.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}", 
                     i + 1, 
                     distanceMatrixRunningTime, 
@@ -274,8 +281,9 @@ namespace ComparisonOfOrderPickingAlgorithms
                     runningTime02, 
                     travelledTotalDistance03, 
                     runningTime03);
+                wr.Close();
             }
-
+            wr = new StreamWriter(reportFilePath, true);
             wr.WriteLine("");
             wr.Close();
         }
@@ -749,7 +757,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             }
         }
 
-        //Method to setup parameter tuning of Genetic Algorithm
+        //Method to setup pcomparison of Genetic Algorithm
         public static void setupGeneticAlgorithmComparison(bool generateNewTestLists)
         {
             int S = 10;
@@ -789,6 +797,47 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     //compareAlgorithmsWithGeneticAlgorithm(path, comparisonReportFilePath);
                     testNewOperatorsWithGeneticAlgorithm(path, comparisonReportFilePath);
+                }
+            }
+        }
+
+        //Method to setup pcomparison of Tabu Search
+        public static void setupTabuAlgorithmComparison(bool generateNewTestLists)
+        {
+            int S = 10;
+            double W = 2.6;
+            double L = 30.4;
+            double K = 2.77;
+            int no_of_horizontal_aisles = 4;
+            int no_of_vertical_aisles = 31;
+
+            depot = new Coordinate(1, no_of_horizontal_aisles);
+            room = new Problem(S, W, L, K, no_of_horizontal_aisles - 1, no_of_vertical_aisles, depot);
+            parameters = new Parameters();
+
+            if (generateNewTestLists)
+            {
+                //Setup test list generation parameters here
+                parameters.PickListSizesOfTestLists = new int[] { 25, 50, 100 };
+                parameters.NumberOfPickLists = 500;
+                Utils.generateTestLists(room, parameters.PickListSizesOfTestLists, parameters.NumberOfPickLists);
+            }
+
+            String[] itemListFilePaths = new String[]
+            {
+                "../../../files/testListWithPickListSize025.txt",
+                "../../../files/testListWithPickListSize050.txt",
+                "../../../files/testListWithPickListSize100.txt"
+                //"../../../files/testListWithPickListSize005.txt"
+            };
+
+            String comparisonReportFilePath = "../../../files/TabuAlgorithmComparisonReportAspirationNotAllowed.txt";
+
+            foreach (string path in itemListFilePaths)
+            {
+                if (File.Exists(path))
+                {
+                    compareAlgorithmsWithTabu(path, comparisonReportFilePath);
                 }
             }
         }
@@ -949,10 +998,11 @@ namespace ComparisonOfOrderPickingAlgorithms
             //String listFilePath = "../../../files/testListOfSize025ForAlgorithmComparison.txt";
             //String listFilePath = "../../../files/testListWithPickListSize005.txt";
             //String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
-            //compareAlgorithms(listFilePath, reportFilePath);
+            //compareAlgorithmsWithTabu(listFilePath, reportFilePath);
             //setupGeneticAlgorithmParameterTuning(false);
-            setupGeneticAlgorithmComparison(false);
+            //setupGeneticAlgorithmComparison(false);
             //setupShortestPathTest(false);
+            setupTabuAlgorithmComparison(false);
             Console.ReadLine();
         }
     }

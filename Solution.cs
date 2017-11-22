@@ -822,21 +822,22 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     if (tabuList.List[initialSolution[bestNeighborsSwappedIndices[0]], initialSolution[bestNeighborsSwappedIndices[1]]] > 0)
                     {
-                        solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
-                        double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
-                        if (costToCheck <= bestCost) //Tabu is overridden
-                        {
-                            //Console.WriteLine("Tabu is overridden");
-                            bestNeighborFound = true;
-                            tabuOverridden = true;
-                            item1 = initialSolution[bestNeighborsSwappedIndices[0]];
-                            item2 = initialSolution[bestNeighborsSwappedIndices[1]];
-                            //Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
-                        }
-                        else
-                        {
+                        //ASPIRATION CRITERION: ALLOWED ISE COMMENTI AC
+                        //solutionToCheck = swapOperator(bestNeighborsSwappedIndices[0], bestNeighborsSwappedIndices[1], initialSolution);
+                        //double costToCheck = calculateTabuSearchObjectiveFunctionValue(solutionToCheck);
+                        //if (costToCheck <= bestCost) //Tabu is overridden
+                        //{
+                        //    //Console.WriteLine("Tabu is overridden");
+                        //    bestNeighborFound = true;
+                        //    tabuOverridden = true;
+                        //    item1 = initialSolution[bestNeighborsSwappedIndices[0]];
+                        //    item2 = initialSolution[bestNeighborsSwappedIndices[1]];
+                        //    //Console.WriteLine("Best Neighbor Found swapping items " + item1 + " and " + item2 + " forming neighbor -> " + string.Join(", ", solutionToCheck));
+                        //}
+                        //else
+                        //{
 
-                        }
+                        //}
                     }
                     else
                     {
@@ -858,7 +859,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 {
                     tabuList.tabuMove(item1, item2);
                 }
-                tabuList.printTabuList();
+                //tabuList.printTabuList();
                 return solutionToCheck;
             }
             //Console.WriteLine("Taking no actions on Tabu List since no best neighbor is found, we are so unlucky to get any random index that is not in tabu list. Keeping Tabu List same.");
