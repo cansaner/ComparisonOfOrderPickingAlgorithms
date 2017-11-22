@@ -476,6 +476,299 @@ namespace ComparisonOfOrderPickingAlgorithms
             wr.Close();
         }
 
+        //Method to test new implemented operators
+        public static void testNewMutationOperatorsWithGeneticAlgorithm(String listFilePath, String reportFilePath)
+        {
+            String delimiter = "\t";
+            StreamWriter wr = new StreamWriter(reportFilePath, true);
+            wr.WriteLine("{0}" + delimiter + "{1}",
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffff"),
+                listFilePath);
+            wr.WriteLine("InstanceNumber" + delimiter + "DistanceMatrixRunningTime"
+                + delimiter + "GACycleShuffleTotalDistance" + delimiter + "GACycleShuffleRunningTime" + delimiter + "GACycleInsertionTotalDistance" + delimiter + "GACycleInsertionRunningTime"
+                + delimiter + "GACycleDisplacementTotalDistance" + delimiter + "GACycleDisplacementRunningTime" + delimiter + "GAOrderedShuffleTotalDistance" + delimiter + "GAOrderedShuffleRunningTime"
+                + delimiter + "GAOrderedInsertionTotalDistance" + delimiter + "GAOrderedInsertionRunningTime" + delimiter + "GAOrderedDisplacementTotalDistance" + delimiter + "GAOrderedDisplacementRunningTime"
+                + delimiter + "GAPMXShuffleTotalDistance" + delimiter + "GAPMXShuffleRunningTime" + delimiter + "GAPMXInsertionTotalDistance" + delimiter + "GAPMXInsertionRunningTime"
+                + delimiter + "GAPMXDisplacementTotalDistance" + delimiter + "GAPMXDisplacementRunningTime" + delimiter + "GAOX2ShuffleTotalDistance" + delimiter + "GAOX2ShuffleRunningTime"
+                + delimiter + "GAOX2InsertionTotalDistance" + delimiter + "GAOX2InsertionRunningTime" + delimiter + "GAOX2DisplacementTotalDistance" + delimiter + "GAOX2DisplacementRunningTime"
+                + delimiter + "SShapeTravelledTotalDistance" + delimiter + "SShapeRunningTime" + delimiter + "LargestGapTravelledTotalDistance" + delimiter + "LargestGapRunningTime");
+            wr.Close();
+
+            parameters.NumberOfStagnantGeneration = 100;
+            parameters.PopulationSize = 450;
+            parameters.CrossoverProbability = 0.8f;
+            parameters.MutationProbability = 0.08f;
+            parameters.CrossoverOperator = PickListGAParameters.Crossover.Cycle;
+            parameters.MutationOperator = PickListGAParameters.Mutation.Shuffle;
+            parameters.ItemListSet = Utils.readTestList(listFilePath);
+            
+            double[,] calculatedDistanceMatrix = new double[1, 1]; ;
+            List<Coordinate>[,] calculatedPathMatrix = new List<Coordinate>[1, 1];
+            double calculatedDistanceMatrixRunningTime = 0;
+
+            //Add one additional Distance Matrix calculation at the beginning to initiate multi-core process and having less values for distance matrix calculation at report
+            room.ItemList = Utils.Clone<Item>(parameters.ItemListSet.ElementAt(0));
+            picker = new Picker(depot);
+            solution = new Solution(room, picker, parameters);
+            solution.prepareDistanceMatrix(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
+
+            for (int i = 0; i < parameters.ItemListSet.Count; i++)
+            {
+                List<Item> itemList = parameters.ItemListSet.ElementAt(i);
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.Cycle;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Shuffle;
+                solution = new Solution(room, picker, parameters);
+
+                solution.prepareDistanceMatrix(new Item(0, solution.Problem.NumberOfCrossAisles - 1, 1, 0, solution.Problem.S));
+                calculatedDistanceMatrix = solution.DistanceMatrix;
+                calculatedPathMatrix = solution.PathMatrix;
+                calculatedDistanceMatrixRunningTime = solution.DistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+                
+                double distanceMatrixRunningTime = solution.DistanceMatrixRunningTime;
+                double travelledTotalDistance01 = solution.TravelledDistance;
+                double runningTime01 = solution.RunningTime;
+                
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.Cycle;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Insertion;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance02 = solution.TravelledDistance;
+                double runningTime02 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.Cycle;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Displacement;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance03 = solution.TravelledDistance;
+                double runningTime03 = solution.RunningTime;
+                
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.Ordered;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Shuffle;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance04 = solution.TravelledDistance;
+                double runningTime04 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.Ordered;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Insertion;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance05 = solution.TravelledDistance;
+                double runningTime05 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.Ordered;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Displacement;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance06 = solution.TravelledDistance;
+                double runningTime06 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.PMX;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Shuffle;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance07 = solution.TravelledDistance;
+                double runningTime07 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.PMX;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Insertion;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance08 = solution.TravelledDistance;
+                double runningTime08 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.PMX;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Displacement;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance09 = solution.TravelledDistance;
+                double runningTime09 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.OX2;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Shuffle;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance10 = solution.TravelledDistance;
+                double runningTime10 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.OX2;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Insertion;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance11 = solution.TravelledDistance;
+                double runningTime11 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                parameters.CrossoverOperator = PickListGAParameters.Crossover.OX2;
+                parameters.MutationOperator = PickListGAParameters.Mutation.Displacement;
+                solution = new Solution(room, picker, parameters);
+                solution.DistanceMatrix = calculatedDistanceMatrix;
+                solution.PathMatrix = calculatedPathMatrix;
+                solution.DistanceMatrixRunningTime = calculatedDistanceMatrixRunningTime;
+                solution.solve(Solution.Algorithm.GeneticAlgorithm);
+
+                double travelledTotalDistance12 = solution.TravelledDistance;
+                double runningTime12 = solution.RunningTime;
+                
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                solution = new Solution(room, picker, parameters);
+                solution.solve(Solution.Algorithm.SShape);
+
+                double travelledTotalDistance13 = solution.TravelledDistance;
+                double runningTime13 = solution.RunningTime;
+
+                room.ItemList = Utils.Clone<Item>(itemList);
+                picker = new Picker(depot);
+                solution = new Solution(room, picker, parameters);
+                solution.solve(Solution.Algorithm.LargestGap);
+
+                double travelledTotalDistance14 = solution.TravelledDistance;
+                double runningTime14 = solution.RunningTime;
+                
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}" + delimiter + "{8}" + delimiter + "{9}" + delimiter + "{10}" + delimiter + "{11}" + delimiter + "{12}" + delimiter + "{13}" + delimiter + "{14}" + delimiter + "{15}" + delimiter + "{16}" + delimiter + "{17}" + delimiter + "{18}" + delimiter + "{19}" + delimiter + "{20}" + delimiter + "{21}" + delimiter + "{22}" + delimiter + "{23}" + delimiter + "{24}" + delimiter + "{25}" + delimiter + "{26}" + delimiter + "{27}" + delimiter + "{28}" + delimiter + "{29}",
+                    i + 1,
+                    distanceMatrixRunningTime,
+                    travelledTotalDistance01,
+                    runningTime01,
+                    travelledTotalDistance02,
+                    runningTime02,
+                    travelledTotalDistance03,
+                    runningTime03,
+                    travelledTotalDistance04,
+                    runningTime04,
+                    travelledTotalDistance05,
+                    runningTime05,
+                    travelledTotalDistance06,
+                    runningTime06,
+                    travelledTotalDistance07,
+                    runningTime07,
+                    travelledTotalDistance08,
+                    runningTime08,
+                    travelledTotalDistance09,
+                    runningTime09,
+                    travelledTotalDistance10,
+                    runningTime10,
+                    travelledTotalDistance11,
+                    runningTime11,
+                    travelledTotalDistance12,
+                    runningTime12,
+                    travelledTotalDistance13,
+                    runningTime13,
+                    travelledTotalDistance14,
+                    runningTime14);
+                Console.ResetColor();
+
+                wr = new StreamWriter(reportFilePath, true);
+                wr.WriteLine("{0}" + delimiter + "{1}" + delimiter + "{2}" + delimiter + "{3}" + delimiter + "{4}" + delimiter + "{5}" + delimiter + "{6}" + delimiter + "{7}" + delimiter + "{8}" + delimiter + "{9}" + delimiter + "{10}" + delimiter + "{11}" + delimiter + "{12}" + delimiter + "{13}" + delimiter + "{14}" + delimiter + "{15}" + delimiter + "{16}" + delimiter + "{17}" + delimiter + "{18}" + delimiter + "{19}" + delimiter + "{20}" + delimiter + "{21}" + delimiter + "{22}" + delimiter + "{23}" + delimiter + "{24}" + delimiter + "{25}" + delimiter + "{26}" + delimiter + "{27}" + delimiter + "{28}" + delimiter + "{29}",
+                    i + 1,
+                    distanceMatrixRunningTime,
+                    travelledTotalDistance01,
+                    runningTime01,
+                    travelledTotalDistance02,
+                    runningTime02,
+                    travelledTotalDistance03,
+                    runningTime03,
+                    travelledTotalDistance04,
+                    runningTime04,
+                    travelledTotalDistance05,
+                    runningTime05,
+                    travelledTotalDistance06,
+                    runningTime06,
+                    travelledTotalDistance07,
+                    runningTime07,
+                    travelledTotalDistance08,
+                    runningTime08,
+                    travelledTotalDistance09,
+                    runningTime09,
+                    travelledTotalDistance10,
+                    runningTime10,
+                    travelledTotalDistance11,
+                    runningTime11,
+                    travelledTotalDistance12,
+                    runningTime12,
+                    travelledTotalDistance13,
+                    runningTime13,
+                    travelledTotalDistance14,
+                    runningTime14);
+                wr.Close();
+
+                calculatedDistanceMatrix = null;
+                calculatedPathMatrix = null;
+                calculatedDistanceMatrixRunningTime = 0;
+            }
+
+            wr = new StreamWriter(reportFilePath, true);
+            wr.WriteLine("");
+            wr.Close();
+        }
+
         //Method to compare solution algorithms
         public static void compareAlgorithmsWithGeneticAlgorithm(String listFilePath, String reportFilePath)
         {
@@ -781,22 +1074,21 @@ namespace ComparisonOfOrderPickingAlgorithms
             
             String[] itemListFilePaths = new String[]
             {
-                "../../../files/testListWithPickListSize100_part01.txt",
-                "../../../files/testListWithPickListSize100_part02.txt",
-                "../../../files/testListWithPickListSize100_part03.txt",
-                "../../../files/testListWithPickListSize100_part04.txt",
-                "../../../files/testListWithPickListSize100_part05.txt"
+                "../../../files/testListWithPickListSize025.txt",
+                "../../../files/testListWithPickListSize050.txt",
+                "../../../files/testListWithPickListSize100.txt"
                 //"../../../files/testListWithPickListSize005.txt"
             };
 
-            String comparisonReportFilePath = "../../../files/GeneticAlgorithmComparisonReport_NewOperators.txt";
+            String comparisonReportFilePath = "../../../files/GeneticAlgorithmComparisonReportNewMutationOperators.txt";
 
             foreach (string path in itemListFilePaths)
             {
                 if (File.Exists(path))
                 {
                     //compareAlgorithmsWithGeneticAlgorithm(path, comparisonReportFilePath);
-                    testNewOperatorsWithGeneticAlgorithm(path, comparisonReportFilePath);
+                    //testNewOperatorsWithGeneticAlgorithm(path, comparisonReportFilePath);
+                    testNewMutationOperatorsWithGeneticAlgorithm(path, comparisonReportFilePath);
                 }
             }
         }
@@ -1000,9 +1292,9 @@ namespace ComparisonOfOrderPickingAlgorithms
             //String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             //compareAlgorithmsWithTabu(listFilePath, reportFilePath);
             //setupGeneticAlgorithmParameterTuning(false);
-            //setupGeneticAlgorithmComparison(false);
+            setupGeneticAlgorithmComparison(false);
             //setupShortestPathTest(false);
-            setupTabuAlgorithmComparison(false);
+            //setupTabuAlgorithmComparison(false);
             Console.ReadLine();
         }
     }
