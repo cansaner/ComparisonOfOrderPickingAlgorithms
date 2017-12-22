@@ -211,7 +211,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             //solution.solve(Solution.Algorithm.LargestGap);
             solution.solve(Solution.Algorithm.GeneticAlgorithm);
         }
-
+ 
         //Method to compare solution algorithms
         public static void compareAlgorithmsWithTabu(String listFilePath, String reportFilePath)
         {
@@ -1123,7 +1123,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                 //"../../../files/testListWithPickListSize005.txt"
             };
 
-            String comparisonReportFilePath = "../../../files/TabuAlgorithmComparisonReportAspirationNotAllowed.txt";
+            String comparisonReportFilePath = "../../../files/TabuAlgorithmComparisonReportAspirationNotAllowedWithDijkstra.txt";
 
             foreach (string path in itemListFilePaths)
             {
@@ -1292,9 +1292,9 @@ namespace ComparisonOfOrderPickingAlgorithms
             //String reportFilePath = "../../../files/AlgorithmComparisonReport.txt";
             //compareAlgorithmsWithTabu(listFilePath, reportFilePath);
             //setupGeneticAlgorithmParameterTuning(false);
-            setupGeneticAlgorithmComparison(false);
+            //setupGeneticAlgorithmComparison(false);
             //setupShortestPathTest(false);
-            //setupTabuAlgorithmComparison(false);
+            setupTabuAlgorithmComparison(false);
             Console.ReadLine();
         }
     }

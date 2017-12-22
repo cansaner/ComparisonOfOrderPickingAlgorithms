@@ -166,7 +166,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             switch (method)
             {
                 case Algorithm.TabuSearch:
-                    solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S), false);
                     break;
                 case Algorithm.SShape:
                     solveUsingSShape();
@@ -178,7 +178,7 @@ namespace ComparisonOfOrderPickingAlgorithms
                     solveUsingGeneticAlgorithm(this.parameters.PickListGAParameters, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
                     break;
                 default:
-                    solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S));
+                    solveUsingTabuSearch(this.parameters.TabuLength, this.parameters.NumberOfIterations, new Item(0, this.problem.NumberOfCrossAisles - 1, 1, 0, this.problem.S), true);
                     break;
             }
             stopWatch.Stop();
@@ -1024,11 +1024,18 @@ namespace ComparisonOfOrderPickingAlgorithms
             return itemList;
         }
 
-        private void solveUsingTabuSearch(int tabuLength, int numberOfIterations, Item depot)
+        private void solveUsingTabuSearch(int tabuLength, int numberOfIterations, Item depot, Boolean solveWithMathModel)
         {
             //preparing distance matrix
             stopWatch = Stopwatch.StartNew();
-            prepareDistanceMatrix(depot);
+            if (solveWithMathModel)
+            {
+                prepareDistanceMatrix(depot);
+            }
+            else
+            {
+                prepareDistanceMatrix_With_Dijkstra(depot);
+            }
             stopWatch.Stop();
             TimeSpan dmElapsed_Time = stopWatch.Elapsed;
             double dmElapsedTime = Math.Round((dmElapsed_Time).TotalSeconds, 3);
