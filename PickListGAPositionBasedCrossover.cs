@@ -54,23 +54,87 @@ namespace ComparisonOfOrderPickingAlgorithms
         /// </returns>
         protected override IChromosome CreateChild(IChromosome firstParent, IChromosome secondParent, int[] swapIndexes)
         {
-            var firstParentGenes = new List<Gene>(firstParent.GetGenes());
+            ////First Parent: [1, 5, 4, 0, 3, 2]
+            ////Second Parent: [2, 3, 5, 0, 1, 4]
+            //firstParent = new PickListGAChromosome(5);
+
+            //firstParent.ReplaceGenes(0, new Gene[] {
+            //    new Gene(2),
+            //    new Gene(3),
+            //    new Gene(5),
+            //    new Gene(0),
+            //    new Gene(1),
+            //    new Gene(4)
+            //});
+            
+            //secondParent = new PickListGAChromosome(5);
+
+            //secondParent.ReplaceGenes(0, new Gene[] {
+            //    new Gene(1),
+            //    new Gene(5),
+            //    new Gene(4),
+            //    new Gene(0),
+            //    new Gene(3),
+            //    new Gene(2)
+            //});
+
+            //swapIndexes = new int[3] { 2, 4, 3};
+
+            ////First Offspring: [4, 3, 5, 0, 1, 2]
+            ////Second Offspring: [2, 5, 4, 0, 3, 1]
+
+            var secondParentSwapGenes = secondParent.GetGenes()
+                .Select((g, i) => new { Gene = g, Index = i })
+                .Where((g) => swapIndexes.Contains(g.Index))
+                .ToArray();
+
+            //var swappedSecondParentgenes = secondParentSwapGenes.Select(element => element.Gene).ToArray();
+
+            //var swappedSecondParentgenes = new Gene[swapIndexes.Length];
+            //for (int i = 0; i < swapIndexes.Length; i++)
+            //{
+            //    swappedSecondParentgenes[i] = secondParentSwapGenes[i].Gene;
+            //}
+
+            var firstParentRemainingGenes = firstParent.GetGenes().Except(secondParentSwapGenes.Select(element => element.Gene).ToArray()).GetEnumerator();
 
             var child = firstParent.CreateNew();
+            var secondParentSwapGensIndex = 0;
 
             for (int i = 0; i < firstParent.Length; i++)
             {
-                if (swapIndexes.Contains(i))
+                if (secondParentSwapGenes.Any(f => f.Index == i))
                 {
-                    var gene = secondParent.GetGene(i);
-                    firstParentGenes.Remove(gene);
-                    firstParentGenes.Insert(i, gene);
+                    child.ReplaceGene(i, secondParentSwapGenes[secondParentSwapGensIndex++].Gene);
+                }
+                else
+                {
+                    firstParentRemainingGenes.MoveNext();
+                    child.ReplaceGene(i, firstParentRemainingGenes.Current);
                 }
             }
 
-            child.ReplaceGenes(0, firstParentGenes.ToArray());
-
             return child;
+
+            ///////////
+
+            //var firstParentGenes = new List<Gene>(firstParent.GetGenes());
+
+            //var child = firstParent.CreateNew();
+
+            //for (int i = 0; i < firstParent.Length; i++)
+            //{
+            //    if (swapIndexes.Contains(i))
+            //    {
+            //        var gene = secondParent.GetGene(i);
+            //        firstParentGenes.Remove(gene);
+            //        firstParentGenes.Insert(i, gene);
+            //    }
+            //}
+
+            //child.ReplaceGenes(0, firstParentGenes.ToArray());
+
+            //return child;
         }
 
         #endregion

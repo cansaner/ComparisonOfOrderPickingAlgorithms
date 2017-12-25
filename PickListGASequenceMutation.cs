@@ -29,6 +29,7 @@ namespace ComparisonOfOrderPickingAlgorithms
             {
                 //Console.WriteLine("...Sequence Mutation started...");
                 var indexes = Utils.GetUniqueInts(2, 0, chromosome.Length).OrderBy(i => i).ToArray();
+                //var indexes = new int[2] { 0, 1};
                 var firstIndex = indexes[0];
                 var secondIndex = indexes[1];
                 var sequenceLength = (secondIndex - firstIndex) + 1;
