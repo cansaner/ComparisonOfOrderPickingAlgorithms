@@ -1478,7 +1478,7 @@ namespace ComparisonOfOrderPickingAlgorithms
 
             PickListGAFitness GAFitness = new PickListGAFitness(initialItemList, this);
             PickListGAPopulation GAPopulation = new PickListGAPopulation(parameters.PopulationSize, parameters.PopulationSize, new PickListGAChromosome(itemIndices));
-            GAPopulation.GenerationStrategy = new TrackingGenerationStrategy();
+            GAPopulation.GenerationStrategy = new PerformanceGenerationStrategy();
             
             PickListGA ga = new PickListGA(GAPopulation, GAFitness, GASelection, GACrossover, GAMutation);
             ga.Reinsertion = new PickListGAElitistReinsertion();
